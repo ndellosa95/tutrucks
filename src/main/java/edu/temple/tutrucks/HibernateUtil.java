@@ -22,8 +22,7 @@ public class HibernateUtil {
     private static SessionFactory buildSessionFactory() {
         try {
             // Create the SessionFactory from hibernate.cfg.xml
-            System.out.println("pwd: " + System.getProperty("user.dir"));
-            return new Configuration().configure(new java.io.File("./../hibernate.cfg.xml")).buildSessionFactory(
+            return new Configuration().configure().buildSessionFactory(
 			    new StandardServiceRegistryBuilder().build() );
         }
         catch (Throwable ex) {
