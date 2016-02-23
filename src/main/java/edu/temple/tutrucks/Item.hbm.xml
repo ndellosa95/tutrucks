@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 15, 2016 6:30:46 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="edu.temple.tutrucks.Item" table="item" catalog="TUTrucks" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="itemName" type="string">
+            <column name="item_name" not-null="true" />
+        </property>
+        <property name="price" type="double">
+            <column name="price" precision="22" scale="0" not-null="true" />
+        </property>
+        <set name="itemReviews" table="item_review" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="item_id" />
+            </key>
+            <one-to-many class="edu.temple.tutrucks.ItemReview" />
+        </set>
+        <set name="tags" table="tag_item_map" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="item_id" />
+            </key>
+            <many-to-many column="tag_id" class="edu.temple.tutrucks.Tag" />
+        </set>
+    </class>
+</hibernate-mapping>

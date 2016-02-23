@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 15, 2016 6:30:46 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="TUTrucks" name="edu.temple.tutrucks.Tag" optimistic-lock="version" table="tags">
+    <id name="id" type="int">
+      <column name="id"/>
+      <generator class="identity"/>
+    </id>
+    <property name="tagName" type="string">
+      <column name="tag_name" not-null="true"/>
+    </property>
+    <set name="items" table="tag_item_map" inverse="false" lazy="true" fetch="select">
+      <key>
+        <column name="tag_id" />
+      </key>
+      <many-to-many column="item_id" class="edu.temple.tutrucks.Taggable" />
+    </set>
+    <set name="trucks" table="tag_truck_map" inverse="false" lazy="true" fetch="select">
+        <key>
+         <column name="truck_id" />
+        </key>
+        <many-to-many column="tag_id" class="edu.temple.tutrucks.Taggable"></many-to-many>
+    </set>
+  </class>
+</hibernate-mapping>

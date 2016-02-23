@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 15, 2016 6:30:46 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="edu.temple.tutrucks.Truck" table="truck" catalog="TUTrucks" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="truckName" type="string">
+            <column name="truck_name" not-null="true" />
+        </property>
+        <property name="latitude" type="double">
+            <column name="latitude" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="longitude" type="double">
+            <column name="longitude" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="openingTime" type="imm_time">
+            <column name="opening_time" not-null="false"></column>
+        </property>
+        <property name="closingTime" type="imm_time">
+            <column name="closing_time" not-null="false"></column>
+        </property>
+        <set name="truckReviews" table="truck_review" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="truck_id" />
+            </key>
+            <one-to-many class="edu.temple.tutrucks.TruckReview" />
+        </set>
+        <set name="menus" table="menu" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="truck_id" />
+            </key>
+            <one-to-many class="edu.temple.tutrucks.Menu" />
+        </set>
+        <set name="tags" table="tag_truck_map" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="truck_id" />
+            </key>
+            <many-to-many column="tag_id" class="edu.temple.tutrucks.Tag"></many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

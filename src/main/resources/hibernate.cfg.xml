@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3333/TUTrucks</property>
+    <property name="hibernate.connection.username">tuf00790</property>
+    <property name="hibernate.connection.password">ce9yu0Ei</property>
+    <mapping resource="edu/temple/tutrucks/Item.hbm.xml"/>
+    <mapping resource="edu/temple/tutrucks/ItemReview.hbm.xml"/>
+    <mapping resource="edu/temple/tutrucks/Menu.hbm.xml"/>
+    <mapping resource="edu/temple/tutrucks/TruckReview.hbm.xml"/>
+    <mapping resource="edu/temple/tutrucks/Tag.hbm.xml"/>
+    <mapping resource="edu/temple/tutrucks/Truck.hbm.xml"/>
+    <mapping resource="edu/temple/tutrucks/User.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>
