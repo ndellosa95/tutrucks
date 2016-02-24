@@ -5,6 +5,9 @@
  */
 package edu.temple.tutrucks;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -42,4 +45,15 @@ public class HibernateTest {
     //
     // @Test
     // public void hello() {}
+    
+    @Test
+    public void testHibernate() {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction t = session.beginTransaction();
+        Query q = session.createQuery("from Truck");
+        for (Object o : q.list()) {
+            System.out.println(((Truck)o).getTruckName());
+        }
+        session.close();
+    }
 }

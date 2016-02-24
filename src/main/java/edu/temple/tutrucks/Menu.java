@@ -11,7 +11,7 @@ import java.util.Set;
 public class Menu  implements java.io.Serializable {
 
 
-     private Integer id;
+     private int id;
      private Truck truck;
      private String menuName;
      private String description;

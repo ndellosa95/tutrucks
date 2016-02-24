@@ -14,7 +14,7 @@
         <property name="price" type="double">
             <column name="price" precision="22" scale="0" not-null="true" />
         </property>
-        <set name="itemReviews" table="item_review" inverse="false" lazy="true" fetch="select">
+        <set name="itemReviews" table="item_review" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="item_id" />
             </key>

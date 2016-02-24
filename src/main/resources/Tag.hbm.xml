@@ -10,17 +10,19 @@
     <property name="tagName" type="string">
       <column name="tag_name" not-null="true"/>
     </property>
-    <set name="items" table="tag_item_map" inverse="false" lazy="true" fetch="select">
+    <set name="items" table="tag_item_map, tag_truck_map" inverse="false" lazy="true" fetch="select">
       <key>
         <column name="tag_id" />
       </key>
-      <many-to-many column="item_id" class="edu.temple.tutrucks.Taggable" />
+      <many-to-many column="item_id" entity-name="edu.temple.tutrucks.Taggable" />
+      <many-to-many column="truck_id" entity-name="edu.temple.tutrucks.Taggable" />
     </set>
+   <!--
     <set name="trucks" table="tag_truck_map" inverse="false" lazy="true" fetch="select">
         <key>
          <column name="truck_id" />
         </key>
-        <many-to-many column="tag_id" class="edu.temple.tutrucks.Taggable"></many-to-many>
-    </set>
+        <many-to-many column="tag_id" targetEntity="edu.temple.tutrucks.Taggable"></many-to-many>
+    </set> -->
   </class>
 </hibernate-mapping>
