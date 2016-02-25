@@ -1,6 +1,8 @@
 package edu.temple.tutrucks;
 // Generated Feb 15, 2016 6:30:46 PM by Hibernate Tools 4.3.1
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -13,7 +15,7 @@ public class Item implements java.io.Serializable, Reviewable, Taggable {
      private int id;
      private String itemName;
      private double price;
-     private Set<ItemReview> itemReviews = new TreeSet();
+     private List<ItemReview> itemReviews = new ArrayList();
      private Set<Tag> tags = new TreeSet();
 
     public Item() {
@@ -47,7 +49,7 @@ public class Item implements java.io.Serializable, Reviewable, Taggable {
     public void setPrice(double price) {
         this.price = price;
     }
-    public Set getItemReviews() {
+    public List getItemReviews() {
         return this.itemReviews;
     }
     
@@ -68,7 +70,7 @@ public class Item implements java.io.Serializable, Reviewable, Taggable {
     @Override
     public void addTags(Tag... t) {
         for (Tag x : t) {
-            if (!x.getItems().contains(this)) x.addItem(this);
+            if (!x.getItems().contains(this)) x.addEntity(this);
             tags.add(x);
         }
     }
