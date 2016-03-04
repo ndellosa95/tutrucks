@@ -19,18 +19,20 @@
         </property>
         <property name="avatar" type="string">
             <column name="avatar" length="511" />
-        </property> <!--
-        <set name="itemReviews" table="item_review" inverse="true" lazy="true" fetch="select">
+        </property>
+        <list name="itemReviews" table="item_review" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="user_id" />
             </key>
+            <list-index column="review_date" />
             <one-to-many class="edu.temple.tutrucks.ItemReview" />
-        </set>
-        <set name="truckReviews" table="truck_review" inverse="true" lazy="true" fetch="select">
+        </list>
+        <list name="truckReviews" table="truck_review" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="user_id" />
             </key>
+            <list-index column="review_date" />
             <one-to-many class="edu.temple.tutrucks.TruckReview" />
-        </set> -->
+        </list>
     </class>
 </hibernate-mapping>

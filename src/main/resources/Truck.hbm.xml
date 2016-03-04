@@ -23,18 +23,20 @@
         <property name="closingTime" type="imm_time">
             <column name="closing_time" not-null="false"></column>
         </property>
-        <set name="truckReviews" table="truck_review" inverse="true" lazy="true" fetch="select">
+        <list name="truckReviews" table="truck_review" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="truck_id" />
             </key>
+            <list-index column="review_stars" />
             <one-to-many class="edu.temple.tutrucks.TruckReview" />
-        </set>
-        <set name="menus" table="menu" inverse="true" lazy="true" fetch="select">
+        </list>
+        <list name="menus" table="menu" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="truck_id" />
             </key>
+            <list-index column="id" />
             <one-to-many class="edu.temple.tutrucks.Menu" />
-        </set>
+        </list>
         <set name="tags" table="tag_truck_map" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="truck_id" />

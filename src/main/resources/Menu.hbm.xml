@@ -4,7 +4,7 @@
 <!-- Generated Feb 15, 2016 6:30:46 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="edu.temple.tutrucks.Menu" table="menu" catalog="TUTrucks" optimistic-lock="version">
-        <id name="id" type="java.lang.Integer">
+        <id name="id" type="int">
             <column name="id" />
             <generator class="identity" />
         </id>

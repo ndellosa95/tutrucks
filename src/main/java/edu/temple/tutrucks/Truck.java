@@ -2,6 +2,8 @@ package edu.temple.tutrucks;
 // Generated Feb 15, 2016 6:30:46 PM by Hibernate Tools 4.3.1
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -14,25 +16,12 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable {
      private String truckName;
      private double latitude;
      private double longitude;
-     private Set<TruckReview> truckReviews = new TreeSet();
-     private Set<Menu> menus = new TreeSet();
+     private List<TruckReview> truckReviews = new ArrayList();
+     private List<Menu> menus = new ArrayList();
      private Set<Tag> tags = new TreeSet();
 
     public Truck() {
-    }
-
-	
-    public Truck(String truckName, double latitude, double longitude) {
-        this.truckName = truckName;
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-    public Truck(String truckName, double latitude, double longitude, Set truckReviews, Set menus) {
-       this.truckName = truckName;
-       this.latitude = latitude;
-       this.longitude = longitude;
-       this.truckReviews = truckReviews;
-       this.menus = menus;
+        
     }
    
     public Integer getId() {
@@ -63,16 +52,12 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
-    public Set getTruckReviews() {
+    public List getTruckReviews() {
         return this.truckReviews;
     }
 
-    public Set getMenus() {
+    public List getMenus() {
         return this.menus;
-    }
-    
-    public void setMenus(Set menus) {
-        this.menus = menus;
     }
 
     @Override
@@ -92,7 +77,7 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable {
     @Override
     public void addTags(Tag... t) {
         for (Tag x : t) {
-            if (!x.getItems().contains(this)) x.addItem(this);
+            if (!x.getTrucks().contains(this)) x.addEntity(this);
             tags.add(x);
         }
     }
