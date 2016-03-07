@@ -1,7 +1,6 @@
 package edu.temple.tutrucks;
 // Generated Feb 15, 2016 6:30:46 PM by Hibernate Tools 4.3.1
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,8 +17,8 @@ public class User  implements java.io.Serializable {
      private String passWord;
      private boolean fbLink;
      private String avatar;
-     private List<TruckReview> truckReviews = new ArrayList();
-     private List<ItemReview> itemReviews = new ArrayList();
+     private List<TruckReview> truckReviews;
+     private List<ItemReview> itemReviews;
 
     public User() {
     }
@@ -64,6 +63,10 @@ public class User  implements java.io.Serializable {
         return this.truckReviews;
     }
     
+    public List getItemReviews() {
+        return itemReviews;
+    }
+    
     public void addReview(Review r) {
         if (!r.getUser().equals(this)) {
             //error handling
@@ -75,6 +78,13 @@ public class User  implements java.io.Serializable {
             itemReviews.add((ItemReview)r);
     }
 
+    public void setTruckReviews(List<TruckReview> truckReviews) {
+        this.truckReviews = truckReviews;
+    }
+
+    public void setItemReviews(List<ItemReview> itemReviews) {
+        this.itemReviews = itemReviews;
+    }
 
 
 

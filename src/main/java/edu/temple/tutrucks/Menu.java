@@ -2,7 +2,7 @@ package edu.temple.tutrucks;
 // Generated Feb 15, 2016 6:30:46 PM by Hibernate Tools 4.3.1
 
 
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.Set;
 
 /**
@@ -15,7 +15,7 @@ public class Menu  implements java.io.Serializable {
      private Truck truck;
      private String menuName;
      private String description;
-     private Set items = new HashSet(0);
+     private Set<Item> items;
 
     public Menu() {
     }
@@ -65,6 +65,10 @@ public class Menu  implements java.io.Serializable {
     
     public void setItems(Set items) {
         this.items = items;
+    }
+    
+    public void addItems(Item... item) {
+        items.addAll(Arrays.asList(item));
     }
 
 

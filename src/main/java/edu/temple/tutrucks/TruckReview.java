@@ -21,6 +21,14 @@ public class TruckReview extends Review<Truck> implements java.io.Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+    
+    public Truck getTruck() {
+        return this.reviewed;
+    }
+    
+    public void setTruck(Truck t) {
+        this.reviewed = t;
+    }
    
 }
 

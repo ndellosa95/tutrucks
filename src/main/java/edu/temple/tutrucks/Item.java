@@ -74,8 +74,14 @@ public class Item implements java.io.Serializable, Reviewable, Taggable {
             tags.add(x);
         }
     }
+    
+    public void setItemReviews(List<ItemReview> itemReviews) {
+        this.itemReviews = itemReviews;
+    }
 
-
+    public void setTags(Set<Tag> tags) {
+        this.tags.addAll(tags);
+    }
 
 
 }

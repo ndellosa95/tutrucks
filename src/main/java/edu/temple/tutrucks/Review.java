@@ -10,14 +10,15 @@ import java.util.Date;
 /**
  *
  * @author nickdellosa
+ * @param <T>
  */
 public class Review<T extends Reviewable> {
     
-     private T reviewed;
-     private User user;
-     private int reviewStars;
-     private String reviewText;
-     private Date reviewDate;
+     T reviewed;
+     User user;
+     int reviewStars;
+     String reviewText;
+     Date reviewDate;
 
 
     public Reviewable getReviewed() {

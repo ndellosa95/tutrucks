@@ -19,6 +19,14 @@ public class ItemReview extends Review<Item> implements java.io.Serializable {
         this.id = id;
     }
     
+    public Item getItem() {
+        return this.reviewed;
+    }
+    
+    public void setItem(Item i) {
+        this.reviewed = i;
+    }
+    
 }
 
 

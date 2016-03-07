@@ -15,8 +15,8 @@ public class Tag implements java.io.Serializable, java.lang.Comparable {
 
      private int id;
      private String tagName;
-     private Set<Item> items = new HashSet();
-     private Set<Truck> trucks = new HashSet();
+     private Set<Item> items;
+     private Set<Truck> trucks;
 
     public Tag() {
     }
@@ -44,6 +44,10 @@ public class Tag implements java.io.Serializable, java.lang.Comparable {
         return this.items;
     }
     
+    public void setItems(Set<Item> items) {
+        this.items = items;
+    }
+    
     public void addEntity(Taggable t) {
         if (!t.getTags().contains(this)) t.addTags(this);
         if (t.getClass() == Item.class)
@@ -54,6 +58,10 @@ public class Tag implements java.io.Serializable, java.lang.Comparable {
     
     public Set getTrucks() {
         return this.trucks;
+    }
+    
+    public void setTrucks(Set<Truck> trucks) {
+        this.trucks = trucks;
     }
     
     public Set<Taggable> getAllTaggedEntities() {

@@ -1,8 +1,7 @@
 package edu.temple.tutrucks;
 // Generated Feb 15, 2016 6:30:46 PM by Hibernate Tools 4.3.1
 
-
-import java.util.ArrayList;
+import java.sql.Time;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -16,8 +15,10 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable {
      private String truckName;
      private double latitude;
      private double longitude;
-     private List<TruckReview> truckReviews = new ArrayList();
-     private List<Menu> menus = new ArrayList();
+     private Time openingTime;
+     private Time closingTime;
+     private List<TruckReview> truckReviews;
+     private List<Menu> menus;
      private Set<Tag> tags = new TreeSet();
 
     public Truck() {
@@ -81,9 +82,34 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable {
             tags.add(x);
         }
     }
+    
+    public void setTruckReviews(List<TruckReview> truckReviews) {
+        this.truckReviews = truckReviews;
+    }
 
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
+    }
 
+    public void setTags(Set<Tag> tags) {
+        this.tags.addAll(tags);
+    }
 
+    public Time getOpeningTime() {
+        return openingTime;
+    }
+
+    public void setOpeningTime(Time openingTime) {
+        this.openingTime = openingTime;
+    }
+
+    public Time getClosingTime() {
+        return closingTime;
+    }
+
+    public void setClosingTime(Time closingTime) {
+        this.closingTime = closingTime;
+    }
 
 }
 
