@@ -12,7 +12,7 @@ import java.util.TreeSet;
  * @author Nick Dell'Osa
  * @version %PROJECT_VERSION%
  * 
- * This class represents a food truck. 
+ * This class represents a food truck. Its mapping file is Truck.hbm.xml
  */
 public class Truck implements java.io.Serializable, Reviewable, Taggable {
 

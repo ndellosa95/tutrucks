@@ -12,7 +12,7 @@ import java.util.HashSet;
  * @author Nick Dell'Osa
  * @version %PROJECT_VERSION%
  * 
- * This class represents the tags that can be attached to any class implementing the Taggable interface.
+ * This class represents the tags that can be attached to any class implementing the Taggable interface. Its mapping file is Tag.hbm.xml
  */
 public class Tag implements java.io.Serializable, java.lang.Comparable {
 

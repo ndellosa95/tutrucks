@@ -10,7 +10,7 @@ import java.util.Set;
  * @author Nick Dell'Osa
  * @version %PROJECT_VERSION%
  * 
- * Represents a truck's menu. It's mapping file is Menu.hbm.xml. Trucks can have one or more menus, each representing a category of food served by the truck. The menu serves as an organization unit. 
+ * Represents a truck's menu. Trucks can have one or more menus, each representing a category of food served by the truck. The menu serves as an organization unit. It's mapping file is Menu.hbm.xml. 
  */
 public class Menu  implements java.io.Serializable {
 

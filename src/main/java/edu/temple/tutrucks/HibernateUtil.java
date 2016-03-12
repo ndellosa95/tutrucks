@@ -20,6 +20,10 @@ public class HibernateUtil {
     
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
+    /**
+     * Builds Hibernate's Session Factory. Required by Hibernate
+     * @return the session factory for Hibernate
+     */
     private static SessionFactory buildSessionFactory() {
         try {
             // Create the SessionFactory from hibernate.cfg.xml
@@ -36,7 +40,10 @@ public class HibernateUtil {
             throw new ExceptionInInitializerError(ex);
         }
     }
-
+    /**
+     * Returns the current Hibernate session factory. Required by Hibernate
+     * @return the current Hibernate session factory
+     */
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
