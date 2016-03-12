@@ -8,12 +8,10 @@ package edu.temple.tutrucks;
 import java.util.Date;
 
 /**
- *
+ * The superclass for all review objects. Contains common traits of reviews.
  * @author nickdellosa
  * @version %PROJECT_VERSION%
  * @param <T> The type of item being reviewed. Must implement the reviewable interface
- * 
- * The superclass for all review objects. Contains common traits of reviews.
  */
 public class Review<T extends Reviewable> {
     

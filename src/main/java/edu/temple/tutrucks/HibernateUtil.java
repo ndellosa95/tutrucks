@@ -15,6 +15,7 @@ import org.hibernate.service.ServiceRegistry;
  * object.
  *
  * @author nickdellosa
+ * @version %PROJECT_VERSION%
  */
 public class HibernateUtil {
     

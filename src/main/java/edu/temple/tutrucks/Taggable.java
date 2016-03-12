@@ -6,11 +6,9 @@
 package edu.temple.tutrucks;
 
 /**
- *
+ * An interface to be implemented by all entities that can have tags associated with them.
  * @author nickdellosa
  * @version %PROJECT_VERSION%
- * 
- * An interface to be implemented by all entities that can have tags associated with them.
  */
 public interface Taggable {
     /**

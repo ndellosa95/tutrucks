@@ -6,10 +6,9 @@
 package edu.temple.tutrucks;
 
 /**
- *
+ * This interface should be implemented by all classes which can have reviews written about them. 
  * @author nickdellosa
  * @version %PROJECT_VERSION%
- * This interface should be implemented by all classes which can have reviews written about them. 
  */
 public interface Reviewable {
     /**

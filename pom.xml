@@ -94,7 +94,7 @@
             <plugin>
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
                 <artifactId>replacer</artifactId>
-                <version>1.5.2</version>
+                <version>1.5.1</version>
                 <executions>
                     <execution>
                         <phase>prepare-package</phase>
@@ -104,8 +104,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <includes>
-                        <include>${project.build.directory}</include>
+                    <includes> <!-- need to fix this to replace version in api documentation post generation -->
+                        <include>${project.build.directory}/**/*.java</include>
                     </includes>
                     <replacements>
                         <replacement>
@@ -114,6 +114,11 @@
                         </replacement>
                     </replacements>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.3</version>
             </plugin>
         </plugins>
     </build>
