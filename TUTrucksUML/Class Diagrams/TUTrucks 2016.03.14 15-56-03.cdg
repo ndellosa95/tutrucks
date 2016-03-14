@@ -12,7 +12,7 @@
         <Method name="getSessionFactory" returnType="SessionFactory" visibility="public" isStatic="true"/>
       </Methods>
     </Class>
-    <Class name="Item" package="edu.temple.tutrucks" visibility="public" xPosition="320.0" yPosition="20.0">
+    <Class name="Item" package="edu.temple.tutrucks" visibility="public" xPosition="73.0" yPosition="179.0">
       <Fields>
         <Field name="id" type="int" visibility="private"/>
         <Field name="itemName" type="String" visibility="private"/>
@@ -56,7 +56,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="ItemReview" package="edu.temple.tutrucks" visibility="public" xPosition="620.0" yPosition="20.0">
+    <Class name="ItemReview" package="edu.temple.tutrucks" visibility="public" xPosition="674.0" yPosition="20.0">
       <Fields>
         <Field name="id" type="int" visibility="private"/>
       </Fields>
@@ -74,7 +74,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="Menu" package="edu.temple.tutrucks" visibility="public" xPosition="920.0" yPosition="20.0">
+    <Class name="Menu" package="edu.temple.tutrucks" visibility="public" xPosition="528.0" yPosition="985.0">
       <Fields>
         <Field name="id" type="int" visibility="private"/>
         <Field name="truck" type="Truck" visibility="private"/>
@@ -120,7 +120,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="Review" package="edu.temple.tutrucks" visibility="public" xPosition="1220.0" yPosition="20.0">
+    <Class name="Review" package="edu.temple.tutrucks" visibility="public" xPosition="1732.0" yPosition="651.0">
       <Fields>
         <Field name="reviewed" type="T" visibility="package"/>
         <Field name="user" type="User" visibility="package"/>
@@ -152,14 +152,7 @@
         </Method>
       </Methods>
     </Class>
-    <Interface name="Reviewable" package="edu.temple.tutrucks" visibility="public" xPosition="1520.0" yPosition="20.0">
-      <Methods>
-        <Method name="addReview" returnType="void" visibility="public">
-          <Argument type="Review" name="r"/>
-        </Method>
-      </Methods>
-    </Interface>
-    <Class name="Tag" package="edu.temple.tutrucks" visibility="public" xPosition="1820.0" yPosition="20.0">
+    <Class name="Tag" package="edu.temple.tutrucks" visibility="public" xPosition="2023.0" yPosition="127.0">
       <Fields>
         <Field name="id" type="int" visibility="private"/>
         <Field name="tagName" type="String" visibility="private"/>
@@ -199,15 +192,7 @@
         </Method>
       </Methods>
     </Class>
-    <Interface name="Taggable" package="edu.temple.tutrucks" visibility="public" xPosition="2120.0" yPosition="20.0">
-      <Methods>
-        <Method name="getTags" returnType="java.util.Set" visibility="public"/>
-        <Method name="addTags" returnType="void" visibility="public">
-          <Argument type="Tag" name="t"/>
-        </Method>
-      </Methods>
-    </Interface>
-    <Class name="Truck" package="edu.temple.tutrucks" visibility="public" xPosition="20.0" yPosition="420.0">
+    <Class name="Truck" package="edu.temple.tutrucks" visibility="public" xPosition="-7.0" yPosition="681.0">
       <Fields>
         <Field name="id" type="int" visibility="private"/>
         <Field name="truckName" type="String" visibility="private"/>
@@ -267,7 +252,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="TruckReview" package="edu.temple.tutrucks" visibility="public" xPosition="320.0" yPosition="420.0">
+    <Class name="TruckReview" package="edu.temple.tutrucks" visibility="public" xPosition="425.0" yPosition="1576.0">
       <Fields>
         <Field name="id" type="int" visibility="private"/>
       </Fields>
@@ -285,7 +270,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="User" package="edu.temple.tutrucks" visibility="public" xPosition="620.0" yPosition="420.0">
+    <Class name="User" package="edu.temple.tutrucks" visibility="public" xPosition="1079.0" yPosition="1346.0">
       <Fields>
         <Field name="id" type="int" visibility="private"/>
         <Field name="userEmail" type="String" visibility="private"/>
@@ -294,6 +279,8 @@
         <Field name="avatar" type="String" visibility="private"/>
         <Field name="truckReviews" type="List&lt;TruckReview&gt;" visibility="private"/>
         <Field name="itemReviews" type="List&lt;ItemReview&gt;" visibility="private"/>
+        <Field name="displayName" type="String" visibility="private"/>
+        <Field name="permissions" type="Permissions" visibility="private"/>
       </Fields>
       <Constructors>
         <Constructor visibility="public"/>
@@ -330,46 +317,77 @@
         <Method name="setItemReviews" returnType="void" visibility="public">
           <Argument type="List&lt;ItemReview&gt;" name="itemReviews"/>
         </Method>
+        <Method name="getDisplayName" returnType="String" visibility="public"/>
+        <Method name="setDisplayName" returnType="void" visibility="public">
+          <Argument type="String" name="displayName"/>
+        </Method>
+        <Method name="getPermissions" returnType="Permissions" visibility="public"/>
+        <Method name="setPermissions" returnType="void" visibility="public">
+          <Argument type="Permissions" name="permissions"/>
+        </Method>
       </Methods>
     </Class>
+    <Interface name="Reviewable" package="edu.temple.tutrucks" visibility="public" xPosition="1596.0" yPosition="43.0">
+      <Methods>
+        <Method name="addReview" returnType="void" visibility="public">
+          <Argument type="Review" name="r"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Interface name="Taggable" package="edu.temple.tutrucks" visibility="public" xPosition="945.0" yPosition="480.0">
+      <Methods>
+        <Method name="getTags" returnType="java.util.Set" visibility="public"/>
+        <Method name="addTags" returnType="void" visibility="public">
+          <Argument type="Tag" name="t"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Enum name="Permissions" package="edu.temple.tutrucks" visibility="public" xPosition="1195.0" yPosition="963.0">
+      <Literals>
+        <Literal name="PLEB"/>
+        <Literal name="ADMIN"/>
+      </Literals>
+    </Enum>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
-    <UseRelation source="edu.temple.tutrucks.Taggable" target="edu.temple.tutrucks.Tag" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="edu.temple.tutrucks.ItemReview" target="edu.temple.tutrucks.Item" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Review" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="edu.temple.tutrucks.User" target="edu.temple.tutrucks.TruckReview" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="edu.temple.tutrucks.Menu" target="edu.temple.tutrucks.Truck" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Taggable"/>
-    <HasRelation name="truckReviews" source="edu.temple.tutrucks.User" target="edu.temple.tutrucks.TruckReview" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;TruckReview&gt;"/>
-    <HasRelation name="items" source="edu.temple.tutrucks.Menu" target="edu.temple.tutrucks.Item" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="Set&lt;Item&gt;"/>
-    <HasRelation name="user" source="edu.temple.tutrucks.Review" target="edu.temple.tutrucks.User" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="items" source="edu.temple.tutrucks.Tag" target="edu.temple.tutrucks.Item" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="Set&lt;Item&gt;"/>
-    <HasRelation name="truck" source="edu.temple.tutrucks.Menu" target="edu.temple.tutrucks.Truck" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="edu.temple.tutrucks.Tag" target="edu.temple.tutrucks.Truck" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.Reviewable"/>
-    <HasRelation name="itemReviews" source="edu.temple.tutrucks.User" target="edu.temple.tutrucks.ItemReview" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;ItemReview&gt;"/>
-    <UseRelation source="edu.temple.tutrucks.Review" target="edu.temple.tutrucks.Reviewable" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="edu.temple.tutrucks.Review" target="edu.temple.tutrucks.User" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.Tag" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="truckReviews" source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.TruckReview" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;TruckReview&gt;"/>
     <HasRelation name="tags" source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Tag" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="Set&lt;Tag&gt;"/>
-    <UseRelation source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Menu" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Tag" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="edu.temple.tutrucks.TruckReview" target="edu.temple.tutrucks.Truck" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Reviewable"/>
-    <HasRelation name="itemReviews" source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.ItemReview" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;ItemReview&gt;"/>
-    <UseRelation source="edu.temple.tutrucks.Reviewable" target="edu.temple.tutrucks.Review" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <IsRelation name="is" source="edu.temple.tutrucks.ItemReview" target="edu.temple.tutrucks.Review"/>
-    <UseRelation source="edu.temple.tutrucks.Tag" target="edu.temple.tutrucks.Item" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="edu.temple.tutrucks.User" target="edu.temple.tutrucks.Review" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="edu.temple.tutrucks.Menu" target="edu.temple.tutrucks.Item" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <IsRelation name="is" source="edu.temple.tutrucks.TruckReview" target="edu.temple.tutrucks.Review"/>
-    <UseRelation source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.TruckReview" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="trucks" source="edu.temple.tutrucks.Tag" target="edu.temple.tutrucks.Truck" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="Set&lt;Truck&gt;"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.Taggable"/>
-    <UseRelation source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.Review" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="menus" source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Menu" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Menu&gt;"/>
-    <HasRelation name="tags" source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.Tag" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="Set&lt;Tag&gt;"/>
+    <HasRelation name="trucks" source="edu.temple.tutrucks.Tag" target="edu.temple.tutrucks.Truck" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="Set&lt;Truck&gt;"/>
+    <UseRelation source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Menu" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="edu.temple.tutrucks.Tag" target="edu.temple.tutrucks.Taggable" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="permissions" source="edu.temple.tutrucks.User" target="edu.temple.tutrucks.Permissions" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.ItemReview" target="edu.temple.tutrucks.Item" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.TruckReview" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="items" source="edu.temple.tutrucks.Tag" target="edu.temple.tutrucks.Item" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="Set&lt;Item&gt;"/>
+    <UseRelation source="edu.temple.tutrucks.User" target="edu.temple.tutrucks.Review" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Reviewable" target="edu.temple.tutrucks.Review" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Menu" target="edu.temple.tutrucks.Truck" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Tag" target="edu.temple.tutrucks.Truck" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Tag" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="tags" source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.Tag" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="Set&lt;Tag&gt;"/>
+    <HasRelation name="itemReviews" source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.ItemReview" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;ItemReview&gt;"/>
+    <HasRelation name="itemReviews" source="edu.temple.tutrucks.User" target="edu.temple.tutrucks.ItemReview" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;ItemReview&gt;"/>
+    <UseRelation source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.Review" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Reviewable"/>
+    <UseRelation source="edu.temple.tutrucks.User" target="edu.temple.tutrucks.TruckReview" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="truck" source="edu.temple.tutrucks.Menu" target="edu.temple.tutrucks.Truck" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.TruckReview" target="edu.temple.tutrucks.Truck" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Taggable" target="edu.temple.tutrucks.Tag" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.User" target="edu.temple.tutrucks.Permissions" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Tag" target="edu.temple.tutrucks.Item" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="truckReviews" source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.TruckReview" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;TruckReview&gt;"/>
+    <HasRelation name="user" source="edu.temple.tutrucks.Review" target="edu.temple.tutrucks.User" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Review" target="edu.temple.tutrucks.User" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="items" source="edu.temple.tutrucks.Menu" target="edu.temple.tutrucks.Item" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="Set&lt;Item&gt;"/>
+    <UseRelation source="edu.temple.tutrucks.Menu" target="edu.temple.tutrucks.Item" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.Reviewable"/>
+    <IsRelation name="is" source="edu.temple.tutrucks.ItemReview" target="edu.temple.tutrucks.Review"/>
+    <HasRelation name="truckReviews" source="edu.temple.tutrucks.User" target="edu.temple.tutrucks.TruckReview" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;TruckReview&gt;"/>
+    <UseRelation source="edu.temple.tutrucks.Review" target="edu.temple.tutrucks.Reviewable" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.Taggable"/>
+    <UseRelation source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.Tag" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Review" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="edu.temple.tutrucks.TruckReview" target="edu.temple.tutrucks.Review"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Taggable"/>
   </ClassDiagramRelations>
 </ClassDiagram>

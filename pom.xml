@@ -105,7 +105,7 @@
                 </executions>
                 <configuration>
                     <includes> <!-- need to fix this to replace version in api documentation post generation -->
-                        <include>${project.build.directory}/**/*.java</include>
+                        <include>target/**/*.html</include>
                     </includes>
                     <replacements>
                         <replacement>
