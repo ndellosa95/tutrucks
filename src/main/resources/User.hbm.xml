@@ -34,5 +34,11 @@
             <list-index column="review_date" />
             <one-to-many class="edu.temple.tutrucks.TruckReview" />
         </list>
+        <property name="displayName" type="string">
+            <column name="display_name"></column>
+        </property>
+        <property name="permissions" type="edu.temple.tutrucks.Permissions">
+            <column name="permissions" not-null="true"></column>
+        </property>
     </class>
 </hibernate-mapping>

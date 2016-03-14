@@ -23,6 +23,8 @@ public class User  implements java.io.Serializable {
      private String avatar;
      private List<TruckReview> truckReviews;
      private List<ItemReview> itemReviews;
+     private String displayName;
+     private Permissions permissions;
 
      /**
       * Empty constructor required by Hibernate
@@ -140,6 +142,34 @@ public class User  implements java.io.Serializable {
      */
     public void setItemReviews(List<ItemReview> itemReviews) {
         this.itemReviews = itemReviews;
+    }
+    /**
+     * Returns the display name for this user. Required by Hibernate
+     * @return the display name for this user
+     */
+    public String getDisplayName() {
+        return displayName;
+    }
+    /**
+     * Sets the display name for this user. Required by Hibernate
+     * @param displayName the display name for this user
+     */
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+    /**
+     * Returns the level of permissions available to this user. Required by Hibernate
+     * @return the level of permissions available to this user
+     */
+    public Permissions getPermissions() {
+        return permissions;
+    }
+    /**
+     * Sets the level of permissions available to this user. Required by Hibernate
+     * @param permissions the level of permissions available to this user
+     */
+    public void setPermissions(Permissions permissions) {
+        this.permissions = permissions;
     }
 
 
