@@ -19,9 +19,9 @@ import static org.junit.Assert.*;
  *
  * @author nickdellosa
  */
-public class HibernateTest {
+public class DBUtilTest {
     
-    public HibernateTest() {
+    public DBUtilTest() {
     }
     
     @BeforeClass
@@ -47,10 +47,14 @@ public class HibernateTest {
     // public void hello() {}
     
     @Test
-    public void testHibernate() {
+    public void searchTest() {
+        String searchTerms = "chicken";
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = session.beginTransaction();
-        Query q = session.createQuery("from Truck");
+        Query q = session.createQuery(
+                "from Truck, Item, Tag where lower(Truck.truckName) like '%" + searchTerms + "%' or " +
+                "lower(Item.itemName) like '%" + searchTerms + "%' or lower(Tag.tagName) like '%" + searchTerms + "%'"
+        );
         for (Object o : q.list()) {
             System.out.println(((Truck)o).getTruckName());
         }

@@ -1,6 +1,7 @@
 package edu.temple.tutrucks;
 // Generated Feb 15, 2016 6:30:46 PM by Hibernate Tools 4.3.1
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,8 +22,8 @@ public class User  implements java.io.Serializable {
      private String passWord;
      private boolean fbLink;
      private String avatar;
-     private List<TruckReview> truckReviews;
-     private List<ItemReview> itemReviews;
+     private List<TruckReview> truckReviews = new ArrayList<>();
+     private List<ItemReview> itemReviews = new ArrayList<>();
      private String displayName;
      private Permissions permissions;
 
@@ -134,14 +135,16 @@ public class User  implements java.io.Serializable {
      * @param truckReviews the list of reviews for trucks written by this user
      */
     public void setTruckReviews(List<TruckReview> truckReviews) {
-        this.truckReviews = truckReviews;
+        this.truckReviews.clear();
+        this.truckReviews.addAll(truckReviews);
     }
     /**
      * Sets the list of reviews for items written by this user. Required by Hibernate
      * @param itemReviews the list of reviews for items written by this user
      */
     public void setItemReviews(List<ItemReview> itemReviews) {
-        this.itemReviews = itemReviews;
+        this.itemReviews.clear();
+        this.itemReviews.addAll(itemReviews);
     }
     /**
      * Returns the display name for this user. Required by Hibernate
