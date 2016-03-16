@@ -125,7 +125,8 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
      * @param itemReviews the list of reviews for this item
      */
     public void setItemReviews(List<ItemReview> itemReviews) {
-        this.itemReviews = itemReviews;
+        this.itemReviews.clear();
+        this.itemReviews.addAll(itemReviews);
     }
     /**
      * Sets the set of tags associated with this item. Required by Hibernate
