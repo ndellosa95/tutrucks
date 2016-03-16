@@ -14,7 +14,7 @@ import java.util.TreeSet;
  * @author Nick Dell'Osa
  * @version %PROJECT_VERSION%
  */
-public class Truck implements java.io.Serializable, Reviewable, Taggable {
+public class Truck implements java.io.Serializable, Reviewable, Taggable, Searchable {
 
      private int id;
      private String truckName;

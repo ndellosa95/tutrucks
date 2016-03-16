@@ -15,7 +15,7 @@ public enum Permissions {
     
     PLEB(0), ADMIN(1);
     
-    private int permissions;
+    private final int permissions;
     
     private Permissions(int p) {
         this.permissions = p;

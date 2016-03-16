@@ -16,7 +16,7 @@ import java.util.HashSet;
  * @version %PROJECT_VERSION%
  * 
  */
-public class Tag implements java.io.Serializable, java.lang.Comparable {
+public class Tag implements java.io.Serializable, java.lang.Comparable, Searchable {
 
      private int id;
      private String tagName;

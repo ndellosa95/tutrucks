@@ -14,7 +14,7 @@ import java.util.TreeSet;
  * @author Nick Dell'Osa
  * @version %PROJECT_VERSION%
  */
-public class Item implements java.io.Serializable, Reviewable, Taggable {
+public class Item implements java.io.Serializable, Reviewable, Taggable, Searchable {
 
 
      private int id;
