@@ -64,6 +64,10 @@ public class User  implements java.io.Serializable {
         return this.truckReviews;
     }
     
+    public List getItemReviews() {
+        return this.itemReviews;
+    }
+    
     public void addReview(Review r) {
         if (!r.getUser().equals(this)) {
             //error handling
