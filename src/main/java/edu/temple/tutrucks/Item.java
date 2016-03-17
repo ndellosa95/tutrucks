@@ -136,6 +136,11 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
         this.tags.addAll(tags);
     }
 
+    @Override
+    public String getSearchName() {
+        return this.itemName;
+    }
+
 
 }
 

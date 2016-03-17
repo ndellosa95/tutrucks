@@ -5,6 +5,9 @@
  */
 package edu.temple.tutrucks;
 
+import edu.temple.tutrucks.Searchable.SearchOrganizer;
+import java.util.ArrayList;
+import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -48,16 +51,22 @@ public class DBUtilTest {
     
     @Test
     public void searchTest() {
-        String searchTerms = "chicken";
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction t = session.beginTransaction();
-        Query q = session.createQuery(
-                "from Truck, Item, Tag where lower(Truck.truckName) like '%" + searchTerms + "%' or " +
-                "lower(Item.itemName) like '%" + searchTerms + "%' or lower(Tag.tagName) like '%" + searchTerms + "%'"
-        );
-        for (Object o : q.list()) {
-            System.out.println(((Truck)o).getTruckName());
+        try {
+            String searchTerms = "chicken";
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Transaction t = session.beginTransaction();
+            Query q = session.createQuery(
+                    "from edu.temple.tutrucks.Searchable s where ("
+                            + "s.id in (select tr.id from Truck tr where tr.truckName like '%" + searchTerms + "%') or "
+                            + "s.id in (select it.id from Item it where it.itemName like '%"  + searchTerms + "%') or "
+                            + "s.id in (select ta.id from Tag ta where ta.tagName like '%" + searchTerms + "%'))"
+            );
+            List<Searchable> results = SearchOrganizer.organize(q.list(), searchTerms); // doesn't work properly
+            session.close();
+            for (Searchable s : results) System.out.println(s.getSearchName());
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+            fail();
         }
-        session.close();
     }
 }

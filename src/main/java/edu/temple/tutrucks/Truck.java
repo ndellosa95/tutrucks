@@ -186,6 +186,11 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
         this.closingTime = closingTime;
     }
 
+    @Override
+    public String getSearchName() {
+        return this.truckName;
+    }
+
 }
 
 
