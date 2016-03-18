@@ -37,21 +37,21 @@ public interface Searchable {
             this.searchable = searchable;
             if (searchable.getClass() == Truck.class)
                 this.priority = 0;
-            else if (searchable.getClass() == Item.class)
+            else if (searchable.getClass() == Tag.class)
                 this.priority = -1;
             else
                 this.priority = -2;
-            beginsWith = searchable.getSearchName().indexOf(searchTerm) == 0;
+            beginsWith = searchable.getSearchName().toLowerCase().indexOf(searchTerm.toLowerCase()) == 0;
         }
 
         @Override
         public int compareTo(SearchOrganizer o) {
             if (this.beginsWith == o.beginsWith) 
-                return Integer.compare(this.priority, o.priority);
+                return Integer.compare(o.priority, this.priority);
             else if (this.beginsWith) 
-                return 1;
-            else 
                 return -1;
+            else 
+                return 1;
         }
     }
     

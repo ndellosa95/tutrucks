@@ -6,7 +6,6 @@
 package edu.temple.tutrucks;
 
 import edu.temple.tutrucks.Searchable.SearchOrganizer;
-import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -50,7 +49,7 @@ public class DBUtilTest {
     // public void hello() {}
     
     @Test
-    public void searchTest() {
+    public void searchAllTest() {
         try {
             String searchTerms = "chicken";
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -61,9 +60,11 @@ public class DBUtilTest {
                             + "s.id in (select it.id from Item it where it.itemName like '%"  + searchTerms + "%') or "
                             + "s.id in (select ta.id from Tag ta where ta.tagName like '%" + searchTerms + "%'))"
             );
-            List<Searchable> results = SearchOrganizer.organize(q.list(), searchTerms); // doesn't work properly
+            List l = q.list();
             session.close();
-            for (Searchable s : results) System.out.println(s.getSearchName());
+            List<Searchable> testResults = SearchOrganizer.organize(l, searchTerms);
+            List<Searchable> results = DBUtils.searchAll(searchTerms);
+            for (int i=0; i < testResults.size(); i++) assertEquals(testResults.get(i).getSearchName(), results.get(i).getSearchName());
         } catch (Exception e) {
             e.printStackTrace(System.err);
             fail();
