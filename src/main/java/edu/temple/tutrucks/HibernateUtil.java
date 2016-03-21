@@ -15,11 +15,16 @@ import org.hibernate.service.ServiceRegistry;
  * object.
  *
  * @author nickdellosa
+ * @version %PROJECT_VERSION%
  */
 public class HibernateUtil {
     
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
+    /**
+     * Builds Hibernate's Session Factory. Required by Hibernate
+     * @return the session factory for Hibernate
+     */
     private static SessionFactory buildSessionFactory() {
         try {
             // Create the SessionFactory from hibernate.cfg.xml
@@ -30,12 +35,16 @@ public class HibernateUtil {
         }
         catch (Throwable ex) {
             // Make sure you log the exception, as it might be swallowed
-            System.err.println("Initial SessionFactory creation failed." + ex);
+            System.err.println("Initial SessionFactory creation failed.");
             System.err.println(ex.getMessage());
+            ex.printStackTrace();
             throw new ExceptionInInitializerError(ex);
         }
     }
-
+    /**
+     * Returns the current Hibernate session factory. Required by Hibernate
+     * @return the current Hibernate session factory
+     */
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }

@@ -6,14 +6,18 @@
 package edu.temple.tutrucks;
 
 /**
- * This interface should be implemented by all classes which can have reviews written about them. 
+ * This enum represents the different levels of permissions users can have. 
+ * 
  * @author nickdellosa
  * @version %PROJECT_VERSION%
  */
-public interface Reviewable {
-    /**
-     * Associates a review with an object.
-     * @param r The review to be associated
-     */
-    public void addReview(Review r);
+public enum Permissions {
+    
+    PLEB(0), ADMIN(1);
+    
+    private final int permissions;
+    
+    private Permissions(int p) {
+        this.permissions = p;
+    }
 }

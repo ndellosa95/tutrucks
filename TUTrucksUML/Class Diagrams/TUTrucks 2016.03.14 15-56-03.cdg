@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="TUTrucks">
+  <ClassDiagramComponents>
+    <Class name="HibernateUtil" package="edu.temple.tutrucks" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="sessionFactory" type="SessionFactory" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="buildSessionFactory" returnType="SessionFactory" visibility="private" isStatic="true"/>
+        <Method name="getSessionFactory" returnType="SessionFactory" visibility="public" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Class name="Item" package="edu.temple.tutrucks" visibility="public" xPosition="73.0" yPosition="179.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="itemName" type="String" visibility="private"/>
+        <Field name="price" type="double" visibility="private"/>
+        <Field name="itemReviews" type="List&lt;ItemReview&gt;" visibility="private"/>
+        <Field name="tags" type="Set&lt;Tag&gt;" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="itemName"/>
+          <Argument type="double" name="price"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="Integer" name="id"/>
+        </Method>
+        <Method name="getItemName" returnType="String" visibility="public"/>
+        <Method name="setItemName" returnType="void" visibility="public">
+          <Argument type="String" name="itemName"/>
+        </Method>
+        <Method name="getPrice" returnType="double" visibility="public"/>
+        <Method name="setPrice" returnType="void" visibility="public">
+          <Argument type="double" name="price"/>
+        </Method>
+        <Method name="getItemReviews" returnType="List" visibility="public"/>
+        <Method name="addReview" returnType="void" visibility="public">
+          <Argument type="Review" name="r"/>
+        </Method>
+        <Method name="getTags" returnType="Set" visibility="public"/>
+        <Method name="addTags" returnType="void" visibility="public">
+          <Argument type="Tag" name="t"/>
+        </Method>
+        <Method name="setItemReviews" returnType="void" visibility="public">
+          <Argument type="List&lt;ItemReview&gt;" name="itemReviews"/>
+        </Method>
+        <Method name="setTags" returnType="void" visibility="public">
+          <Argument type="Set&lt;Tag&gt;" name="tags"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ItemReview" package="edu.temple.tutrucks" visibility="public" xPosition="674.0" yPosition="20.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="Integer" name="id"/>
+        </Method>
+        <Method name="getItem" returnType="Item" visibility="public"/>
+        <Method name="setItem" returnType="void" visibility="public">
+          <Argument type="Item" name="i"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Menu" package="edu.temple.tutrucks" visibility="public" xPosition="528.0" yPosition="985.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="truck" type="Truck" visibility="private"/>
+        <Field name="menuName" type="String" visibility="private"/>
+        <Field name="description" type="String" visibility="private"/>
+        <Field name="items" type="Set&lt;Item&gt;" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="menuName"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="Truck" name="truck"/>
+          <Argument type="String" name="menuName"/>
+          <Argument type="String" name="description"/>
+          <Argument type="Set" name="items"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="getTruck" returnType="Truck" visibility="public"/>
+        <Method name="setTruck" returnType="void" visibility="public">
+          <Argument type="Truck" name="truck"/>
+        </Method>
+        <Method name="getMenuName" returnType="String" visibility="public"/>
+        <Method name="setMenuName" returnType="void" visibility="public">
+          <Argument type="String" name="menuName"/>
+        </Method>
+        <Method name="getDescription" returnType="String" visibility="public"/>
+        <Method name="setDescription" returnType="void" visibility="public">
+          <Argument type="String" name="description"/>
+        </Method>
+        <Method name="getItems" returnType="Set" visibility="public"/>
+        <Method name="setItems" returnType="void" visibility="public">
+          <Argument type="Set" name="items"/>
+        </Method>
+        <Method name="addItems" returnType="void" visibility="public">
+          <Argument type="Item" name="item"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Review" package="edu.temple.tutrucks" visibility="public" xPosition="1732.0" yPosition="651.0">
+      <Fields>
+        <Field name="reviewed" type="T" visibility="package"/>
+        <Field name="user" type="User" visibility="package"/>
+        <Field name="reviewStars" type="int" visibility="package"/>
+        <Field name="reviewText" type="String" visibility="package"/>
+        <Field name="reviewDate" type="Date" visibility="package"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getReviewed" returnType="Reviewable" visibility="public"/>
+        <Method name="setReviewed" returnType="void" visibility="public">
+          <Argument type="T" name="reviewed"/>
+        </Method>
+        <Method name="getUser" returnType="User" visibility="public"/>
+        <Method name="setUser" returnType="void" visibility="public">
+          <Argument type="User" name="user"/>
+        </Method>
+        <Method name="getReviewStars" returnType="int" visibility="public"/>
+        <Method name="setReviewStars" returnType="void" visibility="public">
+          <Argument type="int" name="reviewStars"/>
+        </Method>
+        <Method name="getReviewText" returnType="String" visibility="public"/>
+        <Method name="setReviewText" returnType="void" visibility="public">
+          <Argument type="String" name="reviewText"/>
+        </Method>
+        <Method name="getReviewDate" returnType="Date" visibility="public"/>
+        <Method name="setReviewDate" returnType="void" visibility="public">
+          <Argument type="Date" name="reviewDate"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Tag" package="edu.temple.tutrucks" visibility="public" xPosition="2023.0" yPosition="127.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="tagName" type="String" visibility="private"/>
+        <Field name="items" type="Set&lt;Item&gt;" visibility="private"/>
+        <Field name="trucks" type="Set&lt;Truck&gt;" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="tagName"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="getTagName" returnType="String" visibility="public"/>
+        <Method name="setTagName" returnType="void" visibility="public">
+          <Argument type="String" name="tagName"/>
+        </Method>
+        <Method name="getItems" returnType="Set" visibility="public"/>
+        <Method name="setItems" returnType="void" visibility="public">
+          <Argument type="Set&lt;Item&gt;" name="items"/>
+        </Method>
+        <Method name="addEntity" returnType="void" visibility="public">
+          <Argument type="Taggable" name="t"/>
+        </Method>
+        <Method name="getTrucks" returnType="Set" visibility="public"/>
+        <Method name="setTrucks" returnType="void" visibility="public">
+          <Argument type="Set&lt;Truck&gt;" name="trucks"/>
+        </Method>
+        <Method name="getAllTaggedEntities" returnType="Set&lt;Taggable&gt;" visibility="public"/>
+        <Method name="numEntities" returnType="int" visibility="public"/>
+        <Method name="compareTo" returnType="int" visibility="public">
+          <Argument type="Object" name="o"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Truck" package="edu.temple.tutrucks" visibility="public" xPosition="-7.0" yPosition="681.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="truckName" type="String" visibility="private"/>
+        <Field name="latitude" type="double" visibility="private"/>
+        <Field name="longitude" type="double" visibility="private"/>
+        <Field name="openingTime" type="Time" visibility="private"/>
+        <Field name="closingTime" type="Time" visibility="private"/>
+        <Field name="truckReviews" type="List&lt;TruckReview&gt;" visibility="private"/>
+        <Field name="menus" type="List&lt;Menu&gt;" visibility="private"/>
+        <Field name="tags" type="Set&lt;Tag&gt;" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="getTruckName" returnType="String" visibility="public"/>
+        <Method name="setTruckName" returnType="void" visibility="public">
+          <Argument type="String" name="truckName"/>
+        </Method>
+        <Method name="getLatitude" returnType="double" visibility="public"/>
+        <Method name="setLatitude" returnType="void" visibility="public">
+          <Argument type="double" name="latitude"/>
+        </Method>
+        <Method name="getLongitude" returnType="double" visibility="public"/>
+        <Method name="setLongitude" returnType="void" visibility="public">
+          <Argument type="double" name="longitude"/>
+        </Method>
+        <Method name="getTruckReviews" returnType="List" visibility="public"/>
+        <Method name="getMenus" returnType="List" visibility="public"/>
+        <Method name="addReview" returnType="void" visibility="public">
+          <Argument type="Review" name="r"/>
+        </Method>
+        <Method name="getTags" returnType="Set" visibility="public"/>
+        <Method name="addTags" returnType="void" visibility="public">
+          <Argument type="Tag" name="t"/>
+        </Method>
+        <Method name="setTruckReviews" returnType="void" visibility="public">
+          <Argument type="List&lt;TruckReview&gt;" name="truckReviews"/>
+        </Method>
+        <Method name="setMenus" returnType="void" visibility="public">
+          <Argument type="List&lt;Menu&gt;" name="menus"/>
+        </Method>
+        <Method name="setTags" returnType="void" visibility="public">
+          <Argument type="Set&lt;Tag&gt;" name="tags"/>
+        </Method>
+        <Method name="getOpeningTime" returnType="Time" visibility="public"/>
+        <Method name="setOpeningTime" returnType="void" visibility="public">
+          <Argument type="Time" name="openingTime"/>
+        </Method>
+        <Method name="getClosingTime" returnType="Time" visibility="public"/>
+        <Method name="setClosingTime" returnType="void" visibility="public">
+          <Argument type="Time" name="closingTime"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="TruckReview" package="edu.temple.tutrucks" visibility="public" xPosition="425.0" yPosition="1576.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="Integer" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="Integer" name="id"/>
+        </Method>
+        <Method name="getTruck" returnType="Truck" visibility="public"/>
+        <Method name="setTruck" returnType="void" visibility="public">
+          <Argument type="Truck" name="t"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="User" package="edu.temple.tutrucks" visibility="public" xPosition="1079.0" yPosition="1346.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="userEmail" type="String" visibility="private"/>
+        <Field name="passWord" type="String" visibility="private"/>
+        <Field name="fbLink" type="boolean" visibility="private"/>
+        <Field name="avatar" type="String" visibility="private"/>
+        <Field name="truckReviews" type="List&lt;TruckReview&gt;" visibility="private"/>
+        <Field name="itemReviews" type="List&lt;ItemReview&gt;" visibility="private"/>
+        <Field name="displayName" type="String" visibility="private"/>
+        <Field name="permissions" type="Permissions" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="getUserEmail" returnType="String" visibility="public"/>
+        <Method name="setUserEmail" returnType="void" visibility="public">
+          <Argument type="String" name="userEmail"/>
+        </Method>
+        <Method name="getPassWord" returnType="String" visibility="public"/>
+        <Method name="setPassWord" returnType="void" visibility="public">
+          <Argument type="String" name="passWord"/>
+        </Method>
+        <Method name="isFbLink" returnType="boolean" visibility="public"/>
+        <Method name="setFbLink" returnType="void" visibility="public">
+          <Argument type="boolean" name="fbLink"/>
+        </Method>
+        <Method name="getAvatar" returnType="String" visibility="public"/>
+        <Method name="setAvatar" returnType="void" visibility="public">
+          <Argument type="String" name="avatar"/>
+        </Method>
+        <Method name="getTruckReviews" returnType="List" visibility="public"/>
+        <Method name="getItemReviews" returnType="List" visibility="public"/>
+        <Method name="addReview" returnType="void" visibility="public">
+          <Argument type="Review" name="r"/>
+        </Method>
+        <Method name="setTruckReviews" returnType="void" visibility="public">
+          <Argument type="List&lt;TruckReview&gt;" name="truckReviews"/>
+        </Method>
+        <Method name="setItemReviews" returnType="void" visibility="public">
+          <Argument type="List&lt;ItemReview&gt;" name="itemReviews"/>
+        </Method>
+        <Method name="getDisplayName" returnType="String" visibility="public"/>
+        <Method name="setDisplayName" returnType="void" visibility="public">
+          <Argument type="String" name="displayName"/>
+        </Method>
+        <Method name="getPermissions" returnType="Permissions" visibility="public"/>
+        <Method name="setPermissions" returnType="void" visibility="public">
+          <Argument type="Permissions" name="permissions"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Interface name="Reviewable" package="edu.temple.tutrucks" visibility="public" xPosition="1596.0" yPosition="43.0">
+      <Methods>
+        <Method name="addReview" returnType="void" visibility="public">
+          <Argument type="Review" name="r"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Interface name="Taggable" package="edu.temple.tutrucks" visibility="public" xPosition="945.0" yPosition="480.0">
+      <Methods>
+        <Method name="getTags" returnType="java.util.Set" visibility="public"/>
+        <Method name="addTags" returnType="void" visibility="public">
+          <Argument type="Tag" name="t"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Enum name="Permissions" package="edu.temple.tutrucks" visibility="public" xPosition="1195.0" yPosition="963.0">
+      <Literals>
+        <Literal name="PLEB"/>
+        <Literal name="ADMIN"/>
+      </Literals>
+    </Enum>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="tags" source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Tag" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="Set&lt;Tag&gt;"/>
+    <HasRelation name="menus" source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Menu" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Menu&gt;"/>
+    <HasRelation name="trucks" source="edu.temple.tutrucks.Tag" target="edu.temple.tutrucks.Truck" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="Set&lt;Truck&gt;"/>
+    <UseRelation source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Menu" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Tag" target="edu.temple.tutrucks.Taggable" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="permissions" source="edu.temple.tutrucks.User" target="edu.temple.tutrucks.Permissions" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.ItemReview" target="edu.temple.tutrucks.Item" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.TruckReview" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="items" source="edu.temple.tutrucks.Tag" target="edu.temple.tutrucks.Item" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="Set&lt;Item&gt;"/>
+    <UseRelation source="edu.temple.tutrucks.User" target="edu.temple.tutrucks.Review" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Reviewable" target="edu.temple.tutrucks.Review" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Menu" target="edu.temple.tutrucks.Truck" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Tag" target="edu.temple.tutrucks.Truck" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Tag" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="tags" source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.Tag" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="Set&lt;Tag&gt;"/>
+    <HasRelation name="itemReviews" source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.ItemReview" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;ItemReview&gt;"/>
+    <HasRelation name="itemReviews" source="edu.temple.tutrucks.User" target="edu.temple.tutrucks.ItemReview" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;ItemReview&gt;"/>
+    <UseRelation source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.Review" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Reviewable"/>
+    <UseRelation source="edu.temple.tutrucks.User" target="edu.temple.tutrucks.TruckReview" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="truck" source="edu.temple.tutrucks.Menu" target="edu.temple.tutrucks.Truck" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.TruckReview" target="edu.temple.tutrucks.Truck" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Taggable" target="edu.temple.tutrucks.Tag" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.User" target="edu.temple.tutrucks.Permissions" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Tag" target="edu.temple.tutrucks.Item" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="truckReviews" source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.TruckReview" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;TruckReview&gt;"/>
+    <HasRelation name="user" source="edu.temple.tutrucks.Review" target="edu.temple.tutrucks.User" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Review" target="edu.temple.tutrucks.User" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="items" source="edu.temple.tutrucks.Menu" target="edu.temple.tutrucks.Item" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="Set&lt;Item&gt;"/>
+    <UseRelation source="edu.temple.tutrucks.Menu" target="edu.temple.tutrucks.Item" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.Reviewable"/>
+    <IsRelation name="is" source="edu.temple.tutrucks.ItemReview" target="edu.temple.tutrucks.Review"/>
+    <HasRelation name="truckReviews" source="edu.temple.tutrucks.User" target="edu.temple.tutrucks.TruckReview" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;TruckReview&gt;"/>
+    <UseRelation source="edu.temple.tutrucks.Review" target="edu.temple.tutrucks.Reviewable" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.Taggable"/>
+    <UseRelation source="edu.temple.tutrucks.Item" target="edu.temple.tutrucks.Tag" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Review" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="edu.temple.tutrucks.TruckReview" target="edu.temple.tutrucks.Review"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="edu.temple.tutrucks.Truck" target="edu.temple.tutrucks.Taggable"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
