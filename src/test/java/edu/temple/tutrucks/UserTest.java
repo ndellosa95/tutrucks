@@ -11,6 +11,7 @@ package edu.temple.tutrucks;
  * @author michn_000
  */
 
+import java.util.Random;
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.Set;
@@ -61,6 +62,16 @@ public class UserTest {
         System.out.println("Verifying that the item review was not added to the user list");
         assertEquals(user.getTruckReviews().contains(itemReview), false);
     }
+    /*
+    @Test
+    public void encryptionTest() {
+        String password = "password";
+        Random salter = new java.security.SecureRandom();
+        byte[] salt = new byte[16];
+        salter.nextBytes(salt);
+        String encrypted = User.encryptPassword(password, salt);
+        System.out.println("encrypted password: " + encrypted);
+    } */
 }
 
 
