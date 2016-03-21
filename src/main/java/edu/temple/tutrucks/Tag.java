@@ -136,6 +136,11 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
         }
     }
 
+    @Override
+    public String getSearchName() {
+        return this.tagName;
+    }
+
 
 }
 

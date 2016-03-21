@@ -5,6 +5,8 @@
  */
 package edu.temple.tutrucks;
 
+import edu.temple.tutrucks.Searchable.SearchOrganizer;
+import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -47,17 +49,25 @@ public class DBUtilTest {
     // public void hello() {}
     
     @Test
-    public void searchTest() {
-        String searchTerms = "chicken";
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction t = session.beginTransaction();
-        Query q = session.createQuery(
-                "from Truck, Item, Tag where lower(Truck.truckName) like '%" + searchTerms + "%' or " +
-                "lower(Item.itemName) like '%" + searchTerms + "%' or lower(Tag.tagName) like '%" + searchTerms + "%'"
-        );
-        for (Object o : q.list()) {
-            System.out.println(((Truck)o).getTruckName());
+    public void searchAllTest() {
+        try {
+            String searchTerms = "chicken";
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Transaction t = session.beginTransaction();
+            Query q = session.createQuery(
+                    "from edu.temple.tutrucks.Searchable s where ("
+                            + "s.id in (select tr.id from Truck tr where tr.truckName like '%" + searchTerms + "%') or "
+                            + "s.id in (select it.id from Item it where it.itemName like '%"  + searchTerms + "%') or "
+                            + "s.id in (select ta.id from Tag ta where ta.tagName like '%" + searchTerms + "%'))"
+            );
+            List l = q.list();
+            session.close();
+            List<Searchable> testResults = SearchOrganizer.organize(l, searchTerms);
+            List<Searchable> results = DBUtils.searchAll(searchTerms);
+            for (int i=0; i < testResults.size(); i++) assertEquals(testResults.get(i).getSearchName(), results.get(i).getSearchName());
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+            fail();
         }
-        session.close();
     }
 }
