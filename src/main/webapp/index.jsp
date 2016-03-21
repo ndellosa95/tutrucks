@@ -13,10 +13,12 @@
           <div class="inner cover">
             <img src="images/TUtrucksLogo.png" alt="logo" width="75%"/>
             <p class="lead">
-            <form>
+            <form action="search.jsp" method="POST">
                 <input type="search" class="textbox" placeholder="Search for trucks or items" />
-            <input type="submit" class="search" value="Search"/>
+                <input type="submit" class="search" value="Search"/>
+                
             </form>
+            <a href="search.jsp">List all trucks</a>
             </p>
           </div>
 
