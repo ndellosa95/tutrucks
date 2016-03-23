@@ -12,7 +12,7 @@
             <column name="user_email" not-null="true" />
         </property>
         <property name="passWord" type="string">
-            <column name="pass_word" not-null="true" />
+            <column name="pass_word" />
         </property>
         <property name="fbLink" type="boolean">
             <column name="fb_link" not-null="true" />
@@ -39,6 +39,9 @@
         </property>
         <property name="permissions" type="edu.temple.tutrucks.Permissions">
             <column name="permissions" not-null="true"></column>
+        </property>
+        <property name="salt" type="blob">
+            <column name="salt"></column>
         </property>
     </class>
 </hibernate-mapping>

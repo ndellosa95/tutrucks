@@ -53,7 +53,7 @@ public class DBUtilTest {
         try {
             String searchTerms = "chicken";
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            Transaction t = session.beginTransaction();
+            session.beginTransaction();
             Query q = session.createQuery(
                     "from edu.temple.tutrucks.Searchable s where ("
                             + "s.id in (select tr.id from Truck tr where tr.truckName like '%" + searchTerms + "%') or "
