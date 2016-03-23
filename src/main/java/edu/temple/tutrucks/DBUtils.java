@@ -27,7 +27,7 @@ public class DBUtils {
         );
         List l = q.list();
         session.close();
-        List<Searchable> results = Searchable.SearchOrganizer.organize(l, terms); // doesn't work properly
+        List<Searchable> results = Searchable.SearchOrganizer.organize(l, terms);
         return results;
     }
 }

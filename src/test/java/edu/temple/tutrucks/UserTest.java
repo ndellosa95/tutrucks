@@ -11,13 +11,9 @@ package edu.temple.tutrucks;
  * @author michn_000
  */
 
-import java.util.Random;
 import org.junit.*;
 import static org.junit.Assert.*;
-import java.util.Set;
-import java.util.TreeSet;
-import org.mockito.Mockito;
-import static org.mockito.Mockito.*;
+
 
 public class UserTest {
     private ItemReview itemReview;
