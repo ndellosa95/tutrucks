@@ -1,9 +1,14 @@
 package edu.temple.tutrucks;
 // Generated Feb 15, 2016 6:30:46 PM by Hibernate Tools 4.3.1
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Random;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 
 
@@ -15,79 +20,105 @@ import java.util.List;
  * @author Nick Dell'Osa
  * @version %PROJECT_VERSION%
  */
-public class User  implements java.io.Serializable {
+public class User implements java.io.Serializable {
 
-     private int id;
-     private String userEmail;
-     private String passWord;
-     private boolean fbLink;
-     private String avatar;
-     private List<TruckReview> truckReviews = new ArrayList<>();
-     private List<ItemReview> itemReviews = new ArrayList<>();
-     private String displayName;
-     private Permissions permissions;
+    private static final Random SALTER = new java.security.SecureRandom();
 
-     /**
-      * Empty constructor required by Hibernate
-      */
+    private int id;
+    private String userEmail;
+    private String passWord;
+    private boolean fbLink;
+    private String avatar;
+    private List<TruckReview> truckReviews = new ArrayList<>();
+    private List<ItemReview> itemReviews = new ArrayList<>();
+    private String displayName;
+    private Permissions permissions;
+    private byte[] salt;
+
+    /**
+     * Empty constructor required by Hibernate
+     */
     public User() {
     }
+
     /**
      * Returns the ID of this user. Required by Hibernate
+     *
      * @return the ID of this user
      */
     public int getId() {
         return this.id;
     }
+
     /**
      * Sets the ID of this user. Required by Hibernate
+     *
      * @param id the ID of this user
      */
     public void setId(int id) {
         this.id = id;
     }
+
     /**
      * Returns the email this user registered with. Required by Hibernate
+     *
      * @return this user's email address
      */
     public String getUserEmail() {
         return this.userEmail;
     }
+
     /**
      * Sets the email address of this user. Required by Hibernate
+     *
      * @param userEmail this user's email address
      */
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
+
     /**
-     * Returns the salted and hashed user password stored in the database. Required by Hibernate
+     * Returns the salted and hashed user password stored in the database.
+     * Required by Hibernate
+     *
      * @return this user's password, properly salted and hashed
      */
     public String getPassWord() {
         return this.passWord;
     }
+
     /**
-     * Sets this user's password. It is assumed that the string passed to this function has already been properly salted and hashed. Required by Hibernate
+     * Sets this user's password. It is assumed that the string passed to this
+     * function has already been properly salted and hashed. Required by
+     * Hibernate
+     *
      * @param passWord this user's password, properly salted and hashed
      */
     public void setPassWord(String passWord) {
         this.passWord = passWord;
     }
+
     /**
-     * Returns a boolean value reflecting whether this user signed up via Facebook. Required by Hibernate
+     * Returns a boolean value reflecting whether this user signed up via
+     * Facebook. Required by Hibernate
+     *
      * @return true if the user signed up via Facebook, otherwise false
      */
     public boolean isFbLink() {
         return this.fbLink;
     }
+
     /**
-     * Sets the boolean value reflecting whether this user signed up via Facebook. Required by Hibernate
-     * @param fbLink boolean value reflecting whether this user signed up via Facebook
+     * Sets the boolean value reflecting whether this user signed up via
+     * Facebook. Required by Hibernate
+     *
+     * @param fbLink boolean value reflecting whether this user signed up via
+     * Facebook
      */
     public void setFbLink(boolean fbLink) {
         this.fbLink = fbLink;
     }
+
     /**
      * Returns a link to this user's avatar. Required by Hibernate
      * @return a link to this user's avatar
@@ -174,8 +205,88 @@ public class User  implements java.io.Serializable {
     public void setPermissions(Permissions permissions) {
         this.permissions = permissions;
     }
+    
+    public byte[] getSalt() {
+        return salt;
+    }
 
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
+    }
+    
+    private static byte[] generateSalt() {
+        byte[] salt = new byte[16];
+        SALTER.nextBytes(salt);
+        return salt;
+    }
+    
+    private static String encryptPassword(String password, byte[] salt) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] pwba = password.getBytes(StandardCharsets.UTF_8);
+            byte[] saltedPassword = new byte[salt.length + pwba.length];
+            for (int i=0; i < saltedPassword.length; i++)
+                saltedPassword[i] = (i < 16 ? salt[i] : pwba[i-16]);
+            
+            byte[] hash = digest.digest(saltedPassword);
+            return new String(hash);
+        } catch (NoSuchAlgorithmException ex) {
+            //error handling
+            return null;
+        }
+    }
 
+    public static User validateUser(String email, String password, boolean facebook) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        if (!facebook) {
+            Query q1 = session.createQuery("select u.salt from User u where u.userEmail='" + email + "'");
+            byte[] salt;
+            try {
+                salt = (byte[]) q1.uniqueResult();
+                password = encryptPassword(password, salt);
+            } catch (ClassCastException cce) {
+                
+            }
+        }
+        try {
+            Query q = session.createQuery("from User u where u.userEmail='" + email + "' and (u.passWord='" + password + "' or fbLink=" + facebook + ")");
+            User retval = (User) q.uniqueResult();
+            session.close();
+            return retval;
+        } catch (ClassCastException cce) {
+            // handle this
+            session.close();
+            return null;
+        }
+    }
+    
+    public static User createUser(String email, String password, boolean facebook, String displayName, String fbAvatarURL) {
+        // email and password validation
+        if (((!facebook) && password==null) || (email==null)) {
+            // we have a problem
+            return null;
+        }
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        
+        User user = new User();
+        user.setUserEmail(email);
+        user.setFbLink(facebook);
+        if (facebook) {
+            user.setDisplayName(displayName);
+            user.setAvatar(fbAvatarURL);
+        } else {
+            byte[] salt = generateSalt();
+            user.setSalt(salt);
+            user.setPassWord(encryptPassword(password, salt));
+            user.setDisplayName(email.substring(0, email.indexOf('@')));
+        }
+        session.save(user);
+        session.getTransaction().commit();
+        session.close();
+        return validateUser(email, password, facebook);
+    }
 
 }
 
