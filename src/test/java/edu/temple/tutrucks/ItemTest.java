@@ -11,6 +11,8 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.Set;
 import java.util.TreeSet;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import static org.mockito.Mockito.*;
 /**
  *
@@ -107,6 +109,23 @@ public class ItemTest {
         for (int i = 0; i < tagList.size(); i++) {
              assertEquals(item.getTags().contains(tagList.get(i)), true);
         } 
-    }  
+    }
+    
+    @Test
+    public void testSearchItems() {
+        String searchTerms = "cheesesteak";
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query q = session.createQuery(
+                "from Item where itemName like '%" + searchTerms + "%'"
+        );
+        List l = q.list();
+        session.close();
+        List<Searchable> testResults = Searchable.SearchOrganizer.organize(l, searchTerms);
+        List<Item> results = Item.searchItems(searchTerms);
+        for (int i = 0; i < testResults.size(); i++) {
+            assertEquals(testResults.get(i).getSearchName(), results.get(i).getSearchName());
+        }
+    }
 }
 

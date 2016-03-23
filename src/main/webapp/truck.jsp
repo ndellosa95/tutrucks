@@ -1,37 +1,26 @@
 <%@ include file="header.html"%>
 
-<table>
-    <tr>
-        <td>
-            <% //insert truck name %>
-        </td>
-        <td>
-            <table>
-                <tr>
-                    <td>
-                        Average Review
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <% //review in # of stars %>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-<%
-    //for each item in the truck has
-    out.print("<tr><td>");
-    //insert item name with a link that will cause a popover with additional info
-    out.print("</td><td>");
-    //insert price
-    out.print("</td><td>");
-    //insert review in # of stars with link for popover and shift to reviews
-    out.print("</td>/tr>");
-    //loop
-%>
+<div class="container menu">
+    <div class="row">
+        <div class="col-lg-8" style="text-align: left;">
+            <h1 style="color: white;"><% //insert truck name %></h1>
+        </div>
+        <div class="col-lg-4" style="text-align: right;">
+            <h1 class ="click" style="color: white" data-toggle="modal" data-target="#truckModal"><% //insert dislplay name %></h1>
+        </div>
+    </div>
+    
+    <div class="row">
+        <% //insert truck address %>
+        <!--map business -->
+    </div>
 
-</table>
+    <% //include truck review modal%>
+    
+    <% //include item review modal%>
+    
+    <% //for each menu cateogry, include category jsp%>  
+    
+</div>
 
 <%@ include file="footer.html"%>
