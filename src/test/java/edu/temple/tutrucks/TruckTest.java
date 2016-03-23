@@ -13,6 +13,8 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.Set;
 import java.util.TreeSet;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import static org.mockito.Mockito.*;
 
 /**
@@ -114,6 +116,23 @@ public class TruckTest {
     
     
     //INTEGRATION TESTING
+    
+    @Test
+    public void testSearchTrucks() {
+        String searchTerms = "c";
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query q = session.createQuery(
+                "from Truck where truckName like '%" + searchTerms + "%'"
+        );
+        List l = q.list();
+        session.close();
+        List<Searchable> testResults = Searchable.SearchOrganizer.organize(l, searchTerms);
+        List<Truck> results = Truck.searchTrucks(searchTerms);
+        for (int i = 0; i < testResults.size(); i++) {
+            assertEquals(testResults.get(i).getSearchName(), results.get(i).getSearchName());
+        }
+    }
 
     @Test
     public void testAddReviewIntegration() {

@@ -14,7 +14,7 @@ import java.util.Set;
  * @version %PROJECT_VERSION%
  * 
  */
-public class Menu  implements java.io.Serializable {
+public class Menu implements java.io.Serializable {
 
      private int id;
      private Truck truck;
@@ -125,9 +125,6 @@ public class Menu  implements java.io.Serializable {
     public void addItems(Item... item) {
         items.addAll(Arrays.asList(item));
     }
-
-
-
 
 }
 
