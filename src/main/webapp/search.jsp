@@ -11,12 +11,11 @@
     --%>
     
     <%
-        DBUtils db = new DBUtils();
         String search = (String)request.getParameter("unifiedSearch");
         if(search==null){
             search="";
         }
-        List results = db.searchAll(search);
+        List results = DBUtils.searchAll(search);
         List<Truck> trucks = null;
         
         for (Truck t : trucks) {

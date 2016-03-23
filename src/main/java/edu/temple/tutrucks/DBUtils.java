@@ -19,7 +19,7 @@ import java.sql.Time;
  */
 public class DBUtils {
 
-    public List<Searchable> searchAll(String terms) {
+    public static List<Searchable> searchAll(String terms) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         Query q = session.createQuery(
@@ -34,7 +34,7 @@ public class DBUtils {
         return results;
     }
     
-    public List<Truck> openTrucks() {
+    public static List<Truck> openTrucks() {
         Calendar c = Calendar.getInstance();
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
         //WHAT DID WE DO FOR WEEKENDS
