@@ -5,10 +5,13 @@
  */
 package edu.temple.tutrucks;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import java.sql.Time;
 
 /**
  *
@@ -29,5 +32,24 @@ public class DBUtils {
             session.close();
             List<Searchable> results = Searchable.SearchOrganizer.organize(l, terms); // doesn't work properly
             return results;
+    }
+    
+    public static List<Truck> openTrucks() {
+        Calendar c = Calendar.getInstance();
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        //WHAT DID WE DO FOR WEEKENDS
+        if (dayOfWeek == 1 || dayOfWeek == 7){
+            return null;
+        }
+        int timeHour = c.get(Calendar.HOUR_OF_DAY);
+        int timeMinute = c.get(Calendar.MINUTE);
+        Time current = new Time(timeHour, timeMinute, 0);
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction t = session.beginTransaction();
+        Query q = session.createQuery("from edu.temple.tutrucks.Truck truck where truck.openingTime < " + current + "and"
+                + "truck.closingTime > " + current);
+        List results = q.list();
+        session.close();
+        return results;
     }
 }

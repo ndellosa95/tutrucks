@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="favicon.ico">
+
+        <title>TUtrucks</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="css/cover.css" rel="stylesheet">
+
+        <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+        <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+        <script src="js/ie-emulation-modes-warning.js"></script>
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <style>
+            .panel-heading {
+                background-color: black;
+            }
+            .panel-title {
+                color: #A41E35;
+            }
+            .panel-body {
+                color: black;
+            }
+
+            .itemName {
+                text-align: left;
+                color: #A41E35;
+            }
+
+            .modal-header{
+                background-color:  #A41E35;
+                color: white;
+            }
+
+            .modal-body {
+                color: black;
+            }
+
+            .click{
+                cursor: pointer;
+            }
+
+            .avatar {
+                max-height: 300px;
+                max-width: 300px;
+            }
+            
+            .review {
+                border-bottom: ridge;
+                border-color: #eee;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '1272882256060359',
+                    xfbml: true,
+                    version: 'v2.5'
+                });
+            };
+
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">TUtrucks</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#">All Trucks</a></li>
+                        <li><a href="#">About</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <form class="login">
+                                        <input type="email" class="" placeholder="Email" />
+                                        <input type="password" class="" value="" placeholder="Password"/>
+                                        <input type="submit" class="" value="Log In"/>
+                                    </form>
+                                    <br />
+                                </li>
+                                <li>
+                                    <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true"></div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+        <div class="site-wrapper">
+            <div class="site-wrapper-inner">
+                <div class="container profile">
+                    <div class="col-md-4">
+                        <img class = "avatar" src="http://jamiezone.sheepamongwolves.netdna-cdn.com/wp-content/uploads/2015/08/Piccolo2.jpg?9de5cd">
+                        <h3>Piccolo</h3>
+                        <h5>X truck reviews</h5>
+                        <h5>X item reviews</h5>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title">Truck Reviews</h1>
+                                </div>
+                                <div class="panel-body">
+                                    <div class ="container-fluid">
+                                        <div class="row review">
+                                            <div class="row">
+                                                <div class="col-md-8" style="text-align: left; color:#A41E35;"><h4>Truck Name</h4></div>
+                                                <div class="col-md-4" style="text-align: right;"><h5>Stars</h5></div>
+                                            </div>
+                                            <div class="row" style="text-align: left;">
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a imperdiet augue, et molestie lectus.
+                                                    Aliquam dignissim dignissim diam id scelerisque. Suspendisse hendrerit imperdiet nibh, vel tempor 
+                                                    diam egestas ac. Sed porta aliquam risus vel mollis. Nam tempor purus ut nibh euismod finibus. 
+                                                    Sed dignissim pulvinar turpis, id faucibus quam feugiat ut.</p>
+                                            </div>
+                                        </div>
+                                        <div class="row review">
+                                            <div class="row">
+                                                <div class="col-md-8" style="text-align: left; color:#A41E35;"><h4>Truck Name</h4></div>
+                                                <div class="col-md-4" style="text-align: right;"><h5>Stars</h5></div>
+                                            </div>
+                                            <div class="row" style="text-align: left;">
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a imperdiet augue, et molestie lectus.
+                                                    Aliquam dignissim dignissim diam id scelerisque. Suspendisse hendrerit imperdiet nibh, vel tempor 
+                                                    diam egestas ac. Sed porta aliquam risus vel mollis. Nam tempor purus ut nibh euismod finibus. 
+                                                    Sed dignissim pulvinar turpis, id faucibus quam feugiat ut.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title">Item Reviews</h1>
+                                </div>
+                                <div class="panel-body">
+                                    <div class ="container">
+                                        <div class="row">
+                                            Review shit
+                                        </div>
+                                        <div class="row">
+                                            Review shit
+                                        </div>
+                                        <div class="row">
+                                            Review shit
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
+        <script src="js/bootstrap.min.js"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="js/ie10-viewport-bug-workaround.js"></script>
+    </body>
+</html>
