@@ -51,6 +51,7 @@ public class DBUtilTest {
     @Test
     public void searchAllTest() {
         try {
+            DBUtils db = new DBUtils();
             String searchTerms = "chicken";
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
@@ -63,7 +64,7 @@ public class DBUtilTest {
             List l = q.list();
             session.close();
             List<Searchable> testResults = SearchOrganizer.organize(l, searchTerms);
-            List<Searchable> results = DBUtils.searchAll(searchTerms);
+            List<Searchable> results = db.searchAll(searchTerms);
             for (int i=0; i < testResults.size(); i++) assertEquals(testResults.get(i).getSearchName(), results.get(i).getSearchName());
         } catch (Exception e) {
             e.printStackTrace(System.err);

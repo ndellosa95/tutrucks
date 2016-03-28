@@ -13,8 +13,8 @@
           <div class="inner cover">
             <img src="images/TUtrucksLogo.png" alt="logo" width="75%"/>
             <p class="lead">
-            <form action="search.jsp" method="POST">
-                <input type="search" class="textbox" placeholder="Search for trucks or items" />
+            <form action="search.jsp" method="GET">
+                <input type="search" name="criteria" class="textbox" placeholder="Search for trucks or items" />
                 <input type="submit" class="search" value="Search"/>
                 
             </form>
