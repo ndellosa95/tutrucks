@@ -11,11 +11,28 @@
     --%>
     
     <%
-        String search = (String)request.getParameter("unifiedSearch");
+        String search = (String)request.getParameter("criteria");
         if(search==null){
             search="";
         }
-        List results = DBUtils.searchAll(search);
+        String searchType = null;
+        if (search.contains(":")) {
+            String s[] = search.split(":");
+            searchType = s[0];
+            search = s[1];
+        }
+        List<Searchable> results;
+        switch (searchType) {
+            case "truck":
+                
+                break;
+            case "tag":
+                
+                break;
+            case "item":
+                
+                break;
+        }
         List<Truck> trucks = null;
         
         for (Truck t : trucks) {
