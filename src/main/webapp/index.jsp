@@ -14,11 +14,11 @@
             <img src="images/TUtrucksLogo.png" alt="logo" width="75%"/>
             <p class="lead">
             <form action="search.jsp" method="GET">
-                <input type="search" name="criteria" class="textbox" placeholder="Search for trucks or items" />
+                <input type="search" id="searchbar" name="criteria" class="textbox" placeholder="Search for trucks or items" />
                 <input type="submit" class="search" value="Search"/>
                 
             </form>
-            <a href="search.jsp">List all trucks</a>
+            <a href="search.jsp?criteria=truck:">List all trucks</a>
             </p>
           </div>
 
@@ -42,5 +42,12 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <script>
+        $(document).ready(function () {
+           $("#searchbar").change(function () {
+               
+           }); 
+        });
+    </script>
   </body>
 </html>

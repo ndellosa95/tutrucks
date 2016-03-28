@@ -209,6 +209,17 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
         for (Searchable s : Searchable.SearchOrganizer.organize(l, terms)) results.add((Truck)s);
         return results;
     }
+    
+    public static Truck getTruckByName(String name) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query q = session.createQuery(
+                "from Truck where truckName='" + name + "'"
+        );
+        Truck retval = (Truck) q.uniqueResult();
+        session.close();
+        return retval;
+    }
 
 }
 
