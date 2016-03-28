@@ -18,19 +18,39 @@ import java.sql.Time;
  * @author nickdellosa
  */
 public class DBUtils {
-
+    
     public static List<Searchable> searchAll(String terms) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        Query q = session.createQuery(
-                "from edu.temple.tutrucks.Searchable s where ("
-                + "s.id in (select tr.id from Truck tr where tr.truckName like '%" + terms + "%') or "
-                + "s.id in (select it.id from Item it where it.itemName like '%" + terms + "%') or "
-                + "s.id in (select ta.id from Tag ta where ta.tagName like '%" + terms + "%'))"
-        );
-        List l = q.list();
-        session.close();
-        List<Searchable> results = Searchable.SearchOrganizer.organize(l, terms);
+        List<Searchable> results = new ArrayList<>();
+        if (terms.contains(":")) {
+            String s[] = terms.split(":");
+            String searchType = s[0];
+            String search = s[1];
+            switch (searchType) {
+                case "truck":
+                    results.addAll(Truck.searchTrucks(search));
+                    break;
+                case "tag":
+                    results.addAll(Tag.searchTags(search));
+                    break;
+                case "item":
+                    results.addAll(Item.searchItems(search));
+                    break;
+                default:
+                    results.addAll(DBUtils.searchAll(search));
+            }
+        } else {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            Query q = session.createQuery(
+                    "from edu.temple.tutrucks.Searchable s where ("
+                    + "s.id in (select tr.id from Truck tr where tr.truckName like '%" + terms + "%') or "
+                    + "s.id in (select it.id from Item it where it.itemName like '%" + terms + "%') or "
+                    + "s.id in (select ta.id from Tag ta where ta.tagName like '%" + terms + "%'))"
+            );
+            List l = q.list();
+            session.close();
+            results.addAll(Searchable.SearchOrganizer.organize(l, terms));
+        }
         return results;
     }
     

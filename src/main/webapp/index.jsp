@@ -44,8 +44,11 @@
     <script src="js/ie10-viewport-bug-workaround.js"></script>
     <script>
         $(document).ready(function () {
-           $("#searchbar").change(function () {
-               
+           $("#searchbar").change(function () { // this does not work for some reason
+               alert("searchbar handler called");
+               $.getJSON("search.jsp?criteria=chicken&format=json", function (data) {
+                  alert(data); 
+               });
            }); 
         });
     </script>
