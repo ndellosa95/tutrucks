@@ -17,7 +17,7 @@
         <property name="description" type="string">
             <column name="description" length="1023" />
         </property>
-        <set name="items" table="item" inverse="true" lazy="true" fetch="select">
+        <set name="items" table="item" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="menu_id" />
             </key>

@@ -45,12 +45,18 @@
     <script>
         $(document).ready(function () {
            $("#searchbar").change(function () { // this does not work for some reason
-               $.getJSON("search.jsp", {
-                   criteria: $("#searchbar").val(),
-                   format: "json"
-               }).done(function(data) {
-                   alert(data);
+               $.ajax("search.jsp", {
+                   method: "GET",
+                   dataType: "json",
+                   data: { criteria: $("#searchbar").val(), format: "json" },
+                   success: function (data) {
+                       alert(data);
+                   },
+                   error: function (jqXHR, status, error) {
+                       console.log(status + ", " + error);
+                   }
                });
+               alert("searchbar handler calling");
            }); 
         });
     </script>

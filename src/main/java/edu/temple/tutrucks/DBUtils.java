@@ -24,7 +24,7 @@ public class DBUtils {
         if (terms.contains(":")) {
             String s[] = terms.split(":");
             String searchType = s[0];
-            String search = s[1];
+            String search = s[1].equalsIgnoreCase("*") ? "" : s[1];
             switch (searchType) {
                 case "truck":
                     results.addAll(Truck.searchTrucks(search));
