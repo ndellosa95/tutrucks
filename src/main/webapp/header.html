@@ -39,6 +39,19 @@
           xfbml      : true,
           version    : 'v2.5'
         });
+        FB.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+            }else{
+                $currentValue=document.getElementById("LoginDisplay").innerHTML;
+                document.getElementById("LoginDisplay").innerHTML="<li>"+
+                "<form class='login'>"+
+                "<input type='email' class='' placeholder='Email' />"+
+                "<input type='password' class='' value='' placeholder='Password'/>"+
+                "<input type='submit' class='' value='Log In'/>"+
+                "</form>"+
+                "<br /> </li>"+currentValue;
+            }
+        });
       };
     
       (function(d, s, id){
@@ -69,16 +82,8 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li>
-                <form class="login">
-                    <input type="email" class="" placeholder="Email" />
-                    <input type="password" class="" value="" placeholder="Password"/>
-                <input type="submit" class="" value="Log In"/>
-                </form>
-                <br />
-                </li>
-				<li>
+              <ul class="dropdown-menu" id="LoginDisplay">
+		<li>
                 <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true"></div>
                 </li>
               </ul>
