@@ -49,7 +49,7 @@
     
     <%@ include file="itemReviewModal.jsp" %>
     
-    <% //for each menu cateogry, include category jsp
+    <% //for each menu category, include category jsp
         out.print("<div class='panel panel-default'>\n");
             out.print("<div class='panel-heading'>\n");
                 out.print("<h1 class='panel-title'>");
