@@ -1,7 +1,38 @@
 
 <%@ include file="header.html"%>
+<style>
+            .panel-heading {
+                background-color: black;
+            }
+            .panel-title {
+                color: #A41E35;
+            }
+            .panel-body {
+                color: black;
+            }
+            
+            .itemName {
+                text-align: left;
+                color: #A41E35;
+            }
+            
+            .modal-header{
+                background-color:  #A41E35;
+                color: white;
+            }
+            
+            .modal-body {
+                color: black;
+            }
+            
+            .click{
+                cursor: pointer;
+            }
+            
+</style>
+        
 <%@ page import="edu.temple.tutrucks.*" %>
-<%@page import="java.util.List, java.util.Set,java.util.Locale,java.text.NumberFormat"%>
+<%@ page import="java.util.List, java.util.Set,java.util.Locale,java.text.NumberFormat"%>
 
 <%
     //String search = (String)request.getParameter("truck"); 

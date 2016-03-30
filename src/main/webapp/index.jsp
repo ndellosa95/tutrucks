@@ -44,8 +44,13 @@
     <script src="js/ie10-viewport-bug-workaround.js"></script>
     <script>
         $(document).ready(function () {
-           $("#searchbar").change(function () {
-               
+           $("#searchbar").change(function () { // this does not work for some reason
+               $.getJSON("search.jsp", {
+                   criteria: $("#searchbar").val(),
+                   format: "json"
+               }).done(function(data) {
+                   alert(data);
+               });
            }); 
         });
     </script>

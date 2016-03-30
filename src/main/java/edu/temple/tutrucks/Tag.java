@@ -1,8 +1,12 @@
 package edu.temple.tutrucks;
 // Generated Feb 15, 2016 6:30:46 PM by Hibernate Tools 4.3.1
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 
 
@@ -141,6 +145,18 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
         return this.tagName;
     }
 
+    public static List<Tag> searchTags(String terms) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query q = session.createQuery(
+                "from Tag where tagName like '%" + terms + "%'"
+        );
+        List l = q.list();
+        session.close();
+        ArrayList<Tag> results = new ArrayList<>(l.size());
+        for (Searchable s : Searchable.SearchOrganizer.organize(l, terms)) results.add((Tag)s);
+        return results;
+    }
 
 }
 
