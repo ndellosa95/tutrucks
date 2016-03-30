@@ -68,6 +68,17 @@ public class UserTest {
         String encrypted = User.encryptPassword(password, salt);
         System.out.println("encrypted password: " + encrypted);
     } */
+    /*
+    @Test
+    public void createUser() {
+        String email = "nick.dellosa@yahoo.com";
+        String password = "myninnie";
+        User me = User.createUser(email, password, false, null, null);
+        assertEquals(me.getUserEmail(), email);
+        String eps = me.getPassWord();
+        assertNotEquals(eps, password);
+        System.out.println(eps);
+    } */
 }
 
 

@@ -37,10 +37,13 @@
         <property name="displayName" type="string">
             <column name="display_name"></column>
         </property>
-        <property name="permissions" type="edu.temple.tutrucks.Permissions">
+        <property name="permissions">
             <column name="permissions" not-null="true"></column>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">edu.temple.tutrucks.Permissions</param>
+            </type>
         </property>
-        <property name="salt" type="blob">
+        <property name="salt" type="binary">
             <column name="salt"></column>
         </property>
     </class>

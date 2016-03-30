@@ -273,6 +273,7 @@ public class User implements java.io.Serializable {
         User user = new User();
         user.setUserEmail(email);
         user.setFbLink(facebook);
+        user.setPermissions(Permissions.PLEB);
         if (facebook) {
             user.setDisplayName(displayName);
             user.setAvatar(fbAvatarURL);
@@ -284,7 +285,6 @@ public class User implements java.io.Serializable {
         }
         session.save(user);
         session.getTransaction().commit();
-        session.close();
         return validateUser(email, password, facebook);
     }
 
