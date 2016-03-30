@@ -2,7 +2,7 @@
 <div class="container profile">
     <div class="col-md-4">
         <img class = "avatar" src="<% //insert avatar pic %>">
-        <h3><% //insert dislplay name %></h3>
+        <h3><% //insert display name %></h3>
         <h5><% //number of truck reviews %> truck reviews</h5>
         <h5><% //number of item reviews %> item reviews</h5>
     </div>

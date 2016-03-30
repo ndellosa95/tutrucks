@@ -1,0 +1,41 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 30, 2016, 4:50:34 PM
+    Author     : Don
+*/
+
+.truckName{
+    text-align: left;
+    color: #A41E35;
+}
+.panel-heading {
+    background-color: black;
+}
+.panel-title {
+    color: #A41E35;
+}
+.panel-body {
+    color: black;
+}
+
+.itemName {
+    text-align: left;
+    color: #A41E35;
+}
+
+.modal-header{
+    background-color:  #A41E35;
+    color: white;
+}
+
+.modal-body {
+    color: black;
+}
+
+.click{
+    cursor: pointer;
+}

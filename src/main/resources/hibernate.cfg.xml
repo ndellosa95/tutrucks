@@ -4,7 +4,7 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/TUTrucks</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/TUTrucks?autoReconnect=true</property>
     <property name="hibernate.connection.username">tuf00790</property>
     <property name="hibernate.connection.password">ce9yu0Ei</property>
     <property name="hibernate.current_session_context_class">thread</property>
