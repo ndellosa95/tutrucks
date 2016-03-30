@@ -45,9 +45,11 @@
     <script>
         $(document).ready(function () {
            $("#searchbar").change(function () { // this does not work for some reason
-               alert("searchbar handler called");
-               $.getJSON("search.jsp?criteria=chicken&format=json", function (data) {
-                  alert(data); 
+               $.getJSON("search.jsp", {
+                   criteria: $("#searchbar").val(),
+                   format: "json"
+               }).done(function(data) {
+                   alert(data);
                });
            }); 
         });

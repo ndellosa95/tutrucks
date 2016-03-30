@@ -1,6 +1,6 @@
 <%@page import="com.google.gson.Gson"%>
 <%@ include file="header.html"%>
-<%@ page import="edu.temple.tutrucks.*, java.util.List, com.google.gson.JsonArray" %>
+<%@ page import="edu.temple.tutrucks.*, java.util.List, com.google.gson.Gson, com.google.gson.JsonArray" %>
 
 <table>
     <%--
