@@ -18,7 +18,7 @@
                 <input type="submit" class="search" value="Search"/>
                 
             </form>
-            <a href="search.jsp?criteria=truck:">List all trucks</a>
+            <a href="search.jsp?criteria=truck:*">List all trucks</a>
             </p>
           </div>
 
