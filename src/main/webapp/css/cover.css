@@ -59,6 +59,13 @@ input
 	color: black;
 }
 
+.ui-autocomplete {
+    font-size:small;
+    text-align: left;
+    overflow:hidden;
+    width: 50%;
+}
+
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 .site-wrapper {
   display: table;

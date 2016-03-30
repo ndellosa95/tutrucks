@@ -38,26 +38,26 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
     <script>
         $(document).ready(function () {
-           $("#searchbar").change(function () { // this does not work for some reason
-               $.ajax("search.jsp", {
+           $("#searchbar").autocomplete({ source: function(request, response) {
+              $.ajax("search.jsp", {
                    method: "GET",
                    dataType: "json",
-                   data: { criteria: $("#searchbar").val(), format: "json" },
+                   data: { criteria: request.term, numResults: 8, subscripts: true, format: "json" },
                    success: function (data) {
-                       alert(data);
+                       response(data);
                    },
                    error: function (jqXHR, status, error) {
-                       console.log(status + ", " + error);
                    }
-               });
-               alert("searchbar handler calling");
-           }); 
+               });     
+           }});
         });
     </script>
   </body>

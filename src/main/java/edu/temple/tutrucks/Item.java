@@ -22,6 +22,7 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
      private int id;
      private String itemName;
      private double price;
+     private Menu menu;
      private List<ItemReview> itemReviews = new ArrayList();
      private Set<Tag> tags = new TreeSet();
 
@@ -83,6 +84,20 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
      */
     public void setPrice(double price) {
         this.price = price;
+    }
+    /**
+     * Returns the menu this item belongs to. Required by Hibernate
+     * @return the menu this item belongs to
+     */
+    public Menu getMenu() {
+        return menu;
+    }
+    /**
+     * Sets the menu this item belongs to. Required by Hibernate
+     * @param menu the menu this item belongs to
+     */
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
     /**
      * Returns a list of reviews of the item. Required by Hibernate

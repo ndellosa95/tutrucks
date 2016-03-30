@@ -8,6 +8,9 @@
             <column name="id" />
             <generator class="identity" />
         </id>
+        <many-to-one name="menu" class="edu.temple.tutrucks.Menu" lazy="false" fetch="select">
+            <column name="menu_id" />
+        </many-to-one>
         <property name="itemName" type="string">
             <column name="item_name" not-null="true" />
         </property>

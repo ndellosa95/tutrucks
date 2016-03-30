@@ -7,17 +7,28 @@ put truck name in Title slot on right side
 put truck location in location slot on right side
 put rating in rating slot on right side
 --%>
-</table>
 <%@ include file="footer.html"%>
 <%
-    String search = (String) request.getParameter("criteria");
-    String format = (String) request.getParameter("format");
+    String search = request.getParameter("criteria");
+    String format = request.getParameter("format");
+    int numResults = Integer.parseInt(request.getParameter("numResults"));
+    boolean subs = Boolean.parseBoolean(request.getParameter("subscripts"));
     List<Searchable> results = DBUtils.searchAll(search);
-    System.out.println("search returns");
     if (format != null && format.equalsIgnoreCase("json")) {
         JsonArray tbp = new JsonArray();
-        for (Searchable s : results) {
-            tbp.add(s.getSearchName());
+        if (numResults < 0)
+            numResults = results.size();
+            
+        for (int i=0; i < numResults; i++) {
+            String sn = results.get(i).getSearchName();
+            if (subs) {
+                if (results.get(i) instanceof Item) {
+                    sn += "<sub>from " + (((Item)results.get(i)).getMenu().getTruck().getTruckName()) + "</sub>";
+                } else {
+                    
+                }
+            }
+            tbp.add(sn);
         }
         Gson gson = new Gson();
         String s = gson.toJson(tbp);
