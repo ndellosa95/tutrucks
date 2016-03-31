@@ -46,11 +46,26 @@
     <script src="js/ie10-viewport-bug-workaround.js"></script>
     <script>
         $(document).ready(function () {
-           $("#searchbar").autocomplete({ source: function(request, response) {
+            $.widget("custom.styledAutocomplete", $.ui.autocomplete, {
+                _renderItem: function (ul, item) {
+                    var retval;
+                    var index = item.label.indexOf("<span");
+                    if (index > 0) {
+                        var subtext = item.label.substring(index);
+                        var label = item.label.substring(0, index);
+                        item.value = label;
+                        retval = $("<li>").append(label).append(subtext).appendTo(ul);
+                    } else {
+                        retval = $("<li>").append(item.label).appendTo(ul);
+                    }
+                    return retval;
+                }
+            });
+           $("#searchbar").styledAutocomplete({ source: function(request, response) {
               $.ajax("search.jsp", {
                    method: "GET",
                    dataType: "json",
-                   data: { criteria: request.term, numResults: 8, subscripts: true, format: "json" },
+                   data: { criteria: request.term, numResults: 10, subscripts: true, format: "json" },
                    success: function (data) {
                        response(data);
                    },
