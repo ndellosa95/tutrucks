@@ -51,23 +51,42 @@ put rating in rating slot on right side
             for (Searchable s : results) {
                 if (s instanceof Truck){
                 t = (Truck) s;
-                out.print("<div class ='container'>\n");
-                
-                out.print("<div class='row-fluid'>\n");
-                out.print("<div class='col-lg-2 truckPhoto'>");
-                out.print("PHOTO OF TRUCK");
-                out.print("</div>\n");
-                out.print("<div class='col-lg-4 truckName'>");
-                out.print(t.getTruckName());
-                out.print("</div>\n");
-                out.print("<div class='col-lg-4'>");
-                out.print("Location");
-                out.print("</div>\n");
-                out.print("<div class='col-lg-2 click' data-toggle='modal' data-target='#reviewmodal'>");
-                out.print("REVIEW IN STARS");
-                out.print("</div>\n");
-                out.print("</div>\n");
+                out.print("<div class ='panel panel-danger'>\n");
+                    out.print("<div class='panel-heading'>\n");
+                        out.print("<h1 class='panel-title'>");
+                            out.print(t.getTruckName());
+                        out.print("</h1>\n");
+                    out.print("</div>");
+                out.print("<div class='panel-body'> \n");
+                    out.print("<div class='row-fluid'>\n");
+                        out.print("<div class='col-lg-4 truckPhoto login'>");
 
+                            out.print("PHOTO OF TRUCK");
+                        out.print("</div>\n");
+
+                        out.print("<div class='col-lg-5 login'>");
+
+                            out.print("Location");
+
+                        out.print("</div>\n");
+                        out.print("<div class='col-lg-3 click login' data-toggle='modal' data-target='#reviewmodal'>");
+                
+                            int avgRating=t.getScore();
+                            int fullStars=avgRating/2;
+                            int halfStars=avgRating%2;
+                            out.print("Average Review: ");
+                            for (int i=0;i<fullStars;i++){
+                                out.print("<img src='images/Star_Full.png' width='24' height='24'>");
+                            }
+                            if (halfStars==1){
+                                out.print("<img src='images/Star_Half.png' width='12' height='24'>");
+                            }
+                
+                
+                        out.print("</div>\n");
+                    out.print("</div>\n");
+
+                out.print("</div>\n");
                 out.print("</div>\n");
                 }
             }
