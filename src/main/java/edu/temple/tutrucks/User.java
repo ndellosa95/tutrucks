@@ -207,6 +207,11 @@ public class User implements java.io.Serializable {
         this.permissions = permissions;
     }
     
+    public void changeDisplayName(String newDisplayName) {
+        this.setDisplayName(newDisplayName);
+        this.save();
+    }
+    
     public byte[] getSalt() {
         return salt;
     }
@@ -226,11 +231,7 @@ public class User implements java.io.Serializable {
         String epass = encryptPassword(newPassword, newSalt);
         this.setSalt(newSalt);
         this.setPassWord(epass);
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        session.saveOrUpdate(this);
-        session.getTransaction().commit();
-        session.close();
+        this.save();
     }
     
     private static String encryptPassword(String password, byte[] salt) {
@@ -279,10 +280,7 @@ public class User implements java.io.Serializable {
         if (((!facebook) && password==null) || (email==null)) {
             // we have a problem
             return null;
-        }
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        
+        }        
         User user = new User();
         user.setUserEmail(email);
         user.setFbLink(facebook);
@@ -296,8 +294,7 @@ public class User implements java.io.Serializable {
             user.setPassWord(encryptPassword(password, salt));
             user.setDisplayName(email.substring(0, email.indexOf('@')));
         }
-        session.save(user);
-        session.getTransaction().commit();
+        user.save();
         return validateUser(email, password, facebook);
     }
     
@@ -316,6 +313,14 @@ public class User implements java.io.Serializable {
         hash = 83 * hash + Objects.hashCode(this.userEmail);
         hash = 83 * hash + Objects.hashCode(this.permissions);
         return hash;
+    }
+    
+    public void save() {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        session.saveOrUpdate(this);
+        session.getTransaction().commit();
+        session.close();
     }
 
 }
