@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -220,6 +221,18 @@ public class User implements java.io.Serializable {
         return salt;
     }
     
+    public void changePassword(String newPassword) {
+        byte[] newSalt = generateSalt();
+        String epass = encryptPassword(newPassword, newSalt);
+        this.setSalt(newSalt);
+        this.setPassWord(epass);
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        session.saveOrUpdate(this);
+        session.getTransaction().commit();
+        session.close();
+    }
+    
     private static String encryptPassword(String password, byte[] salt) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -286,6 +299,23 @@ public class User implements java.io.Serializable {
         session.save(user);
         session.getTransaction().commit();
         return validateUser(email, password, facebook);
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof User) {
+            return this.id == ((User)o).id;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + this.id;
+        hash = 83 * hash + Objects.hashCode(this.userEmail);
+        hash = 83 * hash + Objects.hashCode(this.permissions);
+        return hash;
     }
 
 }
