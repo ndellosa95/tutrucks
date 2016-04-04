@@ -173,6 +173,8 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
 
     @Override
     public int getScore() {
+        if (itemReviews.isEmpty())
+            return 0;
         double score = 0.0;
         for (ItemReview ir : itemReviews) {
             score += (double)ir.getReviewStars();
