@@ -7,7 +7,7 @@ put truck name in Title slot on right side
 put truck location in location slot on right side
 put rating in rating slot on right side
 --%>
-<%@ include file="footer.html"%>
+<%@ include file="header.html"%>
 <%
         String search = request.getParameter("criteria");
         String format = request.getParameter("format");
@@ -49,9 +49,10 @@ put rating in rating slot on right side
             out.print("</div>\n");
             out.print("<div class='panel-body'>\n");
             for (Searchable s : results) {
+                if (s instanceof Truck){
                 t = (Truck) s;
                 out.print("<div class ='container'>\n");
-
+                
                 out.print("<div class='row-fluid'>\n");
                 out.print("<div class='col-lg-2 truckPhoto'>");
                 out.print("PHOTO OF TRUCK");
@@ -68,8 +69,11 @@ put rating in rating slot on right side
                 out.print("</div>\n");
 
                 out.print("</div>\n");
+                }
             }
             out.print("</div>\n");
             out.print("</div>\n");
         }
 %>    
+
+<%@ include file="footer.html"%>
