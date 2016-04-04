@@ -16,4 +16,5 @@ public interface Reviewable {
      * @param r The review to be associated
      */
     public void addReview(Review r);
+    public int getScore();
 }

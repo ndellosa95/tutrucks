@@ -221,6 +221,16 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
         return retval;
     }
 
+    @Override
+    public int getScore() {
+        double score = 0.0;
+        for (TruckReview tr : truckReviews) {
+            score += (double)tr.getReviewStars();
+        }
+        score /= (double)truckReviews.size();
+        return (int) Math.round(score);
+    }
+
 }
 
 
