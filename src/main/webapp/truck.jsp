@@ -60,6 +60,7 @@
         <jsp:param name="search" value="<%=truckName%>"/>
     </jsp:include>
 
+    
 
     <%-- //include item review modal--%>
 
