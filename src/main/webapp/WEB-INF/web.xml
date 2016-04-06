@@ -8,4 +8,12 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+    <servlet>
+        <servlet-name>TruckReviewFetch</servlet-name>
+        <servlet-class>edu.temple.controller/TruckReviewFetchServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TruckReviewFetch</servlet-name>
+        <url-pattern>/fetchTrucks</url-pattern>
+    </servlet-mapping>
 </web-app>

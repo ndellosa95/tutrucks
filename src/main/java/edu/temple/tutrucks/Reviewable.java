@@ -5,6 +5,8 @@
  */
 package edu.temple.tutrucks;
 
+import java.util.List;
+
 /**
  * This interface should be implemented by all classes which can have reviews written about them. 
  * @author nickdellosa
@@ -17,4 +19,5 @@ public interface Reviewable {
      */
     public void addReview(Review r);
     public int getScore();
+    public List<Review> loadReviews(int start, int numReviews);
 }
