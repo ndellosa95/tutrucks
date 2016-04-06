@@ -69,8 +69,10 @@ put rating in rating slot on right side
                             out.print("Location");
 
                         out.print("</div>\n");
-                        out.print("<div class='col-lg-3 click login' data-toggle='modal' data-target='#reviewmodal'>");
-                
+                        out.print("<div class='col-lg-3 click login' data-toggle='modal' data-target='#truckModal' data-truckid="
+                                +t.getId()
+                                + ">");
+                            
                             int avgRating=t.getScore();
                             int fullStars=avgRating/2;
                             int halfStars=avgRating%2;
@@ -137,7 +139,7 @@ put rating in rating slot on right side
                             if (halfStars==1){
                                 out.print("<img src='images/Star_Half.png' width='12' height='24'>");
                             }
-                
+                            
                 
                         out.print("</div>\n");
                     out.print("</div>\n");
@@ -152,3 +154,4 @@ put rating in rating slot on right side
 %>    
 
 <%@ include file="footer.html"%>
+<%@ include file="truckReviewModal.jsp"%>
