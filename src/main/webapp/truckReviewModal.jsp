@@ -9,8 +9,7 @@
             <div class="modal-body">
                 <p>
                     <div class="row">
-                    <iframe id="truck" class="col-lg-12 col-md-12 col-sm-12" src="http://www.w3schools.com">
-                    </iframe>
+                    
                     </div>
                 </p>
             </div>
@@ -22,13 +21,22 @@
 </div>
 <script>
     $('#truckModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('truckid') // Extract info from data-* attributes
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var recipient = button.data('truckid'); // Extract info from data-* attributes
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
+        var modal = $(this);
+        $.ajax("fetchTrucks", {
+            method: "GET",
+            dataType: "json",
+            data: {criteria:recipient, start: 0, end: 20},
+            success: function (data){
+                alert(data);
+            }
+            error: function (jqXHR, status, error){
+                
+            }
+        });
         
-        modal.find('iframe').attr('src','truckReviewFetch.jsp?criteria='.concat(recipient))
-
-    })
+    });
 </script>
