@@ -7,7 +7,12 @@
                 <h4 class="modal-title">Reviews</h4>
             </div>
             <div class="modal-body">
-                <p></p>
+                <p>
+                    <div class="row">
+                    <iframe id="truck" class="col-lg-12 col-md-12 col-sm-12" src="http://www.w3schools.com">
+                    </iframe>
+                    </div>
+                </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -21,9 +26,9 @@
         var recipient = button.data('truckid') // Extract info from data-* attributes
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        
         var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
-        modal.find('.modal-body input').val(recipient)
+        
+        modal.find('iframe').attr('src','truckReviewFetch.jsp?criteria='.concat(recipient))
+
     })
 </script>
