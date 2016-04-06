@@ -5,6 +5,7 @@
  */
 package edu.temple.controller;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import edu.temple.tutrucks.Review;
@@ -41,6 +42,9 @@ public class TruckReviewFetchServlet extends HttpServlet {
                 revObj.add("userinfo", userInfo);
                 array.add(revObj);
             }
+            Gson gson = new Gson();
+            String s = gson.toJson(array);
+            resp.getWriter().print(s);
         } catch (Exception e) {
             
         }
