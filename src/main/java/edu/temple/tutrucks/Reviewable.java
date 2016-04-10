@@ -19,5 +19,5 @@ public interface Reviewable {
      */
     public void addReview(Review r);
     public int getScore();
-    public List<Review> loadReviews(int start, int numReviews);
+    public List<? extends Review> loadReviews();
 }

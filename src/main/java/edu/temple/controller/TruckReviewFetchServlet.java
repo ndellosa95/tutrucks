@@ -10,6 +10,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import edu.temple.tutrucks.Review;
 import edu.temple.tutrucks.Truck;
+import edu.temple.tutrucks.TruckReview;
 import java.util.List;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,9 +29,9 @@ public class TruckReviewFetchServlet extends HttpServlet {
             int minReview = Integer.parseInt(req.getParameter("start"));
             int maxReview = Integer.parseInt(req.getParameter("end"));
             Truck t = Truck.getTruckByID(truckID);
-            List<Review> reviews = t.loadReviews(minReview, maxReview);
+            List<TruckReview> reviews = t.loadReviews().subList(minReview, maxReview);
             JsonArray array = new JsonArray();
-            for (Review rev : reviews) {
+            for (TruckReview rev : reviews) {
                 JsonObject revObj = new JsonObject();
                 revObj.addProperty("text", rev.getReviewText());
                 revObj.addProperty("stars", rev.getReviewStars());

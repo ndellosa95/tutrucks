@@ -13,28 +13,24 @@ import java.util.Date;
  * @version %PROJECT_VERSION%
  * @param <T> The type of item being reviewed. Must implement the reviewable interface
  */
-public class Review<T extends Reviewable> {
+public abstract class Review<T extends Reviewable> {
     
-     T reviewed;
+     int id;
      User user;
      int reviewStars;
      String reviewText;
      Date reviewDate;
 
      /**
-      * Returns the object reviewed as type Reviewable. Required by Hibernate
+      * Returns the reviewed entity. Required by Hibernate
       * @return the object that is the subject of the review
       */
-    public Reviewable getReviewed() {
-        return reviewed;
-    }
+    public abstract T getReviewed();
     /**
      * Sets the object being reviewed. Required by Hibernate
      * @param reviewed the object being reviewed
      */
-    public void setReviewed(T reviewed) {
-        this.reviewed = reviewed;
-    }
+    public abstract void setReviewed(T reviewed);
     /**
      * Returns the user who wrote the review. Required by Hibernate
      * @return the user who wrote the review
@@ -94,5 +90,19 @@ public class Review<T extends Reviewable> {
      */
     public void setReviewDate(Date reviewDate) {
         this.reviewDate = reviewDate;
+    }
+    /**
+     * Returns a review's ID. Required by Hibernate
+     * @return this review's ID
+     */
+    public Integer getId() {
+        return this.id;
+    }
+    /**
+     * Sets a review's ID. Required by Hibernate
+     * @param id the ID of this review.
+     */
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

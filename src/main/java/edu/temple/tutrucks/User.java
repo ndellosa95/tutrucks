@@ -251,7 +251,7 @@ public class User implements java.io.Serializable {
     }
 
     public static User validateUser(String email, String password, boolean facebook) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         if (!facebook) {
             Query q1 = session.createQuery("select u.salt from User u where u.userEmail='" + email + "'");
@@ -316,7 +316,7 @@ public class User implements java.io.Serializable {
     }
     
     public void save() {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.saveOrUpdate(this);
         session.getTransaction().commit();

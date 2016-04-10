@@ -11,40 +11,35 @@ package edu.temple.tutrucks;
  */
 public class TruckReview extends Review<Truck> implements java.io.Serializable {
 
-     private int id;
-
+    private Truck truck;
      /**
      * Empty constructor required by Hibernate
      */
     public TruckReview() {
     }
     /**
-     * Returns a truck review's ID. Required by Hibernate
-     * @return this review's ID
-     */
-    public Integer getId() {
-        return this.id;
-    }
-    /**
-     * Sets a truck review's ID. Required by Hibernate
-     * @param id the ID of this truck review.
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    /**
      * Returns the truck in the review. Required by Hibernate
      * @return the truck in the review.
      */
     public Truck getTruck() {
-        return this.reviewed;
+        return this.truck;
     }
     /**
      * Sets the truck in the review. Required by Hibernate
      * @param t the truck in the review
      */
     public void setTruck(Truck t) {
-        this.reviewed = t;
+        this.truck = t;
+    }
+
+    @Override
+    public Truck getReviewed() {
+        return this.truck;
+    }
+
+    @Override
+    public void setReviewed(Truck reviewed) {
+        this.truck = reviewed;
     }
    
 }

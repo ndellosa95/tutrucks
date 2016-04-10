@@ -159,7 +159,7 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
     }
 
     public static List<Item> searchItems(String terms) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
                 "from Item where itemName like '%" + terms + "%'"
@@ -184,23 +184,18 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
     }
 
     @Override
-    public List<Review> loadReviews(int start, int numReviews) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    public List<ItemReview> loadReviews() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
-                "from ItemReview where reviewed.id=" + this.id + " order by reviewDate desc"
+                "from ItemReview where item.id=" + this.id + " order by reviewDate desc"
         );
-        q.setFirstResult(start);
-        q.setMaxResults(numReviews);
         List l = q.list();
-        List<Review> retval = new ArrayList<>();
-        List<ItemReview> nirList = new ArrayList<>();
-        for (Object o : l) {
-            retval.add((Review)o);
-            nirList.add((ItemReview)o);
-        }
-        this.setItemReviews(nirList);
-        return retval;
+        session.close();
+        ArrayList<ItemReview> revs = new ArrayList<>(l.size());
+        for (Object o : l) revs.add((ItemReview)o);
+        this.setItemReviews(revs);
+        return this.itemReviews;
     }
 
 }

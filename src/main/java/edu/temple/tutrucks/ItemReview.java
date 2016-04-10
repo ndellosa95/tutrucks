@@ -11,40 +11,35 @@ package edu.temple.tutrucks;
  */
 public class ItemReview extends Review<Item> implements java.io.Serializable {
 
-    private int id;
-
+    private Item item;
     /**
      * Empty constructor required by Hibernate
      */
     public ItemReview() {
     }
     /**
-     * Returns an item review's ID. Required by Hibernate
-     * @return this review's ID
-     */
-    public int getId() {
-        return this.id;
-    }
-    /**
-     * Sets an item review's ID. Required by Hibernate
-     * @param id the ID of this item review.
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    /**
      * Returns the item in the review. Required by Hibernate
      * @return the item in the review.
      */
     public Item getItem() {
-        return this.reviewed;
+        return this.item;
     }
     /**
      * Sets the item in the review. Required by Hibernate
      * @param i the item in the review.
      */
     public void setItem(Item i) {
-        this.reviewed = i;
+        this.item = i;
+    }
+
+    @Override
+    public Item getReviewed() {
+        return this.item;
+    }
+
+    @Override
+    public void setReviewed(Item reviewed) {
+        this.item = reviewed;
     }
     
 }

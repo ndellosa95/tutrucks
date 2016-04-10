@@ -144,7 +144,7 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
     }
 
     public static List<Tag> searchTags(String terms) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
                 "from Tag where tagName like '%" + terms + "%'"
@@ -157,7 +157,7 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
     }
     
     public static Tag createOrRetrieveTag(String name) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
                 "from Tag where tagName = '" + name + "'"

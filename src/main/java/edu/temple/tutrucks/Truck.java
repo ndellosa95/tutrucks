@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -198,7 +199,7 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
     }
     
     public static List<Truck> searchTrucks(String terms) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
                 "from Truck" + (terms.isEmpty() ? "" : " where truckName like '%" + terms + "%'")
@@ -211,7 +212,7 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
     }
     
     public static Truck getTruckByName(String name) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
                 "from Truck where truckName='" + name + "'"
@@ -222,7 +223,7 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
     }
     
     public static Truck getTruckByID(int id) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
                 "from Truck where id='" + id + "'"
@@ -245,23 +246,18 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
     }
 
     @Override
-    public List<Review> loadReviews(int start, int numReviews) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    public List<TruckReview> loadReviews() {        
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
-                "from TruckReview where reviewed.id=" + this.id + " order by reviewDate desc"
+                "from TruckReview tr where tr.truck.id=" + this.id + " order by tr.reviewDate desc"
         );
-        q.setFirstResult(start);
-        q.setMaxResults(numReviews);
         List l = q.list();
-        List<Review> retval = new ArrayList<>();
-        List<TruckReview> ntrList = new ArrayList<>();
-        for (Object o : l) {
-            retval.add((Review)o);
-            ntrList.add((TruckReview)o);
-        }
-        this.setTruckReviews(ntrList);
-        return retval;
+        session.close();
+        ArrayList<TruckReview> revs = new ArrayList<>(l.size());
+        for (Object o : l) revs.add((TruckReview)o);
+        this.setTruckReviews(revs);
+        return this.truckReviews;
     }
 
 }
