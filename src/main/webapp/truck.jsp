@@ -1,6 +1,9 @@
 <%@ include file="header.html"%>
-<%@ page import="edu.temple.tutrucks.*" %>
+<%@ include file="truckReviewModal.jsp"%>
+<%@ include file="itemReviewModal.jsp"%>
+<%@ page import="edu.temple.tutrucks.*"%>
 <%@ page import="java.util.List, java.util.Set,java.util.Locale,java.text.NumberFormat"%>
+
 <style>
     .panel-heading {
         background-color: black;
@@ -33,10 +36,11 @@
 </style>
 
 <%
-    //String search = (String)request.getParameter("truck"); 
-    String search = "Bagel Shop";
+    String search = (String)request.getParameter("truck"); 
+    //search = "Bagel Shop"; //delete this
     Truck truck = Truck.getTruckByName(search);
     String truckName = truck.getTruckName();
+    int id = truck.getId();
 
     List<Menu> menus = truck.getMenus();
 %>
@@ -47,23 +51,15 @@
             <h1 style="color: white;"><%=truckName%></h1>
         </div>
         <div class="col-lg-4" style="text-align: right;">
-            <h1 class ="click" style="color: white" data-toggle="modal" data-target="#truckModal">Avg. Reviews</h1>
+            <h1 class ="click" style="color: white" data-toggle="modal" data-target="#truckModal" 
+                data-truckid="<%=id%>">Avg. Reviews</h1>
         </div>
     </div>
 
     <div class="row">
         <!--map business -->
     </div>
-
-    <%-- //include truck review modal--%>
-    <jsp:include page='truckReviewModal.jsp'>
-        <jsp:param name="search" value="<%=truckName%>"/>
-    </jsp:include>
-
     
-
-    <%-- //include item review modal--%>
-
     <!--copied from category.jsp-->
     <%
         for (Menu category : menus) {
@@ -134,7 +130,6 @@
                                 averageStars = stars / reviews.size();
                                 out.print(averageStars);
                             }
-                            out.print("4 stars");
                         %>
                     </div>                                   
                 </div> 
@@ -148,3 +143,4 @@
 </div>
 
 <%@ include file="footer.html"%>
+
