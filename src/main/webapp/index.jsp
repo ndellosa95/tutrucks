@@ -4,9 +4,14 @@
     Author     : nickdellosa
 --%>
 
+<%@page import="edu.temple.tutrucks.User"%>
+<% 
+    User user = (User) session.getAttribute("user");
+    String userName = user.getDisplayName();
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%@ include file="header.html"%>
+<%@ include file="header.jsp"%>
 
         <div class="cover-container">
 
@@ -18,7 +23,7 @@
                 <input type="submit" class="search" value="Search"/>
                 
             </form>
-            <a href="search.jsp?criteria=truck:">List all trucks</a>
+            <a href="search.jsp?criteria=truck:*">List all trucks</a>
             </p>
           </div>
 
@@ -38,20 +43,42 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
     <script>
         $(document).ready(function () {
-           $("#searchbar").change(function () { // this does not work for some reason
-               $.getJSON("search.jsp", {
-                   criteria: $("#searchbar").val(),
-                   format: "json"
-               }).done(function(data) {
-                   alert(data);
-               });
-           }); 
+            alert(<%= userName%>);
+            $.widget("custom.styledAutocomplete", $.ui.autocomplete, {
+                _renderItem: function (ul, item) {
+                    var retval;
+                    var index = item.label.indexOf("<span");
+                    if (index > 0) {
+                        var subtext = item.label.substring(index);
+                        var label = item.label.substring(0, index);
+                        item.value = label;
+                        retval = $("<li>").append(label).append(subtext).appendTo(ul);
+                    } else {
+                        retval = $("<li>").append(item.label).appendTo(ul);
+                    }
+                    return retval;
+                }
+            });
+           $("#searchbar").styledAutocomplete({ source: function(request, response) {
+              $.ajax("search.jsp", {
+                   method: "GET",
+                   dataType: "json",
+                   data: { criteria: request.term, numResults: 10, subscripts: true, format: "json" },
+                   success: function (data) {
+                       response(data);
+                   },
+                   error: function (jqXHR, status, error) {
+                   }
+               });     
+           }});
         });
     </script>
   </body>

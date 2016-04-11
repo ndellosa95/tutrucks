@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -206,6 +207,11 @@ public class User implements java.io.Serializable {
         this.permissions = permissions;
     }
     
+    public void changeDisplayName(String newDisplayName) {
+        this.setDisplayName(newDisplayName);
+        this.save();
+    }
+    
     public byte[] getSalt() {
         return salt;
     }
@@ -218,6 +224,14 @@ public class User implements java.io.Serializable {
         byte[] salt = new byte[16];
         SALTER.nextBytes(salt);
         return salt;
+    }
+    
+    public void changePassword(String newPassword) {
+        byte[] newSalt = generateSalt();
+        String epass = encryptPassword(newPassword, newSalt);
+        this.setSalt(newSalt);
+        this.setPassWord(epass);
+        this.save();
     }
     
     private static String encryptPassword(String password, byte[] salt) {
@@ -237,7 +251,7 @@ public class User implements java.io.Serializable {
     }
 
     public static User validateUser(String email, String password, boolean facebook) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         if (!facebook) {
             Query q1 = session.createQuery("select u.salt from User u where u.userEmail='" + email + "'");
@@ -262,30 +276,46 @@ public class User implements java.io.Serializable {
     }
     
     public static User createUser(String email, String password, boolean facebook, String displayName, String fbAvatarURL) {
-        // email and password validation
-        if (((!facebook) && password==null) || (email==null)) {
-            // we have a problem
-            return null;
-        }
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        
         User user = new User();
         user.setUserEmail(email);
+        byte[] salt = generateSalt();
+        user.setSalt(salt);
+        user.setPassWord(encryptPassword(password, salt));
         user.setFbLink(facebook);
         user.setPermissions(Permissions.PLEB);
         if (facebook) {
             user.setDisplayName(displayName);
             user.setAvatar(fbAvatarURL);
         } else {
-            byte[] salt = generateSalt();
-            user.setSalt(salt);
-            user.setPassWord(encryptPassword(password, salt));
             user.setDisplayName(email.substring(0, email.indexOf('@')));
         }
-        session.save(user);
-        session.getTransaction().commit();
+        user.save();
         return validateUser(email, password, facebook);
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof User) {
+            return this.id == ((User)o).id;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + this.id;
+        hash = 83 * hash + Objects.hashCode(this.userEmail);
+        hash = 83 * hash + Objects.hashCode(this.permissions);
+        return hash;
+    }
+    
+    protected void save() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.saveOrUpdate(this);
+        session.getTransaction().commit();
+        session.close();
     }
 
 }

@@ -24,7 +24,7 @@ public class DBUtils {
         if (terms.contains(":")) {
             String s[] = terms.split(":");
             String searchType = s[0];
-            String search = s[1];
+            String search = s[1].equalsIgnoreCase("*") ? "" : s[1];
             switch (searchType) {
                 case "truck":
                     results.addAll(Truck.searchTrucks(search));
@@ -39,7 +39,7 @@ public class DBUtils {
                     results.addAll(DBUtils.searchAll(search));
             }
         } else {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query q = session.createQuery(
                     "from edu.temple.tutrucks.Searchable s where ("
@@ -64,7 +64,7 @@ public class DBUtils {
         int timeHour = c.get(Calendar.HOUR_OF_DAY);
         int timeMinute = c.get(Calendar.MINUTE);
         Time current = new Time(timeHour, timeMinute, 0);
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         Query q = session.createQuery("from edu.temple.tutrucks.Truck truck where truck.openingTime < " + current + "and"
                 + "truck.closingTime > " + current);

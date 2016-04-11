@@ -8,7 +8,7 @@
             <column name="id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="truck" class="edu.temple.tutrucks.Truck" fetch="select">
+        <many-to-one name="truck" class="edu.temple.tutrucks.Truck" lazy="false" fetch="select">
             <column name="truck_id" />
         </many-to-one>
         <property name="menuName" type="string">

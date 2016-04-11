@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="edu.temple.tutrucks.Review" abstract="true">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="hilo" />
+        </id>
+        <property name="reviewStars" type="int">
+            <column name="review_stars" not-null="true" />
+        </property>
+        <property name="reviewText" type="string">
+            <column name="review_text" not-null="true" />
+        </property>
+        <property name="reviewDate" type="date">
+            <column name="review_date" length="10" not-null="true" />
+        </property>
+        <many-to-one name="user" class="edu.temple.tutrucks.User" fetch="select">
+            <column name="user_id" />
+        </many-to-one>
+        <union-subclass name="edu.temple.tutrucks.TruckReview" table="truck_review">
+            <many-to-one name="truck" class="edu.temple.tutrucks.Truck" fetch="select">
+                <column name="truck_id" />
+            </many-to-one>
+        </union-subclass>
+        <union-subclass name="edu.temple.tutrucks.ItemReview" table="item_review">
+            <many-to-one name="item" class="edu.temple.tutrucks.Item" fetch="select">
+                <column name="item_id" />
+            </many-to-one>
+        </union-subclass>
+    </class>
+</hibernate-mapping>
