@@ -243,7 +243,7 @@ public class User implements java.io.Serializable {
                 saltedPassword[i] = (i < 16 ? salt[i] : pwba[i-16]);
             
             byte[] hash = digest.digest(saltedPassword);
-            return new String(hash);
+            return new String(hash).replace("'", "\\'");
         } catch (NoSuchAlgorithmException ex) {
             //error handling
             return null;
@@ -264,7 +264,7 @@ public class User implements java.io.Serializable {
             }
         }
         try {
-            Query q = session.createQuery("from User u where u.userEmail='" + email + "' and (u.passWord='" + password + "' or fbLink=" + facebook + ")");
+            Query q = session.createQuery("from User u where u.userEmail='" + email + "' and u.passWord='" + password + "'");
             User retval = (User) q.uniqueResult();
             session.close();
             return retval;
