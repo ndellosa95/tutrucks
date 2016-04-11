@@ -9,9 +9,8 @@
     <property name="hibernate.connection.password">ce9yu0Ei</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <mapping resource="Item.hbm.xml"/>
-    <mapping resource="ItemReview.hbm.xml"/>
+    <mapping resource="Review.hbm.xml"/>
     <mapping resource="Menu.hbm.xml"/>
-    <mapping resource="TruckReview.hbm.xml"/>
     <mapping resource="Tag.hbm.xml"/>
     <mapping resource="Truck.hbm.xml"/>
     <mapping resource="User.hbm.xml"/>
