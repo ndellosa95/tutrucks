@@ -7,7 +7,7 @@ put truck name in Title slot on right side
 put truck location in location slot on right side
 put rating in rating slot on right side
 --%>
-<%@ include file="header.html"%>
+<%@ include file="header.jsp"%>
 <%
         String search = request.getParameter("criteria");
         String format = request.getParameter("format");
