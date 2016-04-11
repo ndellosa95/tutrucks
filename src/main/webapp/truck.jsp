@@ -59,7 +59,7 @@
     <div class="row">
         <!--map business -->
     </div>
-    
+
     <!--copied from category.jsp-->
     <%
         for (Menu category : menus) {
@@ -79,7 +79,6 @@
                         out.print("Menu");
                     }
                 %>
-
             </h1>
             <h5 style="font-style: italic"> 
                 <%
