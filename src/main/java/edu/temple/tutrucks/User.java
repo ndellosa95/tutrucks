@@ -276,22 +276,17 @@ public class User implements java.io.Serializable {
     }
     
     public static User createUser(String email, String password, boolean facebook, String displayName, String fbAvatarURL) {
-        // email and password validation
-        if (((!facebook) && password==null) || (email==null)) {
-            // we have a problem
-            return null;
-        }        
         User user = new User();
         user.setUserEmail(email);
+        byte[] salt = generateSalt();
+        user.setSalt(salt);
+        user.setPassWord(encryptPassword(password, salt));
         user.setFbLink(facebook);
         user.setPermissions(Permissions.PLEB);
         if (facebook) {
             user.setDisplayName(displayName);
             user.setAvatar(fbAvatarURL);
         } else {
-            byte[] salt = generateSalt();
-            user.setSalt(salt);
-            user.setPassWord(encryptPassword(password, salt));
             user.setDisplayName(email.substring(0, email.indexOf('@')));
         }
         user.save();
@@ -315,7 +310,7 @@ public class User implements java.io.Serializable {
         return hash;
     }
     
-    public void save() {
+    protected void save() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.saveOrUpdate(this);
