@@ -9,9 +9,12 @@
             <div class="modal-body">
                 <p>
                     <div class="row">
-                        <form id="registrationForm" class="registration login">
-                            <input type="email" placeholder="Email" /><br />
-                            <input type="password" placeholder="Password" /><br />
+                        <form id="registrationForm" class="registration login" action="/createUser" method="post">
+                            <input type="email" name="email" placeholder="Email" /><br />
+                            <input type="password" name="password" placeholder="Password" /><br />
+                            <input type="hidden" name="facebook" />
+                            <input type="hidden" name="display" />
+                            <input type="hidden" name="avatar" />
                             <input type="submit" value="Create Account" />
                         </form>
                     </div>
