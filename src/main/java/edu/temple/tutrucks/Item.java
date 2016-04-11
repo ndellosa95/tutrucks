@@ -22,6 +22,7 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
      private int id;
      private String itemName;
      private double price;
+     private Menu menu;
      private List<ItemReview> itemReviews = new ArrayList();
      private Set<Tag> tags = new TreeSet();
 
@@ -85,6 +86,20 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
         this.price = price;
     }
     /**
+     * Returns the menu this item belongs to. Required by Hibernate
+     * @return the menu this item belongs to
+     */
+    public Menu getMenu() {
+        return menu;
+    }
+    /**
+     * Sets the menu this item belongs to. Required by Hibernate
+     * @param menu the menu this item belongs to
+     */
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+    /**
      * Returns a list of reviews of the item. Required by Hibernate
      * @return a list of the item's reviews.
      */
@@ -144,7 +159,7 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
     }
 
     public static List<Item> searchItems(String terms) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
                 "from Item where itemName like '%" + terms + "%'"
@@ -154,6 +169,33 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
         ArrayList<Item> results = new ArrayList<>(l.size());
         for (Searchable s : Searchable.SearchOrganizer.organize(l, terms)) results.add((Item)s);
         return results;
+    }
+
+    @Override
+    public int getScore() {
+        if (itemReviews.isEmpty())
+            return 0;
+        double score = 0.0;
+        for (ItemReview ir : itemReviews) {
+            score += (double)ir.getReviewStars();
+        }
+        score /= (double)itemReviews.size();
+        return (int) Math.round(score);
+    }
+
+    @Override
+    public List<ItemReview> loadReviews() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query q = session.createQuery(
+                "from ItemReview where item.id=" + this.id + " order by reviewDate desc"
+        );
+        List l = q.list();
+        session.close();
+        ArrayList<ItemReview> revs = new ArrayList<>(l.size());
+        for (Object o : l) revs.add((ItemReview)o);
+        this.setItemReviews(revs);
+        return this.itemReviews;
     }
 
 }

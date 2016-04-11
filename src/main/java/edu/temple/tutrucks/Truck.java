@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -198,7 +199,7 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
     }
     
     public static List<Truck> searchTrucks(String terms) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
                 "from Truck" + (terms.isEmpty() ? "" : " where truckName like '%" + terms + "%'")
@@ -211,7 +212,7 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
     }
     
     public static Truck getTruckByName(String name) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
                 "from Truck where truckName='" + name + "'"
@@ -219,6 +220,44 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
         Truck retval = (Truck) q.uniqueResult();
         session.close();
         return retval;
+    }
+    
+    public static Truck getTruckByID(int id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query q = session.createQuery(
+                "from Truck where id='" + id + "'"
+        );
+        Truck retval = (Truck) q.uniqueResult();
+        session.close();
+        return retval;
+    }
+    
+    @Override
+    public int getScore() {
+        if (truckReviews.isEmpty())
+            return 0;
+        double score = 0.0;
+        for (TruckReview tr : truckReviews) {
+            score += (double)tr.getReviewStars();
+        }
+        score /= (double)truckReviews.size();
+        return (int) Math.round(score);
+    }
+
+    @Override
+    public List<TruckReview> loadReviews() {        
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query q = session.createQuery(
+                "from TruckReview tr where tr.truck.id=" + this.id + " order by tr.reviewDate desc"
+        );
+        List l = q.list();
+        session.close();
+        ArrayList<TruckReview> revs = new ArrayList<>(l.size());
+        for (Object o : l) revs.add((TruckReview)o);
+        this.setTruckReviews(revs);
+        return this.truckReviews;
     }
 
 }

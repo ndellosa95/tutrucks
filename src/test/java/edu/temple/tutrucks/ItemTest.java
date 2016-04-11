@@ -127,5 +127,18 @@ public class ItemTest {
             assertEquals(testResults.get(i).getSearchName(), results.get(i).getSearchName());
         }
     }
+    /*
+    @Test
+    public void testLoadReviews() {
+        Item i;
+        List<ItemReview> reviews;
+        i = Item.searchItems("chicken").get(0);
+        reviews = i.loadReviews();
+        assertTrue(reviews.size() > 0);
+        for (ItemReview r : reviews) {
+            if (r != null) System.out.println(r.reviewText);
+            else System.out.println("null entry");
+        }
+    } */
 }
 

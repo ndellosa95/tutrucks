@@ -30,7 +30,7 @@
             <list-index column="review_stars" />
             <one-to-many class="edu.temple.tutrucks.TruckReview" />
         </list>
-        <list name="menus" table="menu" inverse="true" lazy="true" fetch="select">
+        <list name="menus" table="menu" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="truck_id" />
             </key>
