@@ -7,7 +7,7 @@
 <%@page import="edu.temple.tutrucks.User"%>
 <% 
     User user = (User) session.getAttribute("user");
-    String userName = user.getDisplayName();
+    System.out.println(user == null ? "user not found" : user.getDisplayName());
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -51,7 +51,6 @@
     <script src="js/ie10-viewport-bug-workaround.js"></script>
     <script>
         $(document).ready(function () {
-            alert(<%= userName%>);
             $.widget("custom.styledAutocomplete", $.ui.autocomplete, {
                 _renderItem: function (ul, item) {
                     var retval;
