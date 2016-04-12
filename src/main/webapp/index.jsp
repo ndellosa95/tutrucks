@@ -7,7 +7,10 @@
 <%@page import="edu.temple.tutrucks.User"%>
 <% 
     User user = (User) session.getAttribute("user");
-    String userName = user.getDisplayName();
+    String userName="";
+    if (user!=null){
+        userName = user.getDisplayName();
+    }
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
