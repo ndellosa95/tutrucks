@@ -1,4 +1,4 @@
-<%@ include file="header.html"%>
+<%@ include file="header.jsp"%>
 <%@ include file="truckReviewModal.jsp"%>
 <%@ include file="itemReviewModal.jsp"%>
 <%@ page import="edu.temple.tutrucks.*"%>
@@ -36,12 +36,10 @@
 </style>
 
 <%
-    String search = (String)request.getParameter("truck"); 
-    //search = "Bagel Shop"; //delete this
+    String search = request.getParameter("truck");
     Truck truck = Truck.getTruckByName(search);
     String truckName = truck.getTruckName();
-    int id = truck.getId();
-
+    int truckID = truck.getId();
     List<Menu> menus = truck.getMenus();
 %>
 
@@ -52,7 +50,7 @@
         </div>
         <div class="col-lg-4" style="text-align: right;">
             <h1 class ="click" style="color: white" data-toggle="modal" data-target="#truckModal" 
-                data-truckid="<%=id%>">Avg. Reviews</h1>
+                data-truckid="<%=truckID%>">Avg. Reviews</h1>
         </div>
     </div>
 
@@ -63,8 +61,7 @@
     <!--copied from category.jsp-->
     <%
         for (Menu category : menus) {
-            //ignore null menu category from db
-            if (category == null) {
+            if (category == null) {     //ignore null menu category from db
                 continue;
             }
     %>
@@ -72,9 +69,9 @@
         <div class="panel-heading">
             <h1 class="panel-title"> 
                 <%
-                    String name = category.getMenuName();
-                    if (name != null && name != "") {
-                        out.print(name);
+                    String menuName = category.getMenuName();
+                    if (menuName != null && menuName != "") {
+                        out.print(menuName);
                     } else {
                         out.print("Menu");
                     }
@@ -93,30 +90,29 @@
         <div class="panel-body">
             <div class ="container">
                 <%
-                    String itemName;
-                    double price;
                     Set<Item> items = category.getItems();
                     for (Item item : items) {
                         if (item == null) {
                             continue;
                         }
+                        int itemID = item.getId();
                 %>
                 <!--copied from menuItem.jsp-->
                 <div class="row-fluid">                                  
                     <div class="col-lg-8 itemName">
                         <%
-                            itemName = item.getItemName();
+                            String itemName = item.getItemName();
                             out.print(itemName);
                         %>
                     </div>
                     <div class="col-lg-2">
                         <%
-                            price = item.getPrice();
+                            double price = item.getPrice();
                             out.print(NumberFormat.getCurrencyInstance(new Locale("en", "US")).format(price));
                         %>
                     </div>
-                    <div class="col-lg-2 click" data-toggle="modal" data-target="#itemModal">
-                        <% //insert average stars
+                    <div class="col-lg-2 click" data-toggle="modal" data-target="#itemModal" data-truckid="<%=itemID%>">
+                        <%
                             double stars = 0;
                             double averageStars = 0;
                             List<ItemReview> reviews = item.getItemReviews();
@@ -125,7 +121,6 @@
                                 for (ItemReview review : reviews) {
                                     stars += (double) review.getReviewStars() / 2;
                                 }
-
                                 averageStars = stars / reviews.size();
                                 out.print(averageStars);
                             }
