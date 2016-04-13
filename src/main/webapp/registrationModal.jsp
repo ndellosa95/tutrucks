@@ -10,11 +10,11 @@
                 <p>
                     <div class="row">
                         <form id="registrationForm" class="registration login" action="/createUser" method="post">
-                            <input type="email" name="email" placeholder="Email" /><br />
-                            <input type="password" name="password" placeholder="Password" /><br />
-                            <input type="hidden" name="facebook" />
-                            <input type="hidden" name="display" />
-                            <input type="hidden" name="avatar" />
+                            <input type="email" pattern="(.+)@(.+)\.((com)|(edu)|(org)|(gov))" name="email" placeholder="Email" required /><br />
+                            <input type="password" pattern=".{6,16}" name="password" placeholder="Password" required /><br />
+                            <input type="hidden" id="facebook" name="facebook" />
+                            <input type="hidden" id="display" name="display" />
+                            <input type="hidden" id="avatar" name="avatar" />
                             <input type="submit" value="Create Account" />
                         </form>
                     </div>
