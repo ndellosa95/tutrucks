@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <%@include file="registrationModal.jsp" %>
+    <%@include file="loginModal.jsp" %>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -82,11 +83,14 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login/Register <span class="caret"></span></a>
               <ul class="dropdown-menu" id="LoginDisplay">
+                  <br>
 		<li>
-                <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true"></div>
+                    <div class='col-lg-3 click login' data-toggle='modal' data-target='#loginModal'>Login</div>
                 </li>
+                <br>
+                  
                 <li>
                     <div class='col-lg-3 click login' data-toggle='modal' data-target='#registrationModal'>Register</div>
                 </li>
