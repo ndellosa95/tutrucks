@@ -16,7 +16,7 @@
                             <div class="col-lg-4" style="text-align: center;">
                                 <input type="email" id="email" pattern="(.+)@(.+)\.((com)|(edu)|(org)|(gov))" name="email" placeholder="Email" /><br />
                                 <input type="password" id="password" pattern=".{6,16}" name="password" placeholder="Password (6-16 characters)" /><br />
-                                <input type="hidden" id="facebook" name="facebook" />
+                                <input type="hidden" id="facebook_id" name="facebook_id" />
                                 <input type="hidden" id="display" name="display" />
                                 <input type="hidden" id="avatar" name="avatar" />
                                 <input type="submit" value="Create Account" />
@@ -31,22 +31,21 @@
                                         $("#loginButton").click(function() {
                                             FB.getLoginStatus(function(response) {
                                                 if (response.status === 'connected') {
-                                                // the user is logged in and has authenticated your
-                                                // app, and response.authResponse supplies
-                                                // the user's ID, a valid access token, a signed
-                                                // request, and the time the access token 
-                                                // and signed request each expire
-                                                var uid = response.authResponse.userID;
-                                                var accessToken = response.authResponse.accessToken;
+                                                    $('#modal').modal('toggle');
+                                                    alert("You are already logged in")
+                                                //var uid = response.authResponse.userID;
+                                                //var accessToken = response.authResponse.accessToken;
                                               } else if (response.status === 'not_authorized') {
                                                 // the user is logged in to Facebook, 
                                                 // but has not authenticated your app
                                               } else {
                                                 FB.login(function(response) {
                                                     if (response.authResponse) {
-                                                     console.log('Welcome!  Fetching your information.... ');
-                                                     FB.api('/me', { locale: 'en_US', fields: 'name, email' }, function(response) {
-                                                       document.getElementById("email").innerHTML="EMAIL GATHERED";//response.email;
+                                                     FB.api('/me', { locale: 'en_US', fields: 'id, name, email, picture' }, function(response) {
+                                                       document.getElementById("email").value = response.email;
+                                                       document.getElementById("facebook_id").value = response.id;
+                                                       document.getElementById("display").value=response.name;
+                                                       document.getElementById("avatar").value=response.picture.data.url;
                                                      });
                                                     } else {
                                                      console.log('User cancelled login or did not fully authorize.');
