@@ -46,7 +46,7 @@
                                                     if (response.authResponse) {
                                                      console.log('Welcome!  Fetching your information.... ');
                                                      FB.api('/me', { locale: 'en_US', fields: 'name, email' }, function(response) {
-                                                       document.getElementById("email").innerHTML=response.email;
+                                                       document.getElementById("email").innerHTML="EMAIL GATHERED";//response.email;
                                                      });
                                                     } else {
                                                      console.log('User cancelled login or did not fully authorize.');

@@ -24,6 +24,10 @@ import org.hibernate.Session;
 public class User implements java.io.Serializable {
 
     private static final Random SALTER = new java.security.SecureRandom();
+    private static final String APP_ID = "1272882256060359";
+    private static final String APP_SECRET = "f45bb012fb2097e5a7aa53fded1c2383";
+    private static final String TOKEN_EXTENDER_URL = "www.facebook.com/oauth/access_token";
+    private static final int TOKEN_LENGTH = 1024;
 
     private int id;
     private String userEmail;
@@ -35,6 +39,7 @@ public class User implements java.io.Serializable {
     private String displayName;
     private Permissions permissions;
     private byte[] salt;
+    private String fbID;
 
     /**
      * Empty constructor required by Hibernate
@@ -220,6 +225,14 @@ public class User implements java.io.Serializable {
         this.salt = salt;
     }
     
+    public String getFbID() {
+        return fbID;
+    }
+    
+    public void setFbID(String fbID) {
+        this.fbID = fbID;
+    }
+    
     private static byte[] generateSalt() {
         byte[] salt = new byte[16];
         SALTER.nextBytes(salt);
@@ -250,18 +263,16 @@ public class User implements java.io.Serializable {
         }
     }
 
-    public static User validateUser(String email, String password, boolean facebook) {
+    public static User validateUser(String email, String password) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        if (!facebook) {
-            Query q1 = session.createQuery("select u.salt from User u where u.userEmail='" + email + "'");
-            byte[] salt;
-            try {
-                salt = (byte[]) q1.uniqueResult();
-                password = encryptPassword(password, salt);
-            } catch (ClassCastException cce) {
-                
-            }
+        Query q1 = session.createQuery("select u.salt from User u where u.userEmail='" + email + "'");
+        byte[] salt;
+        try {
+            salt = (byte[]) q1.uniqueResult();
+            password = encryptPassword(password, salt);
+        } catch (ClassCastException cce) {
+
         }
         try {
             Query q = session.createQuery("from User u where u.userEmail='" + email + "' and u.passWord='" + password + "'");
@@ -275,7 +286,61 @@ public class User implements java.io.Serializable {
         }
     }
     
-    public static User createUser(String email, String password, boolean facebook, String displayName, String fbAvatarURL) {
+    public static User validateUserFacebook(String email, String fbID) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query q = session.createQuery("from User u where u.userEmail='" + email + "' and u.fbID='" + fbID + "'");
+        try {
+            User retval = (User) q.uniqueResult();
+            session.close();
+            return retval;
+        } catch (ClassCastException cce) {
+            session.close();
+            return null;
+        }
+    }
+    
+    public void linkUserFacebook(String fbID) {
+        this.setFbLink(true);
+        this.setFbID(fbID);
+        this.save();
+    }
+    
+    public void linkUserFacebook(String fbID, String displayName, String avatar) {
+        this.setDisplayName(displayName);
+        this.setAvatar(avatar);
+        this.linkUserFacebook(fbID);
+    }
+    /*
+    private static String validateFacebookToken(String fbToken) {
+        try {
+            URL tokenExtender = new URL(TOKEN_EXTENDER_URL);
+            HttpsURLConnection con = (HttpsURLConnection) tokenExtender.openConnection();
+            String newToken = null;
+            con.setRequestMethod("GET");
+            con.setDoOutput(true);
+            String params = "grant_type=fb_exchange_token&client_id=" + APP_ID + "&client_secret=" + APP_SECRET + "&fb_exchange_token=" + fbToken;
+            try (OutputStream stream = con.getOutputStream()) {
+                stream.write(params.getBytes());
+                stream.flush();
+            }
+            int responseCode = con.getResponseCode();
+            if (responseCode == 200) {
+                byte[] responseToken = new byte[TOKEN_LENGTH];
+                try (InputStream in = con.getInputStream()) {
+                    in.read(responseToken);
+                }
+                newToken = new String(responseToken);
+            }
+            con.disconnect();
+            return newToken;
+        } catch (IOException ex) {
+            
+        }
+        return null;
+    } */
+    
+    public static User createUser(String email, String password, boolean facebook, String displayName, String fbAvatarURL, String fbID) {
         User user = new User();
         user.setUserEmail(email);
         byte[] salt = generateSalt();
@@ -286,11 +351,12 @@ public class User implements java.io.Serializable {
         if (facebook) {
             user.setDisplayName(displayName);
             user.setAvatar(fbAvatarURL);
+            user.setFbID(fbID);
         } else {
             user.setDisplayName(email.substring(0, email.indexOf('@')));
         }
         user.save();
-        return validateUser(email, password, facebook);
+        return validateUser(email, password);
     }
     
     @Override
@@ -310,14 +376,13 @@ public class User implements java.io.Serializable {
         return hash;
     }
     
-    protected void save() {
+    public void save() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.saveOrUpdate(this);
         session.getTransaction().commit();
         session.close();
     }
-
 }
 
 
