@@ -26,7 +26,7 @@
                                 <strong> OR </strong>
                             </div>
                             <div class="col-lg-4">
-                                <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div>
+                                <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true"></div>
                             </div>
                         </form>
                     </div>

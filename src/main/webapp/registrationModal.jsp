@@ -14,8 +14,8 @@
                                 &nbsp;
                             </div>
                             <div class="col-lg-4" style="text-align: center;">
-                                <input type="email" pattern="(.+)@(.+)\.((com)|(edu)|(org)|(gov))" name="email" placeholder="Email" required /><br />
-                                <input type="password" pattern=".{6,16}" name="password" placeholder="Password (6-16 characters)" /><br />
+                                <input type="email" id="email" pattern="(.+)@(.+)\.((com)|(edu)|(org)|(gov))" name="email" placeholder="Email" /><br />
+                                <input type="password" id="password" pattern=".{6,16}" name="password" placeholder="Password (6-16 characters)" /><br />
                                 <input type="hidden" id="facebook" name="facebook" />
                                 <input type="hidden" id="display" name="display" />
                                 <input type="hidden" id="avatar" name="avatar" />
@@ -25,7 +25,42 @@
                                 <strong> OR </strong>
                             </div>
                             <div class="col-lg-4">
-                                <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div>
+                                <div id="loginButton"><img src="images/fbconnect.png" width="180px" height="40px"></div>
+                                <script>
+                                    $(document).ready(function () {
+                                        $("#loginButton").click(function() {
+                                            FB.getLoginStatus(function(response) {
+                                                if (response.status === 'connected') {
+                                                // the user is logged in and has authenticated your
+                                                // app, and response.authResponse supplies
+                                                // the user's ID, a valid access token, a signed
+                                                // request, and the time the access token 
+                                                // and signed request each expire
+                                                var uid = response.authResponse.userID;
+                                                var accessToken = response.authResponse.accessToken;
+                                              } else if (response.status === 'not_authorized') {
+                                                // the user is logged in to Facebook, 
+                                                // but has not authenticated your app
+                                              } else {
+                                                FB.login(function(response) {
+                                                    if (response.authResponse) {
+                                                     console.log('Welcome!  Fetching your information.... ');
+                                                     FB.api('/me', { locale: 'en_US', fields: 'name, email' }, function(response) {
+                                                       document.getElementById("email").innerHTML=response.email;
+                                                     });
+                                                    } else {
+                                                     console.log('User cancelled login or did not fully authorize.');
+                                                    }
+                                                }, {scope: 'email, public_profile'});
+                                              }
+                                            });
+                                        });
+                                    });
+                                    
+                                    
+                                    
+                                </script>
+                                
                             </div>
                         </form>
                     </div>
