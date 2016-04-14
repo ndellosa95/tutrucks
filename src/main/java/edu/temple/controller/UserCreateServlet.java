@@ -30,13 +30,14 @@ public class UserCreateServlet extends HttpServlet {
             // redirect back to registration
         }
         boolean fb = Boolean.parseBoolean(req.getParameter("facebook"));
-        String display, avatar;
-        display = avatar = null;
+        String display, avatar, fbID;
+        display = avatar = fbID = null;
         if (fb) {
             display = req.getParameter("display");
             avatar = req.getParameter("avatar");
+            fbID = req.getParameter("facebook_id");
         }
-        User user = User.createUser(email, password, fb, display, avatar);
+        User user = User.createUser(email, password, fb, display, avatar, fbID);
         HttpSession session = req.getSession(true);
         session.setAttribute("user", user);
         resp.sendRedirect("/");

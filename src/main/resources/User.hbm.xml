@@ -46,5 +46,9 @@
         <property name="salt" type="binary">
             <column name="salt"></column>
         </property>
+        <join table="facebook_info" optional="true">
+            <key column="user_id" />
+            <many-to-one name="fbID" column="fb_id" not-null="true" unique="true" />
+        </join>
     </class>
 </hibernate-mapping>

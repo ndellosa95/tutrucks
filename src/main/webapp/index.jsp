@@ -6,8 +6,11 @@
 
 <%@page import="edu.temple.tutrucks.User"%>
 <% 
+    boolean invalidLogin = false;
+    try {
+        invalidLogin = Boolean.parseBoolean(request.getParameter("invalid"));
+    } catch (Exception e) {}
     User user = (User) session.getAttribute("user");
-    System.out.println(user == null ? "user not found" : user.getDisplayName());
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
