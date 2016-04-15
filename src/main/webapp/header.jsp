@@ -94,38 +94,7 @@
                     <div class='col-lg-3 click login' data-toggle='modal' data-target='#registrationModal'>Register</div>
                 </li>
               </ul>
-              <script>
-                    $(document).ready(function () {
-                        //check user login status
-                        FB.getLoginStatus(function(response) {
-                            if (response.status === 'connected') {
-                            
-                            //var uid = response.authResponse.userID;
-                            //var accessToken = response.authResponse.accessToken;
-                          } else if (response.status === 'not_authorized') {
-                            // the user is logged in to Facebook, 
-                            // but has not authenticated your app
-                          } else {
-                            FB.login(function(response) {
-                                if (response.authResponse) {
-                                 FB.api('/me', { locale: 'en_US', fields: 'id, name, email, picture' }, function(response) {
-                                   document.getElementById("email").value = response.email;
-                                   document.getElementById("facebook_id").value = response.id;
-                                   document.getElementById("display").value=response.name;
-                                   document.getElementById("avatar").value=response.picture.data.url;
-                                 });
-                                } else {
-                                 console.log('User cancelled login or did not fully authorize.');
-                                }
-                            }, {scope: 'email, public_profile'});
-                          }
-                        });
-                    });
-                    
-
-
-
-                </script>
+              
             </li>
           </ul>
         </div><!--/.nav-collapse -->

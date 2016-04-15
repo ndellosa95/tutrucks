@@ -33,6 +33,31 @@
           <div class="mastfoot">
             <div class="inner">
               <p>&copy;2016 TUtrucks</p>
+              <div id="shareButton"><img src="images/fbshare.png" width="180px" height="40px"></div>
+              <script>
+                  
+                $(document).ready(function () {
+                                        $("#shareButton").click(function() {
+                                            FB.getLoginStatus(function(response) {
+                                                if (response.status === 'connected') {
+                                                FB.ui({
+                                                    method: 'share',
+                                                    href: 'http://babyhuey.cis.temple.edu/TUTrucks/',
+                                                }, function(response){});
+                                                //var uid = response.authResponse.userID;
+                                                //var accessToken = response.authResponse.accessToken;
+                                              } else if (response.status === 'not_authorized') {
+                                                // the user is logged in to Facebook, 
+                                                // but has not authenticated your app
+                                              } else {
+                                                };
+                                              })
+                                            });
+                                        });
+                                    
+                                    
+                                    
+                </script>
             </div>
           </div>
 
