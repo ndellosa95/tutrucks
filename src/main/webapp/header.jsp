@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%@include file="registrationModal.jsp" %>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,7 +10,10 @@
     <link rel="icon" href="favicon.ico">
 
     <title>TUtrucks</title>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -24,33 +26,27 @@
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="js/ie-emulation-modes-warning.js"></script>
-
+    
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-
+  
   <body>
-		<script>
+      <script>
       window.fbAsyncInit = function() {
         FB.init({
           appId      : '1272882256060359',
+          cookie     : true,
           xfbml      : true,
           version    : 'v2.5'
         });
         FB.getLoginStatus(function(response) {
             if (response.status === 'connected') {
             }else{
-                $currentValue=document.getElementById("LoginDisplay").innerHTML;
-                document.getElementById("LoginDisplay").innerHTML="<li>"+
-                "<form class='login'>"+
-                "<input type='email' class='' placeholder='Email' />"+
-                "<input type='password' class='' value='' placeholder='Password'/>"+
-                "<input type='submit' class='' value='Log In'/>"+
-                "</form>"+
-                "<br /> </li>"+currentValue;
+                
             }
         });
       };
@@ -63,6 +59,8 @@
          fjs.parentNode.insertBefore(js, fjs);
        }(document, 'script', 'facebook-jssdk'));
     </script>
+    <%@include file="registrationModal.jsp" %>
+    <%@include file="loginModal.jsp" %>
    <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -82,11 +80,14 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login/Register <span class="caret"></span></a>
               <ul class="dropdown-menu" id="LoginDisplay">
+                  <br>
 		<li>
-                <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true"></div>
+                    <div class='col-lg-3 click login' data-toggle='modal' data-target='#loginModal'>Login</div>
                 </li>
+                <br>
+                  
                 <li>
                     <div class='col-lg-3 click login' data-toggle='modal' data-target='#registrationModal'>Register</div>
                 </li>

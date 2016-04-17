@@ -46,5 +46,8 @@
         <property name="salt" type="binary">
             <column name="salt"></column>
         </property>
+        <property name="fbID" type="string">
+            <column name="fb_id"></column>
+        </property>
     </class>
 </hibernate-mapping>

@@ -72,11 +72,11 @@ put rating in rating slot on right side
                         out.print("<div class='col-lg-3 click login' data-toggle='modal' data-target='#truckModal' data-truckid="
                                 +t.getId()
                                 + ">");
-                            
+                            t.loadReviews();
                             int avgRating=t.getScore();
                             int fullStars=avgRating/2;
                             int halfStars=avgRating%2;
-                            out.print("Average Review: ");
+                            out.print("Average Review: "+avgRating);
                             for (int i=0;i<fullStars;i++){
                                 out.print("<img src='images/Star_Full.png' width='24' height='24'>");
                             }
