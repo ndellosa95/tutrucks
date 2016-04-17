@@ -1,3 +1,4 @@
+<%@page import="java.util.Random"%>
 <%@ include file="header.jsp"%>
 <%@ include file="truckReviewModal.jsp"%>
 <%@ include file="itemReviewModal.jsp"%>
@@ -36,7 +37,8 @@
 </style>
 
 <%
-    String search = request.getParameter("truck");
+    String search = request.getParameter("truck"); 
+//    search = "Bagel Shop"; //DELETE
     Truck truck = Truck.getTruckByName(search);
     String truckName = truck.getTruckName();
     int truckID = truck.getId();
@@ -113,15 +115,21 @@
                     </div>
                     <div class="col-lg-2 click" data-toggle="modal" data-target="#itemModal" data-truckid="<%=itemID%>">
                         <%
-                            double stars = 0;
-                            double averageStars = 0;
+                            double stars = 0.0;
+                            double averageStars = 0.0;
                             List<ItemReview> reviews = item.getItemReviews();
-
+                            
+//                            Random r = new Random();
+//                            for(int i = 0; i < 10; i++){
+//                                ItemReview ir = new ItemReview();
+//                                int rand = r.nextInt(11);
+//                                ir.setReviewStars(rand);
+//                                reviews.add(ir);
+//                            }
+                            
                             if (reviews.size() > 0) {
-                                for (ItemReview review : reviews) {
-                                    stars += (double) review.getReviewStars() / 2;
-                                }
-                                averageStars = stars / reviews.size();
+                                stars = item.getScore();
+                                averageStars = stars / 2;
                                 out.print(averageStars);
                             }
                         %>
