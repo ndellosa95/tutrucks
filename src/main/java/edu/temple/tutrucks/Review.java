@@ -57,7 +57,7 @@ public abstract class Review<T extends Reviewable> {
      * @param reviewStars the number of stars given in the review. Must be between 0 and 5.
      */
     public void setReviewStars(int reviewStars) {
-        if (reviewStars > 5 || reviewStars < 0) {
+        if (reviewStars > 10 || reviewStars < 0) {
             //error handling
             return;
         }
