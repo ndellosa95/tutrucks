@@ -9,7 +9,7 @@
 //            user = new User();
 //            user.setAvatar("https://upload.wikimedia.org/wikipedia/en/3/38/Avatarjakeneytiri.jpg");
 //            user.setDisplayName("Avatar");
-//            String avatar = user.getAvatar();
+            String avatar = user.getAvatar();
             List<TruckReview> truckReviews = user.getTruckReviews();
 //            TruckReview tr = new TruckReview();
 //            Truck t = Truck.getTruckByID(1);
