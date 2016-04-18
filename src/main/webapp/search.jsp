@@ -7,7 +7,7 @@ put truck name in Title slot on right side
 put truck location in location slot on right side
 put rating in rating slot on right side
 --%>
-<%@ include file="header.jsp"%>
+
 <%
         String search = request.getParameter("criteria");
         String format = request.getParameter("format");
@@ -34,6 +34,7 @@ put rating in rating slot on right side
             String s = gson.toJson(tbp);
             out.clearBuffer();
             out.print(s);
+            out.close();
         } else {
             Truck t;
             search = (String) request.getParameter("criteria");
@@ -151,7 +152,7 @@ put rating in rating slot on right side
             out.print("</div>\n");
             out.print("</div>\n");
         }
-%>    
-
+%>
+<%@ include file="header.jsp"%>    
 <%@ include file="footer.html"%>
 <%@ include file="truckReviewModal.jsp"%>

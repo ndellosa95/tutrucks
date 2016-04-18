@@ -60,6 +60,7 @@
                                response(data);
                            },
                            error: function (jqXHR, status, error) {
+                               console.log("error: " + error);
                            }
                        });     
                    }});
