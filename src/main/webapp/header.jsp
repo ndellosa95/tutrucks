@@ -77,6 +77,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="index.jsp">Home</a></li>
             <li><a href="search.jsp?criteria=truck:*">All Trucks</a></li>
+            <li><a href="#">My Profile</a></li>
             <li><a href="#">About</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">

@@ -34,6 +34,37 @@
             <div class="inner">
               <p>&copy;2016 TUtrucks</p>
               <div id="shareButton"><img src="images/fbshare.png" width="180px" height="40px"></div>
+            <script>
+                $(document).ready(function () {
+                    $.widget("custom.styledAutocomplete", $.ui.autocomplete, {
+                        _renderItem: function (ul, item) {
+                            var retval;
+                            var index = item.label.indexOf("<span");
+                            if (index > 0) {
+                                var subtext = item.label.substring(index);
+                                var label = item.label.substring(0, index);
+                                item.value = label;
+                                retval = $("<li>").append(label).append(subtext).appendTo(ul);
+                            } else {
+                                retval = $("<li>").append(item.label).appendTo(ul);
+                            }
+                            return retval;
+                        }
+                    });
+                   $("#searchbar").styledAutocomplete({ source: function(request, response) {
+                      $.ajax("search.jsp", {
+                           method: "GET",
+                           dataType: "json",
+                           data: { criteria: request.term, numResults: 10, subscripts: true, format: "json" },
+                           success: function (data) {
+                               response(data);
+                           },
+                           error: function (jqXHR, status, error) {
+                           }
+                       });     
+                   }});
+                });
+            </script>
               <script>
                   
                 $(document).ready(function () {
