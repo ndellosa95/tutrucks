@@ -33,6 +33,62 @@
           <div class="mastfoot">
             <div class="inner">
               <p>&copy;2016 TUtrucks</p>
+              <div id="shareButton"><img src="images/fbshare.png" width="180px" height="40px"></div>
+            <script>
+                $(document).ready(function () {
+                    $.widget("custom.styledAutocomplete", $.ui.autocomplete, {
+                        _renderItem: function (ul, item) {
+                            var retval;
+                            var index = item.label.indexOf("<span");
+                            if (index > 0) {
+                                var subtext = item.label.substring(index);
+                                var label = item.label.substring(0, index);
+                                item.value = label;
+                                retval = $("<li>").append(label).append(subtext).appendTo(ul);
+                            } else {
+                                retval = $("<li>").append(item.label).appendTo(ul);
+                            }
+                            return retval;
+                        }
+                    });
+                   $("#searchbar").styledAutocomplete({ source: function(request, response) {
+                      $.ajax("search.jsp", {
+                           method: "GET",
+                           dataType: "json",
+                           data: { criteria: request.term, numResults: 10, subscripts: true, format: "json" },
+                           success: function (data) {
+                               response(data);
+                           },
+                           error: function (jqXHR, status, error) {
+                           }
+                       });     
+                   }});
+                });
+            </script>
+              <script>
+                  
+                $(document).ready(function () {
+                                        $("#shareButton").click(function() {
+                                            FB.getLoginStatus(function(response) {
+                                                if (response.status === 'connected') {
+                                                FB.ui({
+                                                    method: 'share',
+                                                    href: 'http://babyhuey.cis.temple.edu/TUTrucks/',
+                                                }, function(response){});
+                                                //var uid = response.authResponse.userID;
+                                                //var accessToken = response.authResponse.accessToken;
+                                              } else if (response.status === 'not_authorized') {
+                                                // the user is logged in to Facebook, 
+                                                // but has not authenticated your app
+                                              } else {
+                                                };
+                                              })
+                                            });
+                                        });
+                                    
+                                    
+                                    
+                </script>
             </div>
           </div>
 
