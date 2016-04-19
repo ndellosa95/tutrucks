@@ -37,9 +37,9 @@
 </style>
 
 <%
-    String search = request.getParameter("truck"); 
+    String search = request.getParameter("truck");
 //    search = "Bagel Shop"; //DELETE
-    Truck truck = Truck.getTruckByName(search);
+    Truck truck = Truck.getTruckByID(Integer.parseInt(search));
     String truckName = truck.getTruckName();
     int truckID = truck.getId();
     List<Menu> menus = truck.getMenus();
@@ -52,7 +52,24 @@
         </div>
         <div class="col-lg-4" style="text-align: right;">
             <h1 class ="click" style="color: white" data-toggle="modal" data-target="#truckModal" 
-                data-truckid="<%=truckID%>">Avg. Reviews</h1>
+                data-truckid="<%=truckID%>">
+                <%
+                    truck.loadReviews();
+                            int avgRating=truck.getScore();
+                            int fullStars=avgRating/2;
+                            int halfStars=avgRating%2;
+                            out.print("Reviews: ");
+                            if (avgRating==0){
+                                out.print("None");
+                            }
+                            for (int i=0;i<fullStars;i++){
+                                out.print("<img src='images/Star_Full.png' width='24' height='24'>");
+                            }
+                            if (halfStars==1){
+                                out.print("<img src='images/Star_Half.png' width='12' height='24'>");
+                            }
+                    %>
+                    </h1>
         </div>
     </div>
 
