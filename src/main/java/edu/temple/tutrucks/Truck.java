@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -263,6 +262,17 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
         for (Object o : l) revs.add((TruckReview)o);
         this.setTruckReviews(revs);
         return this.truckReviews;
+    }
+
+    @Override
+    public Set loadTags() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query q = session.createQuery("from Tag t join t.trucks tr where tr.id = :id");
+        List l = q.list();
+        session.close();
+        for (Object o : l) this.addTags((Tag)o);
+        return this.tags;
     }
 
 }

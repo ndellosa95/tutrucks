@@ -21,4 +21,9 @@ public interface Taggable {
      * @param t the tag(s) to be attached to this entity
      */
     public void addTags(Tag... t);
+    /**
+     * Loads all associated tags from the database and attaches them to this entity.
+     * @return the set of tags attached to this entity
+     */
+    public java.util.Set loadTags();
 }

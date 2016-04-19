@@ -43,6 +43,7 @@
     String truckName = truck.getTruckName();
     int truckID = truck.getId();
     List<Menu> menus = truck.getMenus();
+    
 %>
 
 <div class="container menu">

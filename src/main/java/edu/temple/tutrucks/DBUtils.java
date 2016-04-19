@@ -12,6 +12,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import java.sql.Time;
+import java.util.HashSet;
 
 /**
  *
@@ -19,37 +20,53 @@ import java.sql.Time;
  */
 public class DBUtils {
     
-    public static List<Searchable> searchAll(String terms) {
+    public static List<Searchable> searchAll(String terms, String tags) {
         List<Searchable> results = new ArrayList<>();
-        if (terms.contains(":")) {
-            String s[] = terms.split(":");
-            String searchType = s[0];
-            String search = s[1].equalsIgnoreCase("*") ? "" : s[1];
-            switch (searchType) {
-                case "truck":
-                    results.addAll(Truck.searchTrucks(search));
-                    break;
-                case "tag":
-                    results.addAll(Tag.searchTags(search));
-                    break;
-                case "item":
-                    results.addAll(Item.searchItems(search));
-                    break;
-                default:
-                    results.addAll(DBUtils.searchAll(search));
+        if (terms != null) {
+            if (terms.contains(":")) {
+                String s[] = terms.split(":");
+                String searchType = s[0];
+                String search = s[1].equalsIgnoreCase("*") ? "" : s[1];
+                switch (searchType) {
+                    case "truck":
+                        results.addAll(Truck.searchTrucks(search));
+                        break;
+                    case "tag":
+                        results.addAll(Tag.searchTags(search));
+                        break;
+                    case "item":
+                        results.addAll(Item.searchItems(search));
+                        break;
+                    default:
+                        results.addAll(DBUtils.searchAll(search, tags));
+                }
+            } else {
+                Session session = HibernateUtil.getSessionFactory().openSession();
+                session.beginTransaction();
+                Query q = session.createQuery(
+                        "from edu.temple.tutrucks.Searchable s where ("
+                        + "s.id in (select tr.id from Truck tr where tr.truckName like '%" + terms + "%') or "
+                        + "s.id in (select it.id from Item it where it.itemName like '%" + terms + "%') or "
+                        + "s.id in (select ta.id from Tag ta where ta.tagName like '%" + terms + "%'))"
+                );
+                List l = q.list();
+                session.close();
+                results.addAll(Searchable.SearchOrganizer.organize(l, terms));
             }
-        } else {
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            Query q = session.createQuery(
-                    "from edu.temple.tutrucks.Searchable s where ("
-                    + "s.id in (select tr.id from Truck tr where tr.truckName like '%" + terms + "%') or "
-                    + "s.id in (select it.id from Item it where it.itemName like '%" + terms + "%') or "
-                    + "s.id in (select ta.id from Tag ta where ta.tagName like '%" + terms + "%'))"
-            );
-            List l = q.list();
-            session.close();
-            results.addAll(Searchable.SearchOrganizer.organize(l, terms));
+        }
+        if (tags != null) {
+            ArrayList<Tag> tagList = new ArrayList();
+            for (String tag : tags.split("&")) tagList.add(Tag.retrieveTag(tag, false));
+            HashSet<Searchable> taggedResults = new HashSet<>();
+            for (Tag t : tagList) {
+                taggedResults.addAll(t.getTrucks());
+                taggedResults.addAll(t.getItems());
+            }
+            if (results.isEmpty()) {
+                results.addAll(taggedResults);
+            } else {
+                results.retainAll(taggedResults);
+            }
         }
         return results;
     }

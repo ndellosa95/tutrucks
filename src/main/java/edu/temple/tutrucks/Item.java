@@ -198,6 +198,17 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
         return this.itemReviews;
     }
 
+    @Override
+    public Set loadTags() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query q = session.createQuery("from Tag t join t.items it where it.id = :id");
+        List l = q.list();
+        session.close();
+        for (Object o : l) this.addTags((Tag)o);
+        return this.tags;
+    }
+
 }
 
 
