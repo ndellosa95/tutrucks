@@ -43,7 +43,6 @@ public class UserLoginLogoutServlet extends HttpServlet {
                 session.setAttribute("user", null);
             }
         }
-        if (redirect)
             resp.sendRedirect("/");
     }
 }

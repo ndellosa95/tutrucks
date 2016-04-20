@@ -9,7 +9,7 @@
             <div class="modal-body">
                 <p>
                     <div class="row">
-                        <form id="loginForm" class="login" action="/login" method="post">
+                        <form id="loginForm" class="login" action="login" method="post">
                             <div class="col-lg-1">
                                 &nbsp;
                             </div>
