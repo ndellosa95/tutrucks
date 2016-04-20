@@ -122,7 +122,7 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
      * @return the set of tags attached to this truck
      */
     @Override
-    public Set<Tag> getTags() {
+    public Set getTags() {
         return this.tags;
     }
     /**
@@ -156,7 +156,7 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
      * Sets the set of tags attached to this truck. Required by Hibernate
      * @param tags the set of tags attached to this truck
      */
-    public void setTags(Set<Tag> tags) {
+    public void setTags(Set tags) {
         this.tags.addAll(tags);
     }
     /**
