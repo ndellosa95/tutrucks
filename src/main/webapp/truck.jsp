@@ -33,7 +33,6 @@
     .click{
         cursor: pointer;
     }
-
 </style>
 
 <%
@@ -71,6 +70,17 @@
                             }
                     %>
                     </h1>
+                    <p style="color: white"><%
+                            out.print("Tags: <span>");
+                            Set<Tag> tags = truck.loadTags();
+                            for (Tag t : tags) {
+                                out.print("<a class='taglinks' href='search.jsp?tagged=" + 
+                                        t.getTagName() + "'>" + t.getTagName() + "</a>, ");
+                            }
+                            out.print("<a id='tag_adder' href='#'>add tags...</a>"
+                                    + "<input type='text' id='tag_add_field' hidden />"
+                                    + "<input type='button' id='tag_add_button' hidden /></span>");
+                    %></p>
         </div>
     </div>
 
@@ -161,6 +171,22 @@
     <!--end category.jsp-->
     <% }%>
 </div>
-
+    <script>
+    $(document).ready(function() {
+        $("#tag_adder").click(function () {
+            $("#tag_add_button").val('Cancel');
+            $("#tag_add_field").show();
+            $("#tag_add_button").show();
+        });
+        $("#tag_add_field").change(function () {
+            var changeTextToAdd = $(this).val().length > 0;
+            $("#tag_add_button").val(changeTextToAdd ? 'Add Tag' : 'Cancel');            
+        });
+        $("#tag_add_button").click(function () {
+            var addTag = $("#tag_add_field").val();
+            console.log(addTag);
+        });
+    });
+    </script>
 <%@ include file="footer.html"%>
 

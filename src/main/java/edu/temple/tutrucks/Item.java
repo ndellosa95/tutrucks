@@ -123,7 +123,7 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
      * @return the set of tags associated with the item
      */
     @Override
-    public Set getTags() {
+    public Set<Tag> getTags() {
         return this.tags;
     }
     /**
@@ -199,7 +199,7 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
     }
 
     @Override
-    public Set loadTags() {
+    public Set<Tag> loadTags() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery("from Tag t join t.items it where it.id = :id");

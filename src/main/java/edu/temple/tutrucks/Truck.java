@@ -122,7 +122,7 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
      * @return the set of tags attached to this truck
      */
     @Override
-    public Set getTags() {
+    public Set<Tag> getTags() {
         return this.tags;
     }
     /**
@@ -265,7 +265,7 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
     }
 
     @Override
-    public Set loadTags() {
+    public Set<Tag> loadTags() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery("from Tag t join t.trucks tr where tr.id = :id");
