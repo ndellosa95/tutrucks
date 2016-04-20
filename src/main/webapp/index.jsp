@@ -3,8 +3,6 @@
     Created on : Feb 22, 2016, 9:42:19 PM
     Author     : nickdellosa
 --%>
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ include file="header.jsp"%>
@@ -45,14 +43,15 @@
                         }
                     });
                    $("#searchbar").styledAutocomplete({ source: function(request, response) {
-                      $.ajax("search.jsp", {
+                      $.ajax("autocomplete", {
                            method: "GET",
                            dataType: "json",
-                           data: { criteria: request.term, numResults: 10, subscripts: true, format: "json" },
+                           data: { criteria: request.term, numResults: 10, subscripts: true },
                            success: function (data) {
                                response(data);
                            },
                            error: function (jqXHR, status, error) {
+                               console.log("error: " + error);
                            }
                        });     
                    }});
