@@ -24,6 +24,7 @@ public class UserCreateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
+        String page = req.getParameter("currentpage");
         if (!email.matches(EMAIL_VERIFICATION)) {
             // redirect back to registration
         } else if (password.length()>16 || password.length()<6) {
@@ -40,6 +41,6 @@ public class UserCreateServlet extends HttpServlet {
         User user = User.createUser(email, password, fb, display, avatar, fbID);
         HttpSession session = req.getSession(true);
         session.setAttribute("user", user);
-        resp.sendRedirect("/");
+        resp.sendRedirect(page==null?"/":page);
     }
 }

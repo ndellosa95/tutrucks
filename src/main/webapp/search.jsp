@@ -8,7 +8,7 @@ put truck location in location slot on right side
 put rating in rating slot on right side
 --%>
 <%@ include file="header.jsp"%>    
-<%@ include file="footer.html"%>
+
 <%@ include file="truckReviewModal.jsp"%>
 <%
         String search = request.getParameter("criteria");
@@ -133,3 +133,4 @@ put rating in rating slot on right side
         out.print("</div>\n");
         out.print("</div>\n");
 %>
+<%@ include file="footer.html"%>
