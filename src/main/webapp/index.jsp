@@ -4,14 +4,7 @@
     Author     : nickdellosa
 --%>
 
-<%@page import="edu.temple.tutrucks.User"%>
-<% 
-    boolean invalidLogin = false;
-    try {
-        invalidLogin = Boolean.parseBoolean(request.getParameter("invalid"));
-    } catch (Exception e) {}
-    User user = (User) session.getAttribute("user");
-%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ include file="header.jsp"%>

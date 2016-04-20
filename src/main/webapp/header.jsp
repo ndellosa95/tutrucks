@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<%@page import="edu.temple.tutrucks.User"%>
+<% 
+    boolean invalidLogin = false;
+    try {
+        invalidLogin = Boolean.parseBoolean(request.getParameter("invalid"));
+    } catch (Exception e) {}
+    User user = (User) session.getAttribute("user");
+%>
 <html lang="en">
   <head>
     <meta charset="utf-8">
