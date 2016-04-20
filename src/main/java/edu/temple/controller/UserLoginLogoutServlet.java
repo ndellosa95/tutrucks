@@ -21,7 +21,8 @@ public class UserLoginLogoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(true);
-        boolean redirect = Boolean.parseBoolean(req.getParameter("redirect"));
+        String redirect = req.getParameter("redirect");
+        System.out.println("Redirect: " + redirect);
         if (req.getServletPath().endsWith("login")) {
             String email = req.getParameter("email");
             String password = req.getParameter("password");
@@ -43,7 +44,6 @@ public class UserLoginLogoutServlet extends HttpServlet {
                 session.setAttribute("user", null);
             }
         }
-        if (redirect)
-            resp.sendRedirect("/");
+        resp.sendRedirect(redirect==null?"/":redirect);
     }
 }
