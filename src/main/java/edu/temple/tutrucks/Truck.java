@@ -268,10 +268,12 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
     public Set<Tag> loadTags() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        Query q = session.createQuery("from Tag t join t.trucks tr where tr.id = :id");
+        Query q = session.createQuery("from Tag t join t.trucks tr where tr.id = " + this.getId());
         List l = q.list();
-        session.close();
-        for (Object o : l) this.addTags((Tag)o);
+        session.close();        
+        for (Object o : l) {
+            if (o instanceof Tag) this.addTags((Tag)o); 
+        }
         return this.tags;
     }
 
