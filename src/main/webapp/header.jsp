@@ -1,3 +1,11 @@
+<%@page import="edu.temple.tutrucks.User"%>
+<% 
+    boolean invalidLogin = false;
+    try {
+        invalidLogin = Boolean.parseBoolean(request.getParameter("invalid"));
+    } catch (Exception e) {}
+    User user = (User) session.getAttribute("user");
+%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -35,6 +43,7 @@
   </head>
   
   <body>
+      
       <script>
       window.fbAsyncInit = function() {
         FB.init({
@@ -76,19 +85,21 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="index.jsp">Home</a></li>
             <li><a href="search.jsp?criteria=truck:*">All Trucks</a></li>
+            <li><a href="#">My Profile</a></li>
             <li><a href="#">About</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
+            <li class="dropdown" id="loginDropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login/Register <span class="caret"></span></a>
               <ul class="dropdown-menu" id="LoginDisplay">
                   <br>
-		<li>
+                  
+		<li id="loginItem">
                     <div class='col-lg-3 click login' data-toggle='modal' data-target='#loginModal'>Login</div>
                 </li>
                 <br>
                   
-                <li>
+                <li id="registrationItem">
                     <div class='col-lg-3 click login' data-toggle='modal' data-target='#registrationModal'>Register</div>
                 </li>
               </ul>

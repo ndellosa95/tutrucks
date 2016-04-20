@@ -25,10 +25,10 @@
                                 <strong> OR </strong>
                             </div>
                             <div class="col-lg-4">
-                                <div id="loginButton"><img src="images/fbconnect.png" width="180px" height="40px"></div>
+                                <div id="registrationButton"><img src="images/fbconnect.png" width="180px" height="40px"></div>
                                 <script>
                                     $(document).ready(function () {
-                                        $("#loginButton").click(function() {
+                                        $("#registrationButton").click(function() {
                                             FB.getLoginStatus(function(response) {
                                                 if (response.status === 'connected') {
                                                     $('#modal').modal('toggle');

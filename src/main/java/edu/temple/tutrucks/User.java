@@ -39,7 +39,7 @@ public class User implements java.io.Serializable {
     private String displayName;
     private Permissions permissions;
     private byte[] salt;
-    private String fbID;
+    private String facebookID;
 
     /**
      * Empty constructor required by Hibernate
@@ -225,12 +225,12 @@ public class User implements java.io.Serializable {
         this.salt = salt;
     }
     
-    public String getFbID() {
-        return fbID;
+    public String getFacebookID() {
+        return facebookID;
     }
     
-    public void setFbID(String fbID) {
-        this.fbID = fbID;
+    public void setFacebookID(String fbID) {
+        this.facebookID = fbID;
     }
     
     private static byte[] generateSalt() {
@@ -302,7 +302,7 @@ public class User implements java.io.Serializable {
     
     public void linkUserFacebook(String fbID) {
         this.setFbLink(true);
-        this.setFbID(fbID);
+        this.setFacebookID(fbID);
         this.save();
     }
     
@@ -351,7 +351,7 @@ public class User implements java.io.Serializable {
         if (facebook) {
             user.setDisplayName(displayName);
             user.setAvatar(fbAvatarURL);
-            user.setFbID(fbID);
+            user.setFacebookID(fbID);
         } else {
             user.setDisplayName(email.substring(0, email.indexOf('@')));
         }

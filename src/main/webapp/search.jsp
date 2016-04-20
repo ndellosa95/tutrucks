@@ -7,35 +7,15 @@ put truck name in Title slot on right side
 put truck location in location slot on right side
 put rating in rating slot on right side
 --%>
-<%@ include file="header.jsp"%>
+<%@ include file="header.jsp"%>    
+<%@ include file="footer.html"%>
+<%@ include file="truckReviewModal.jsp"%>
 <%
         String search = request.getParameter("criteria");
-        String format = request.getParameter("format");
         int numResults = request.getParameter("numResults") == null ? -1 : Integer.parseInt(request.getParameter("numResults"));
         boolean subs = request.getParameter("subscripts") == null ? false : Boolean.parseBoolean(request.getParameter("subscripts"));
         List<Searchable> results = DBUtils.searchAll(search);
-        if (format != null && format.equalsIgnoreCase("json")) {
-            JsonArray tbp = new JsonArray();
-            if (numResults < 0) {
-                numResults = results.size();
-            }
-
-            for (int i = 0; i < numResults; i++) {
-                String sn = results.get(i).getSearchName();
-                String html = "<span class='ac_subtext'>*</span>";
-                if (subs) {
-                    sn += html.replace("*", results.get(i) instanceof Item
-                            ? "at " + (((Item) results.get(i)).getMenu().getTruck().getTruckName())
-                            : results.get(i).getClass().getSimpleName());
-                }
-                tbp.add(sn);
-            }
-            Gson gson = new Gson();
-            String s = gson.toJson(tbp);
-            out.clearBuffer();
-            out.print(s);
-        } else {
-            Truck t;
+        Truck t;
             search = (String) request.getParameter("criteria");
             results = DBUtils.searchAll(search);
             out.print("<div class='panel panel-default'>\n");
@@ -52,13 +32,16 @@ put rating in rating slot on right side
                 if (s instanceof Truck){
                 t = (Truck) s;
                 out.print("<div class ='panel panel-danger'>\n");
+                    out.print("<a href='truck.jsp?truck="+t.getId()+"' style='color: black'>");
                     out.print("<div class='panel-heading'>\n");
                         out.print("<h1 class='panel-title'>");
                             out.print(t.getTruckName());
                         out.print("</h1>\n");
+                    out.print("</a>");
                     out.print("</div>");
                 out.print("<div class='panel-body'> \n");
                     out.print("<div class='row-fluid'>\n");
+                    out.print("<a href='truck.jsp?truck="+t.getId()+"' style='color: black'>");
                         out.print("<div class='col-lg-4 truckPhoto login'>");
 
                             out.print("PHOTO OF TRUCK");
@@ -69,6 +52,7 @@ put rating in rating slot on right side
                             out.print("Location");
 
                         out.print("</div>\n");
+                        out.print("</a>");
                         out.print("<div class='col-lg-3 click login' data-toggle='modal' data-target='#truckModal' data-truckid="
                                 +t.getId()
                                 + ">");
@@ -76,7 +60,8 @@ put rating in rating slot on right side
                             int avgRating=t.getScore();
                             int fullStars=avgRating/2;
                             int halfStars=avgRating%2;
-                            out.print("Average Review: "+avgRating);
+                            out.print("Average Review: ");
+                            if (avgRating==0) out.print("None");
                             for (int i=0;i<fullStars;i++){
                                 out.print("<img src='images/Star_Full.png' width='24' height='24'>");
                             }
@@ -150,8 +135,4 @@ put rating in rating slot on right side
             }
             out.print("</div>\n");
             out.print("</div>\n");
-        }
-%>    
-
-<%@ include file="footer.html"%>
-<%@ include file="truckReviewModal.jsp"%>
+%>

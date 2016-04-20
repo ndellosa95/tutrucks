@@ -1,53 +1,52 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Feb 15, 2016 6:30:46 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="edu.temple.tutrucks.User" table="user" catalog="TUTrucks" optimistic-lock="version">
-        <id name="id" type="int">
-            <column name="id" />
-            <generator class="identity" />
-        </id>
-        <property name="userEmail" type="string">
-            <column name="user_email" not-null="true" />
-        </property>
-        <property name="passWord" type="string">
-            <column name="pass_word" />
-        </property>
-        <property name="fbLink" type="boolean">
-            <column name="fb_link" not-null="true" />
-        </property>
-        <property name="avatar" type="string">
-            <column name="avatar" length="511" />
-        </property>
-        <list name="itemReviews" table="item_review" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="user_id" />
-            </key>
-            <list-index column="review_date" />
-            <one-to-many class="edu.temple.tutrucks.ItemReview" />
-        </list>
-        <list name="truckReviews" table="truck_review" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="user_id" />
-            </key>
-            <list-index column="review_date" />
-            <one-to-many class="edu.temple.tutrucks.TruckReview" />
-        </list>
-        <property name="displayName" type="string">
-            <column name="display_name"></column>
-        </property>
-        <property name="permissions">
-            <column name="permissions" not-null="true"></column>
-            <type name="org.hibernate.type.EnumType">
-                <param name="enumClass">edu.temple.tutrucks.Permissions</param>
-            </type>
-        </property>
-        <property name="salt" type="binary">
-            <column name="salt"></column>
-        </property>
-        <property name="fbID" type="string">
-            <column name="fb_id"></column>
-        </property>
-    </class>
+  <class catalog="TUTrucks" name="edu.temple.tutrucks.User" optimistic-lock="version" table="user">
+    <id name="id" type="int">
+      <column name="id"/>
+      <generator class="identity"/>
+    </id>
+    <property name="userEmail" type="string">
+      <column name="user_email" not-null="true"/>
+    </property>
+    <property name="passWord" type="string">
+      <column name="pass_word"/>
+    </property>
+    <property name="fbLink" type="boolean">
+      <column name="fb_link" not-null="true"/>
+    </property>
+    <property name="avatar" type="string">
+      <column length="511" name="avatar"/>
+    </property>
+    <list fetch="select" inverse="true" lazy="true" name="itemReviews" table="item_review">
+      <key>
+        <column name="user_id"/>
+      </key>
+      <list-index column="review_date"/>
+      <one-to-many class="edu.temple.tutrucks.ItemReview"/>
+    </list>
+    <list fetch="select" inverse="true" lazy="true" name="truckReviews" table="truck_review">
+      <key>
+        <column name="user_id"/>
+      </key>
+      <list-index column="review_date"/>
+      <one-to-many class="edu.temple.tutrucks.TruckReview"/>
+    </list>
+    <property name="displayName" type="string">
+      <column name="display_name"/>
+    </property>
+    <property name="permissions">
+      <column name="permissions" not-null="true"/>
+      <type name="org.hibernate.type.EnumType">
+        <param name="enumClass">edu.temple.tutrucks.Permissions</param>
+      </type>
+    </property>
+    <property name="salt" type="binary">
+      <column name="salt"/>
+    </property>
+    <property name="facebookID" type="string">
+      <column name="fb_id"/>
+    </property>
+  </class>
 </hibernate-mapping>
