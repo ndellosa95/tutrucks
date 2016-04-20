@@ -27,7 +27,7 @@ public class AutoCompleteServlet extends HttpServlet {
         String search = req.getParameter("criteria");
         int numResults = req.getParameter("numResults") == null ? -1 : Integer.parseInt(req.getParameter("numResults"));
         boolean subs = req.getParameter("subscripts") == null ? false : Boolean.parseBoolean(req.getParameter("subscripts"));
-        List<Searchable> results = DBUtils.searchAll(search);
+        List<Searchable> results = DBUtils.searchAll(search, null);
         JsonArray tbp = new JsonArray();
         if (numResults < 0) {
             numResults = results.size();

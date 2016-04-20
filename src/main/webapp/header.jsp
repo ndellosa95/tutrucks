@@ -1,3 +1,5 @@
+
+<!DOCTYPE html>
 <%@page import="edu.temple.tutrucks.User"%>
 <% 
     boolean invalidLogin = false;
@@ -5,8 +7,16 @@
         invalidLogin = Boolean.parseBoolean(request.getParameter("invalid"));
     } catch (Exception e) {}
     User user = (User) session.getAttribute("user");
+    String logOnAreaVisibility = " display:none; ";
+    String logOffAreaVisibility = " display:none; ";
+    if (user == null) {
+        logOnAreaVisibility = " display:inline-block; ";
+        logOffAreaVisibility ="display: none;";
+    }else{
+        logOnAreaVisibility = " display:none; ";
+        logOffAreaVisibility = " display:inline-block; ";
+    }
 %>
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -89,7 +99,7 @@
             <li><a href="#">About</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown" id="loginDropdown">
+            <li class="dropdown" id="loginDropdown" style="<%=logOnAreaVisibility%>">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login/Register <span class="caret"></span></a>
               <ul class="dropdown-menu" id="LoginDisplay">
                   <br>
@@ -104,6 +114,9 @@
                 </li>
               </ul>
               
+            </li>
+            <li id="logoutTab" style="<%=logOffAreaVisibility%>">
+                Logout
             </li>
           </ul>
         </div><!--/.nav-collapse -->

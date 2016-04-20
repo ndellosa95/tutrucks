@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -18,7 +19,7 @@ import org.hibernate.Session;
  * @version %PROJECT_VERSION%
  * 
  */
-public class Tag implements java.io.Serializable, java.lang.Comparable, Searchable {
+public class Tag implements java.io.Serializable, java.lang.Comparable<Tag>, Searchable {
 
      private int id;
      private String tagName;
@@ -123,19 +124,39 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
     }
     /**
      * Compares the tags based on their popularity first, then their name.
-     * @param o the object to be compared to this tag
-     * @return 1 if this tag is more popular or equally popular and higher in the alphabet; -1 otherwise (since no two tags can be identical, 0 is not a possible value)
+     * @param t the object to be compared to this tag
+     * @return 1 if this tag is more popular or equally popular and higher in the alphabet, 0 if they are the same; -1 otherwise
      */
     @Override
-    public int compareTo(Object o) {
-        try {
-            Tag t = (Tag) o;
-            if (this.numEntities() == t.numEntities())
-                return this.getTagName().compareTo(t.getTagName());
-            return Integer.compare(this.numEntities(), t.numEntities());
-        } catch (ClassCastException cce) {
+    public int compareTo(Tag t) {
+        if (this.equals(t)) {
             return 0;
+        } else {
+            if (this.numEntities() > t.numEntities()) {
+                return 1;
+            } else if (this.numEntities() < t.numEntities()) {
+                return -1;
+            } else {
+                return this.tagName.compareTo(t.tagName);
+            }
         }
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Tag) {
+            Tag t = (Tag) o;
+            return t.id == this.id;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 23 * hash + this.id;
+        hash = 23 * hash + Objects.hashCode(this.tagName);
+        return hash;
     }
 
     @Override
@@ -156,7 +177,7 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
         return results;
     }
     
-    public static Tag createOrRetrieveTag(String name) {
+    public static Tag retrieveTag(String name, boolean createIfDoesNotExist) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
@@ -164,7 +185,21 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
         );
         Tag retval = (Tag) q.uniqueResult();
         session.close();
-        return retval == null ? new Tag(name) : retval;
+        if (retval == null && createIfDoesNotExist) {
+            Tag aretval = new Tag(name);
+            aretval.save();
+            return aretval;
+        } else {
+            return retval;
+        }
+    }
+    
+    public void save() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.saveOrUpdate(this);
+        session.getTransaction().commit();
+        session.close();
     }
 
 }

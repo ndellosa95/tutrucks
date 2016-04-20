@@ -63,7 +63,7 @@ public class DBUtilTest {
             List l = q.list();
             session.close();
             List<Searchable> testResults = SearchOrganizer.organize(l, searchTerms);
-            List<Searchable> results = DBUtils.searchAll(searchTerms);
+            List<Searchable> results = DBUtils.searchAll(searchTerms, null);
             for (int i=0; i < testResults.size(); i++) assertEquals(testResults.get(i).getSearchName(), results.get(i).getSearchName());
         } catch (Exception e) {
             e.printStackTrace(System.err);

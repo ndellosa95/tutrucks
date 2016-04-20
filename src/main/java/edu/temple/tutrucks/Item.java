@@ -123,7 +123,7 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
      * @return the set of tags associated with the item
      */
     @Override
-    public Set getTags() {
+    public Set<Tag> getTags() {
         return this.tags;
     }
     /**
@@ -196,6 +196,17 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
         for (Object o : l) revs.add((ItemReview)o);
         this.setItemReviews(revs);
         return this.itemReviews;
+    }
+
+    @Override
+    public Set<Tag> loadTags() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query q = session.createQuery("from Tag t join t.items it where it.id = :id");
+        List l = q.list();
+        session.close();
+        for (Object o : l) this.addTags((Tag)o);
+        return this.tags;
     }
 
 }
