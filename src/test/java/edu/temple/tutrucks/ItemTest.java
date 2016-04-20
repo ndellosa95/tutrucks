@@ -105,9 +105,9 @@ public class ItemTest {
          for (int i = 0; i < tagList.size(); i++) {
              verify(tagList.get(i)).getItems();
         }
-        System.out.println("Verifying all tags were added to item");    
+        System.out.println("Verifying all tags were added to item");
         for (int i = 0; i < tagList.size(); i++) {
-             assertEquals(item.getTags().contains(tagList.get(i)), true);
+             assertTrue(item.getTags().contains(tagList.get(i)));
         } 
     }
     
