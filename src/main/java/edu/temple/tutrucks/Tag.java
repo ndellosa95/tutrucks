@@ -19,7 +19,7 @@ import org.hibernate.Session;
  * @version %PROJECT_VERSION%
  * 
  */
-public class Tag implements java.io.Serializable, java.lang.Comparable<Tag>, Searchable {
+public class Tag implements java.io.Serializable, java.lang.Comparable, Searchable {
 
      private int id;
      private String tagName;
@@ -84,12 +84,14 @@ public class Tag implements java.io.Serializable, java.lang.Comparable<Tag>, Sea
      * Attaches a taggable entity to this tag. 
      * @param t the taggable entity to be associated with this tag
      */
-    public void addEntity(Taggable t) {
+    public void addEntity(Truck t) {
         if (!t.getTags().contains(this)) t.addTags(this);
-        if (t.getClass() == Item.class)
-            items.add((Item)t);
-        else
-            trucks.add((Truck)t);
+        trucks.add((Truck)t);
+    }
+    
+    public void addEntity(Item i) {
+        if (!i.getTags().contains(this)) i.addTags(this);
+        items.add((Item)i);
     }
     /**
      * Returns the set of trucks associated with this tag. Required by Hibernate.
@@ -128,10 +130,11 @@ public class Tag implements java.io.Serializable, java.lang.Comparable<Tag>, Sea
      * @return 1 if this tag is more popular or equally popular and higher in the alphabet, 0 if they are the same; -1 otherwise
      */
     @Override
-    public int compareTo(Tag t) {
-        if (this.equals(t)) {
+    public int compareTo(Object o) {
+        if (this.equals(o)) {
             return 0;
-        } else {
+        } else if (o instanceof Tag) {
+            Tag t = (Tag) o;
             if (this.numEntities() > t.numEntities()) {
                 return 1;
             } else if (this.numEntities() < t.numEntities()) {
@@ -140,10 +143,13 @@ public class Tag implements java.io.Serializable, java.lang.Comparable<Tag>, Sea
                 return this.tagName.compareTo(t.tagName);
             }
         }
+        return -1;
     }
     
     @Override
     public boolean equals(Object o) {
+        if (this == o)
+            return true;
         if (o instanceof Tag) {
             Tag t = (Tag) o;
             return t.id == this.id;

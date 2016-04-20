@@ -123,7 +123,7 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
      * @return the set of tags associated with the item
      */
     @Override
-    public Set<Tag> getTags() {
+    public Set getTags() {
         return this.tags;
     }
     /**
@@ -149,7 +149,7 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
      * Sets the set of tags associated with this item. Required by Hibernate
      * @param tags the set of tags associated with this item.
      */
-    public void setTags(Set<Tag> tags) {
+    public void setTags(Set tags) {
         this.tags.addAll(tags);
     }
 
