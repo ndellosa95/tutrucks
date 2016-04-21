@@ -85,13 +85,13 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
      * @param t the taggable entity to be associated with this tag
      */
     public void addEntity(Truck t) {
+        trucks.add(t);
         if (!t.getTags().contains(this)) t.addTags(this);
-        trucks.add((Truck)t);
     }
     
     public void addEntity(Item i) {
+        items.add(i);
         if (!i.getTags().contains(this)) i.addTags(this);
-        items.add((Item)i);
     }
     /**
      * Returns the set of trucks associated with this tag. Required by Hibernate.

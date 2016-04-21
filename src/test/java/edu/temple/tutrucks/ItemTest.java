@@ -61,7 +61,9 @@ public class ItemTest {
     
     @Test
     public void testAddReviewFailed() {
-        when(review.getReviewed()).thenReturn(new Item());  
+        Item i = new Item();
+        i.setId(1);
+        when(review.getReviewed()).thenReturn(i);  
         item.addReview(review);
         System.out.println("Verifying review called getReviewed");
         verify(review).getReviewed();
