@@ -19,8 +19,12 @@
 %>
 <html lang="en">
   <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
     <script>
-        
+        $(document).ready(function() {
         function facebookReady() {
             FB.init({
                 appId      : '1272882256060359',
@@ -46,6 +50,7 @@
          js.src = "https://connect.facebook.net/en_US/sdk.js";
          fjs.parentNode.insertBefore(js, fjs);
        }(document, 'script', 'facebook-jssdk'));
+   });
     </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -56,10 +61,7 @@
     <link rel="icon" href="favicon.ico">
 
     <title>TUtrucks</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
+    
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -120,8 +122,8 @@
               </ul>
               
             </li>
-            <li id="logoutTab" style="<%=logOffAreaVisibility%>">
-                Logout
+            <li class="" id="logoutTab" style="<%=logOffAreaVisibility%>">
+                    <a style="color:black" href="javascript:$.post('logout'); location.reload();">Logout</a>
             </li>
           </ul>
         </div><!--/.nav-collapse -->
