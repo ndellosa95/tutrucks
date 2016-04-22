@@ -256,7 +256,15 @@ public class User implements java.io.Serializable {
                 saltedPassword[i] = (i < 16 ? salt[i] : pwba[i-16]);
             
             byte[] hash = digest.digest(saltedPassword);
-            return new String(hash).replace("'", "\\'");
+            String hashed = new String(hash).replace("'", "\\'").replace("#", "\\#");
+            StringBuilder retval = new StringBuilder();
+            for (char c : hashed.toCharArray()) {
+                if (c < 32)
+                    retval.append(c + 32);
+                else
+                    retval.append(c);
+            }
+            return String.valueOf(retval);
         } catch (NoSuchAlgorithmException ex) {
             //error handling
             return null;
