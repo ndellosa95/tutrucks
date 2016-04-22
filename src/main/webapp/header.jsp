@@ -19,6 +19,34 @@
 %>
 <html lang="en">
   <head>
+    <script>
+        
+        function facebookReady() {
+            FB.init({
+                appId      : '1272882256060359',
+                xfbml      : true,
+                status   : true,
+                cookie     : true,
+                version    : 'v2.5'
+            });
+            $(document).trigger("facebook:ready");
+        }
+
+        if(window.FB) {
+            facebookReady();
+        } else {
+            window.fbAsyncInit = facebookReady;
+        }
+
+    
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -54,30 +82,7 @@
   
   <body>
       
-      <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '1272882256060359',
-          cookie     : true,
-          xfbml      : true,
-          version    : 'v2.5'
-        });
-        FB.getLoginStatus(function(response) {
-            if (response.status === 'connected') {
-            }else{
-                
-            }
-        });
-      };
-    
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "//connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
-    </script>
+      
     <%@include file="registrationModal.jsp" %>
     <%@include file="loginModal.jsp" %>
    <nav class="navbar navbar-default navbar-fixed-top">
