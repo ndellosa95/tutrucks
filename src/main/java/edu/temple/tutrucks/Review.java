@@ -53,8 +53,8 @@ public abstract class Review<T extends Reviewable> {
         return reviewStars;
     }
     /**
-     * Sets the number of stars in the review. Must be between 0 and 5. Required by Hibernate
-     * @param reviewStars the number of stars given in the review. Must be between 0 and 5.
+     * Sets the number of stars in the review. Must be between 0 and 10. Required by Hibernate
+     * @param reviewStars the number of stars given in the review. Must be between 0 and 10.
      */
     public void setReviewStars(int reviewStars) {
         if (reviewStars > 10 || reviewStars < 0) {
