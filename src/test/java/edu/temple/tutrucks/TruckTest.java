@@ -201,7 +201,7 @@ public class TruckTest {
         reviews = t.loadReviews();
         assertTrue(reviews.size() > 0);
         for (TruckReview r : reviews) {
-            if (r != null) System.out.println(r.reviewText);
+            if (r != null) System.out.println(r.getReviewText());
             else System.out.println("null entry");
         }
     }

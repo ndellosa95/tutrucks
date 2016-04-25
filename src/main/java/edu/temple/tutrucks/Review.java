@@ -6,6 +6,10 @@
 package edu.temple.tutrucks;
 
 import java.util.Date;
+import java.util.Objects;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 
 /**
  * The superclass for all review objects. Contains common traits of reviews.
@@ -15,11 +19,18 @@ import java.util.Date;
  */
 public abstract class Review<T extends Reviewable> {
     
-     int id;
-     User user;
-     int reviewStars;
-     String reviewText;
-     Date reviewDate;
+     private int id;
+     private User user;
+     private int reviewStars;
+     private String reviewText;
+     private Date reviewDate;
+     
+     /**
+      * Default empty constructor.
+      */
+     public Review() {
+         this.id = 0;
+     }
 
      /**
       * Returns the reviewed entity. Required by Hibernate
@@ -104,5 +115,50 @@ public abstract class Review<T extends Reviewable> {
      */
     public void setId(Integer id) {
         this.id = id;
+    }
+    
+    public void save() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        if (this.id == 0) {
+            Criteria criteria = session.createCriteria(this.getClass()).setProjection(Projections.max("id"));
+            Object result = criteria.uniqueResult();
+            int max = result == null ? 0 : (Integer)result;
+            this.setId(max+1);
+        }
+        session.saveOrUpdate(this);
+        session.saveOrUpdate(this.getReviewed());
+        session.getTransaction().commit();
+        session.close();
+        this.getUser().save();
+    }
+    
+    public void delete() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.delete(this);
+        session.saveOrUpdate(this.getReviewed());
+        session.saveOrUpdate(this.getUser());
+        session.getTransaction().commit();
+        session.close();
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Review) {
+            Review r = (Review) o;
+            return this.getClass().equals(r.getClass()) && this.id == r.id;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 41 * hash + this.id;
+        hash = 41 * hash + this.reviewStars;
+        hash = 41 * hash + Objects.hashCode(this.reviewText);
+        hash = 41 * hash + Objects.hashCode(this.reviewDate);
+        return hash;
     }
 }
