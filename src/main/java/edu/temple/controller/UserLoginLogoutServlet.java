@@ -33,6 +33,7 @@ public class UserLoginLogoutServlet extends HttpServlet {
                 session.setAttribute("user", u);
             } else {
                 u = User.validateUser(email, password);
+                System.out.println("User: "+u);
                 session.setAttribute("user", u);
             }
         } else {

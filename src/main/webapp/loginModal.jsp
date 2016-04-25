@@ -49,10 +49,10 @@
                                                 FB.login(function(response) {
                                                     if (response.authResponse) {
                                                      FB.api('/me', { locale: 'en_US', fields: 'id, name, email, picture' }, function(response) {
-                                                       document.getElementById("email").value = response.email;
-                                                       document.getElementById("facebook_id").value = response.id;
-                                                       document.getElementById("display").value=response.name;
-                                                       document.getElementById("avatar").value=response.picture.data.url;
+                                                       document.getElementById("email_l").value = response.email;
+                                                       document.getElementById("facebook_id_l").value = response.id;
+                                                       document.getElementById("display_l").value=response.name;
+                                                       document.getElementById("avatar_l").value=response.picture.data.url;
                                                      });
                                                     } else {
                                                      console.log('User cancelled login or did not fully authorize.');
