@@ -117,6 +117,7 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
             return;
         }
         truckReviews.add((TruckReview)r);
+        this.reloadReviews();
     }
     /**
      * Returns the set of tags attached to this truck. Required by Hibernate
@@ -249,9 +250,9 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
         //System.out.println(score);
         return (int) Math.round(score);
     }
-
+    
     @Override
-    public List<TruckReview> loadReviews() {        
+    public List<TruckReview> reloadReviews() {    
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
@@ -263,6 +264,14 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
         for (Object o : l) revs.add((TruckReview)o);
         this.setTruckReviews(revs);
         return this.truckReviews;
+    }
+
+    @Override
+    public List<TruckReview> loadReviews() {    
+        if (!truckReviews.isEmpty())
+            return this.truckReviews;
+        else
+            return this.reloadReviews();
     }
 
     @Override

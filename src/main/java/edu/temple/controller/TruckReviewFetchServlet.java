@@ -8,7 +8,6 @@ package edu.temple.controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import edu.temple.tutrucks.Review;
 import edu.temple.tutrucks.Truck;
 import edu.temple.tutrucks.TruckReview;
 import java.util.List;

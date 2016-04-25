@@ -118,6 +118,7 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
             return;
         }
         itemReviews.add((ItemReview)r);
+        this.reloadReviews();
     }
     /**
      * Returns a set of tags associated with this item. Required by Hibernate
@@ -183,9 +184,9 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
         score /= (double)itemReviews.size();
         return (int) Math.round(score);
     }
-
+    
     @Override
-    public List<ItemReview> loadReviews() {
+    public List<ItemReview> reloadReviews() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
@@ -200,10 +201,18 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
     }
 
     @Override
+    public List<ItemReview> loadReviews() {
+        if (!this.itemReviews.isEmpty())
+            return this.itemReviews;
+        else
+            return this.reloadReviews();
+    }
+
+    @Override
     public Set<Tag> loadTags() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        Query q = session.createQuery("from Tag t join t.items it where it.id = :id");
+        Query q = session.createQuery("from Tag t join t.items it where it.id = " + this.getId());
         List l = q.list();
         session.close();
         for (Object o : l) this.addTags((Tag)o);
