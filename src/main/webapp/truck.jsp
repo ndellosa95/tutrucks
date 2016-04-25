@@ -90,7 +90,13 @@
                                 out.print("<img src='images/Star_Half.png' width='12' height='24'>");
                             }
                     %>
-                    </h1>
+            </h1><br>
+            <div id="shareButtonDiv">
+               
+                <img id="shareButton" src="images/fbshare.png" width="180px" height="40px"/>
+                
+            
+            </div>
         </div>
     </div>
 
@@ -211,5 +217,31 @@
         });
     });
     </script>
+    
+    <script>
+            
+             $(document).on("facebook:ready", function() {
+                FB.getLoginStatus(function(response) {
+                    if (!(response.status==='connected'))
+                        document.getElementById("shareButtonDiv").innerHTML="&nbsp;";
+                });
+                $("#shareButton").click(function() {
+                    FB.getLoginStatus(function(response) {
+                        if (response.status === 'connected') {
+                        FB.ui({
+                            method: 'share',
+                            href: window.location.href
+                        }, function(response){});
+                        //var uid = response.authResponse.userID;
+                        //var accessToken = response.authResponse.accessToken;
+                      } else if (response.status === 'not_authorized') {
+                        // the user is logged in to Facebook, 
+                        // but has not authenticated your app
+                      } else {
+                        };
+                      });
+                    });
+                });
+            </script>
 <%@ include file="footer.html"%>
 
