@@ -118,7 +118,6 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
             return;
         }
         itemReviews.add((ItemReview)r);
-        this.reloadReviews();
     }
     /**
      * Returns a set of tags associated with this item. Required by Hibernate

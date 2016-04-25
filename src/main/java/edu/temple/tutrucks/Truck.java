@@ -117,7 +117,6 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
             return;
         }
         truckReviews.add((TruckReview)r);
-        this.reloadReviews();
     }
     /**
      * Returns the set of tags attached to this truck. Required by Hibernate
