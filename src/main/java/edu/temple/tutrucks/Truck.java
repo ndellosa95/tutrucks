@@ -273,7 +273,7 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
         List l = q.list();
         session.close();        
         for (Object o : l) {
-            this.addTags((Tag)o); 
+            if (o instanceof Tag) this.addTags((Tag)o); 
         }
         return this.tags;
     }
