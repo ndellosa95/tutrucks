@@ -132,7 +132,7 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
     }
     /**
      * Compares the tags based on their popularity first, then their name.
-     * @param t the object to be compared to this tag
+     * @param o the object to be compared to this tag
      * @return 1 if this tag is more popular or equally popular and higher in the alphabet, 0 if they are the same; -1 otherwise
      */
     @Override
@@ -175,7 +175,11 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
     public String getSearchName() {
         return this.tagName;
     }
-
+    /**
+     * Retrieves a list of tags that match the specified terms.
+     * @param terms the String to match
+     * @return a list of tags that match the specified terms
+     */
     public static List<Tag> searchTags(String terms) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -188,7 +192,12 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
         for (Searchable s : Searchable.SearchOrganizer.organize(l, terms)) results.add((Tag)s);
         return results;
     }
-    
+    /**
+     * Retrieves the tag with the specified name. If the tag does not exist and the createIfDoesNotExist parameter is true, this tag will be created.
+     * @param name the name of the tag to retrieve
+     * @param createIfDoesNotExist whether or not to create the tag if it does not exist
+     * @return the Tag object with the specified name
+     */
     public static Tag retrieveTag(String name, boolean createIfDoesNotExist) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -205,7 +214,9 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
             return retval;
         }
     }
-    
+    /**
+     * Saves this tag object to the database and assigns it an ID value.
+     */
     public void save() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -213,7 +224,9 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
         session.getTransaction().commit();
         session.close();
     }
-    
+    /**
+     * Removes this tag object from the database.
+     */
     public void delete() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();

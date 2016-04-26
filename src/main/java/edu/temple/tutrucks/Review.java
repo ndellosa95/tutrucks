@@ -116,7 +116,9 @@ public abstract class Review<T extends Reviewable> {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+    /**
+     * Saves this review object to the database and assigns it an ID value.
+     */
     public void save() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -132,7 +134,9 @@ public abstract class Review<T extends Reviewable> {
         session.close();
         this.getUser().save();
     }
-    
+    /**
+     * Removes this review object from the database.
+     */
     public void delete() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();

@@ -213,24 +213,39 @@ public class User implements java.io.Serializable {
     public void setPermissions(Permissions permissions) {
         this.permissions = permissions;
     }
-    
+    /**
+     * Changes the display name of this user and saves the change to the database.
+     * @param newDisplayName the new display name for this user
+     */
     public void changeDisplayName(String newDisplayName) {
         this.setDisplayName(newDisplayName);
         this.save();
     }
-    
+    /**
+     * Returns the salt of this user.
+     * @return this user's salt
+     */
     public byte[] getSalt() {
         return salt;
     }
-
+    /**
+     * Sets the salt for this user.
+     * @param salt the new salt for this user
+     */
     public void setSalt(byte[] salt) {
         this.salt = salt;
     }
-    
+    /**
+     * Returns this user's Facebook ID.
+     * @return this user's Facebook ID
+     */
     public String getFacebookID() {
         return facebookID;
     }
-    
+    /**
+     * Sets this user's Facebook ID.
+     * @param fbID this user's new Facebook ID
+     */
     public void setFacebookID(String fbID) {
         this.facebookID = fbID;
     }
@@ -240,7 +255,10 @@ public class User implements java.io.Serializable {
         SALTER.nextBytes(salt);
         return salt;
     }
-    
+    /**
+     * Changes this user's password and saves the change to the database.
+     * @param newPassword the new unencrypted password for this user
+     */
     public void changePassword(String newPassword) {
         byte[] newSalt = generateSalt();
         byte[] epass = encryptPassword(newPassword, newSalt);
@@ -264,7 +282,12 @@ public class User implements java.io.Serializable {
             return null;
         }
     }
-
+    /**
+     * Validates the credentials submitted and returns the associated user object.
+     * @param email the email of the user
+     * @param password the unencrypted password of the user
+     * @return the associated user object if the credentials are correct; null otherwise
+     */
     public static User validateUser(String email, String password) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -274,7 +297,12 @@ public class User implements java.io.Serializable {
         byte[] encrypted = encryptPassword(password, user.salt);
         return Arrays.equals(user.passWord, encrypted) ? user : null;
     }
-    
+    /**
+     * Validates the credentials submitted and returns the associated user object.
+     * @param email the email of the user
+     * @param fbID the Facebook ID of the user
+     * @return the associated user object if the credentials are correct; null otherwise
+     */
     public static User validateUserFacebook(String email, String fbID) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -288,19 +316,36 @@ public class User implements java.io.Serializable {
             return null;
         }
     }
-    
+    /**
+     * Links this user to their Facebook account.
+     * @param fbID the Facebook ID of this user
+     */
     public void linkUserFacebook(String fbID) {
         this.setFbLink(true);
         this.setFacebookID(fbID);
         this.save();
     }
-    
+    /**
+     * Links this user to their Facebook account.
+     * @param fbID the Facebook ID of this user
+     * @param displayName the name of this user on Facebook
+     * @param avatar the link to this user's Facebook profile picture
+     */
     public void linkUserFacebook(String fbID, String displayName, String avatar) {
         this.setDisplayName(displayName);
         this.setAvatar(avatar);
         this.linkUserFacebook(fbID);
     }
-    
+    /**
+     * Creates a user with the specified credentials.
+     * @param email the new user's email
+     * @param password the new user's password
+     * @param facebook whether or not the new user is signing up via Facebook
+     * @param displayName the display name of the new user
+     * @param fbAvatarURL a link to the avatar of the new user
+     * @param fbID the Facebook ID of the new user
+     * @return the User object representing the newly created user
+     */
     public static User createUser(String email, String password, boolean facebook, String displayName, String fbAvatarURL, String fbID) {
         User user = new User();
         user.setUserEmail(email);
@@ -336,7 +381,9 @@ public class User implements java.io.Serializable {
         hash = 83 * hash + Objects.hashCode(this.permissions);
         return hash;
     }
-    
+    /**
+     * Saves this user object to the database and assigns it an ID value.
+     */
     public void save() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -344,7 +391,9 @@ public class User implements java.io.Serializable {
         session.getTransaction().commit();
         session.close();
     }
-    
+    /**
+     * Removes this user object from the database.
+     */
     public void delete() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();

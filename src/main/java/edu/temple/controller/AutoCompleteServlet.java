@@ -17,11 +17,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author nickdellosa
+ * @author Nick Dell'Osa
+ * @version %PROJECT_VERSION%
  */
 public class AutoCompleteServlet extends HttpServlet {
 
+    /**
+     * Processes the get request for this servlet. This servlets retrieves searchable information with the specified criteria and outputs it in JSON format.
+     * This servlet takes 3 paramaters: criteria, the search criteria, numResults, the number of results to output, and subscripts, a boolean value on whether or not to display the subscripts associated with each {@link Searchable}
+     * @param req the HttpServletRequest object for this servlet
+     * @param resp the HttpServletResponse object for this servlet
+     * @throws IOException 
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String search = req.getParameter("criteria");

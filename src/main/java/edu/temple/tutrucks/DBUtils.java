@@ -19,7 +19,12 @@ import java.util.HashSet;
  * @author nickdellosa
  */
 public class DBUtils {
-    
+    /**
+     * Searches through all Searchable objects in the database. Currently, {@link Searchable} objects include trucks, items, and tags.
+     * @param terms the String to match
+     * @param tags the tags that should be associated with returned {@link Searchable}s (will only return trucks and items with the specified tags and not the tag objects themselves)
+     * @return a list of {@link Searchable}s matching the specified terms and tags
+     */
     public static List<Searchable> searchAll(String terms, String tags) {
         List<Searchable> results = new ArrayList<>();
         if (terms != null) {
@@ -70,7 +75,10 @@ public class DBUtils {
         }
         return results;
     }
-    
+    /**
+     * Retrives a list of all trucks currently open for business.
+     * @return a list of all trucks currently open for business
+     */
     public static List<Truck> openTrucks() {
         Calendar c = Calendar.getInstance();
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);

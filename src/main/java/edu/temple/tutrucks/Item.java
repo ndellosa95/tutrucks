@@ -158,7 +158,11 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
     public String getSearchName() {
         return this.itemName;
     }
-
+    /**
+     * Retrieves a list of items that match the specified terms.
+     * @param terms the String to match
+     * @return a list of items that match the specified terms
+     */
     public static List<Item> searchItems(String terms) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -217,7 +221,11 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
         for (Object o : l) this.addTags((Tag)o);
         return this.tags;
     }
-    
+    /**
+     * Retrieves the item with the specified id.
+     * @param id the id of the Item object to retrieve.
+     * @return the item with the specified id
+     */
     public static Item getItemByID(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();

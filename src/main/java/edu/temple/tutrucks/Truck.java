@@ -193,11 +193,18 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
     public String getSearchName() {
         return this.truckName;
     }
-    
+    /**
+     * Retrieves a list of all trucks in the database.
+     * @return a list of all trucks in the database
+     */
     public static List<Truck> getAllTrucks() {
         return searchTrucks("");
     }
-    
+    /**
+     * Retrieves a list of trucks that match the specified terms.
+     * @param terms the String to match
+     * @return a list of trucks that match the specified terms
+     */
     public static List<Truck> searchTrucks(String terms) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -210,7 +217,11 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
         for (Searchable s : Searchable.SearchOrganizer.organize(l, terms)) results.add((Truck)s);
         return results;
     }
-    
+    /**
+     * Retrieves the Truck with the specified name.
+     * @param name the name of the Truck object to retrieve.
+     * @return the truck with the specified name
+     */
     public static Truck getTruckByName(String name) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -221,7 +232,11 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
         session.close();
         return retval;
     }
-    
+    /**
+     * Retrieves the truck with the specified id.
+     * @param id the id of the Truck object to retrieve.
+     * @return the truck with the specified id
+     */
     public static Truck getTruckByID(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
