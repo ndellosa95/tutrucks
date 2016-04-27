@@ -218,7 +218,9 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
         Query q = session.createQuery("from Tag t join t.items it where it.id = " + this.getId());
         List l = q.list();
         session.close();
-        for (Object o : l) this.addTags((Tag)o);
+        for (Object o : l) {
+            if (o instanceof Tag) this.addTags((Tag)o);
+        }
         return this.tags;
     }
     /**
