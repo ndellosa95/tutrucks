@@ -18,7 +18,7 @@ import org.hibernate.Session;
  * @author Nick Dell'Osa
  * @version %PROJECT_VERSION%
  */
-public class Truck implements java.io.Serializable, Reviewable, Taggable, Searchable {
+public class Truck implements java.io.Serializable, Reviewable, Taggable, Searchable, Visualizable {
 
      private int id;
      private String truckName;
@@ -26,6 +26,7 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
      private double longitude;
      private Time openingTime;
      private Time closingTime;
+     private String avatar;
      private List<TruckReview> truckReviews = new ArrayList<>();
      private List<Menu> menus = new ArrayList<>();
      private Set<Tag> tags = new TreeSet();
@@ -192,6 +193,16 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
     @Override
     public String getSearchName() {
         return this.truckName;
+    }
+    
+    @Override
+    public String getAvatar() {
+        return this.avatar;
+    }
+
+    @Override
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
     /**
      * Retrieves a list of all trucks in the database.

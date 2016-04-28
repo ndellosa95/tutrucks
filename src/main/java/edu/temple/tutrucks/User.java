@@ -22,7 +22,7 @@ import org.hibernate.Session;
  * @author Nick Dell'Osa
  * @version %PROJECT_VERSION%
  */
-public class User implements java.io.Serializable {
+public class User implements java.io.Serializable, Visualizable {
 
     private static final Random SALTER = new java.security.SecureRandom();
     private static final String APP_ID = "1272882256060359";
@@ -132,6 +132,7 @@ public class User implements java.io.Serializable {
      * Returns a link to this user's avatar. Required by Hibernate
      * @return a link to this user's avatar
      */
+    @Override
     public String getAvatar() {
         return this.avatar;
     }
@@ -139,6 +140,7 @@ public class User implements java.io.Serializable {
      * Sets the link to this user's avatar. Required by Hibernate
      * @param avatar the link to this user's avatar
      */
+    @Override
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
