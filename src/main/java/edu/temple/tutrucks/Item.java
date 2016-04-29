@@ -206,10 +206,10 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
 
     @Override
     public List<ItemReview> loadReviews() {
-        if (!this.itemReviews.isEmpty())
-            return this.itemReviews;
-        else
+        if (this.itemReviews.isEmpty() || !this.reviewsValid())
             return this.reloadReviews();
+        else
+            return this.itemReviews;
     }
 
     @Override
@@ -258,6 +258,16 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
         hash = 53 * hash + Objects.hashCode(this.itemName);
         hash = 53 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
         return hash;
+    }
+    
+    @Override
+    public boolean reviewsValid() {
+        for (ItemReview r : itemReviews) {
+            if (!(r.getItem().equals(this) && r.getReviewText() != null)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

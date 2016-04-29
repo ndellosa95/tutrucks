@@ -39,27 +39,25 @@ public class TruckReviewFetchServlet extends HttpServlet {
             List<TruckReview> reviews = t.loadReviews().subList(minReview, maxReview);
             JsonArray array = new JsonArray();
             for (TruckReview rev : reviews) {
-                JsonObject revObj = new JsonObject();
-                revObj.addProperty("text", rev.getReviewText());
-                revObj.addProperty("stars", rev.getReviewStars());
-                revObj.addProperty("date", rev.getReviewDate().toString());
-                JsonObject userInfo = new JsonObject();
-                userInfo.addProperty("name", rev.getUser().getDisplayName());
-                userInfo.addProperty("email", rev.getUser().getUserEmail());
-                userInfo.addProperty("avatar", rev.getUser().getAvatar());
-                revObj.add("userinfo", userInfo);
-                array.add(revObj);
+                if (rev != null) {
+                    JsonObject revObj = new JsonObject();
+                    revObj.addProperty("text", rev.getReviewText());
+                    revObj.addProperty("stars", rev.getReviewStars());
+                    revObj.addProperty("date", rev.getReviewDate().toString());
+                    JsonObject userInfo = new JsonObject();
+                    userInfo.addProperty("name", rev.getUser().getDisplayName());
+                    userInfo.addProperty("email", rev.getUser().getUserEmail());
+                    userInfo.addProperty("avatar", rev.getUser().getAvatar());
+                    revObj.add("userinfo", userInfo);
+                    array.add(revObj);
+                }
             }
             Gson gson = new Gson();
             String s = gson.toJson(array);
             resp.getWriter().print(s);
         } catch (Exception e) {
-            
+            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
-    }
-    
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        
     }
 }

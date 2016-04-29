@@ -33,4 +33,9 @@ public interface Reviewable {
      * @return the reviewable entities reviews from the database
      */
     public List<? extends Review> loadReviews();
+    /**
+     * Checks the validity of the current reviews for this reviewable.
+     * @return true if the reviews are valid, false otherwise.
+     */
+    boolean reviewsValid();
 }

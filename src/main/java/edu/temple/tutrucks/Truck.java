@@ -294,10 +294,10 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
 
     @Override
     public List<TruckReview> loadReviews() {    
-        if (!truckReviews.isEmpty())
-            return this.truckReviews;
-        else
+        if (truckReviews.isEmpty() || !this.reviewsValid())
             return this.reloadReviews();
+        else
+            return this.truckReviews;
     }
 
     @Override
@@ -334,6 +334,15 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
         hash = 41 * hash + Objects.hashCode(this.openingTime);
         hash = 41 * hash + Objects.hashCode(this.closingTime);
         return hash;
+    }
+
+    @Override
+    public boolean reviewsValid() {
+        for (TruckReview r : truckReviews) {
+            if (r==null || !(r.getTruck().equals(this) && r.getReviewText() != null))
+                return false;
+        }
+        return true;
     }
 
 }
