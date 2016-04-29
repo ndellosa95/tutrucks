@@ -40,10 +40,10 @@ public class AutoCompleteServlet extends HttpServlet {
             numResults = results.size();
         }
 
-        for (int i = 0; i < numResults; i++) {
+        for (int i = 0; i < Math.min(numResults, results.size()); i++) {
             String sn = results.get(i).getSearchName();
-            String html = "<span class='ac_subtext'>*</span>";
             if (subs) {
+                String html = "<span class='ac_subtext'>*</span>";
                 sn += html.replace("*", results.get(i) instanceof Item
                         ? "at " + (((Item) results.get(i)).getMenu().getTruck().getTruckName())
                         : results.get(i).getClass().getSimpleName());

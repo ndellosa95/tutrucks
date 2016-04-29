@@ -160,10 +160,11 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
     }
     /**
      * Retrieves a list of items that match the specified terms.
-     * @param terms the String to match
+     * @param criteria the String to match
      * @return a list of items that match the specified terms
      */
-    public static List<Item> searchItems(String terms) {
+    public static List<Item> searchItems(String criteria) {
+        String terms = criteria.toLowerCase();
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(

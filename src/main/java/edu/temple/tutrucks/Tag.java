@@ -177,14 +177,15 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
     }
     /**
      * Retrieves a list of tags that match the specified terms.
-     * @param terms the String to match
+     * @param criteria the String to match
      * @return a list of tags that match the specified terms
      */
-    public static List<Tag> searchTags(String terms) {
+    public static List<Tag> searchTags(String criteria) {
+        String terms = criteria.toLowerCase();
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
-                "from Tag where tagName like '%" + terms + "%'"
+                "from Tag where lower(tagName) like '%" + terms + "%'"
         );
         List l = q.list();
         session.close();

@@ -213,14 +213,15 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
     }
     /**
      * Retrieves a list of trucks that match the specified terms.
-     * @param terms the String to match
+     * @param criteria the String to match
      * @return a list of trucks that match the specified terms
      */
-    public static List<Truck> searchTrucks(String terms) {
+    public static List<Truck> searchTrucks(String criteria) {
+        String terms = criteria.toLowerCase();
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
-                "from Truck" + (terms.isEmpty() ? "" : " where truckName like '%" + terms + "%'")
+                "from Truck" + (terms.isEmpty() ? "" : " where lower(truckName) like '%" + terms + "%'")
         );
         List l = q.list();
         session.close();
