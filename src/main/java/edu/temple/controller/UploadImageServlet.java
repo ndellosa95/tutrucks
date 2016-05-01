@@ -24,7 +24,22 @@ import javax.servlet.http.Part;
  */
 public class UploadImageServlet extends HttpServlet {
     
-    private static final String IMAGE_UPLOADS = "/uploads/";
+    private static final String IMAGE_UPLOADS = "uploads/";
+    
+    static {
+        File uploadsDir = new File(IMAGE_UPLOADS);
+        if (!uploadsDir.exists()) {
+            uploadsDir.mkdir();
+        }
+        File truckDir = new File(IMAGE_UPLOADS + "truck");
+        if (!truckDir.exists()) {
+            truckDir.mkdir();
+        }
+        File userDir = new File(IMAGE_UPLOADS + "user");
+        if (!userDir.exists()) {
+            userDir.mkdir();
+        }
+    }
     
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
@@ -59,10 +74,7 @@ public class UploadImageServlet extends HttpServlet {
             File output = new File(IMAGE_UPLOADS + entityType + "/" + id + ".png");
             ImageIO.write(image, "png", output);
             v.setAvatar(output.getPath());
-        } catch (IOException ex) {
-        } catch (ServletException ex) {
-        } catch (NumberFormatException ex) {
-        } catch (ClassCastException ex) {
+        } catch (IOException | ServletException | NumberFormatException | ClassCastException ex) {
         }
     }
     
