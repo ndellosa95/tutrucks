@@ -24,14 +24,25 @@ public class TruckReviewFetchServlet extends HttpServlet {
    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+        
         try {
             int truckID = Integer.parseInt(req.getParameter("criteria"));
             int minReview = Integer.parseInt(req.getParameter("start"));
             int maxReview = Integer.parseInt(req.getParameter("end"));
             Truck t = Truck.getTruckByID(truckID);
-            List<TruckReview> reviews = t.loadReviews().subList(minReview, maxReview);
+            
+            List<TruckReview> reviews1 = t.loadReviews();
+            String s;
+            if (minReview>=reviews1.size()){
+                minReview=0;
+                maxReview=-1;
+            };
+            if (maxReview>=reviews1.size()) maxReview=reviews1.size()-1;
+            List<TruckReview> reviews = reviews1.subList(minReview, maxReview-minReview+1);
+            
             JsonArray array = new JsonArray();
             for (TruckReview rev : reviews) {
+                
                 JsonObject revObj = new JsonObject();
                 revObj.addProperty("text", rev.getReviewText());
                 revObj.addProperty("stars", rev.getReviewStars());
@@ -43,11 +54,13 @@ public class TruckReviewFetchServlet extends HttpServlet {
                 revObj.add("userinfo", userInfo);
                 array.add(revObj);
             }
+            
             Gson gson = new Gson();
-            String s = gson.toJson(array);
+            s = gson.toJson(array);
+            System.out.println(s);
             resp.getWriter().print(s);
         } catch (Exception e) {
-            
+            System.out.println(e);
         }
     }
     
