@@ -301,6 +301,14 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
         return hash;
     }
 
+    public static List<String> getAllTruckNames() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query q = session.createQuery("select truckName from Truck order by truckName ASC");
+        List l = q.list();
+        session.close();
+        return l;
+    }
 }
 
 
