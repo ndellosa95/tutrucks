@@ -5,6 +5,7 @@
  */
 package edu.temple.controller;
 
+import edu.temple.tutrucks.Permissions;
 import edu.temple.tutrucks.Truck;
 import edu.temple.tutrucks.User;
 import edu.temple.tutrucks.Visualizable;
@@ -50,6 +51,11 @@ public class UploadImageServlet extends HttpServlet {
             Visualizable v = null;
             switch (entityType) {
                 case "truck":
+                    User admin = (User)req.getSession().getAttribute("user");
+                    if (admin.getPermissions() != Permissions.ADMIN) {
+                        resp.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to perform this action.");
+                        return;
+                    }
                     id = Integer.parseInt(req.getParameter("id"));
                     v = Truck.getTruckByID(id);
                     if (v == null) {

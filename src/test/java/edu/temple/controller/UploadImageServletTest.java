@@ -5,6 +5,7 @@
  */
 package edu.temple.controller;
 
+import edu.temple.tutrucks.Permissions;
 import edu.temple.tutrucks.User;
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,6 +34,12 @@ public class UploadImageServletTest {
     private static final String TEST_IMAGE = UploadImageServletTest.class.getClassLoader().getResource("TestImage.jpg").getFile();
     private static final String TEST_IMAGE2 = UploadImageServletTest.class.getClassLoader().getResource("TestImage2.jpg").getFile();
     
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+    private HttpSession session;
+    private Part imagePart;
+    private User fakeUser;
+    
     public UploadImageServletTest() {
     }
     
@@ -46,6 +53,13 @@ public class UploadImageServletTest {
     
     @Before
     public void setUp() {
+        request = mock(HttpServletRequest.class);
+        response = mock(HttpServletResponse.class);
+        session = mock(HttpSession.class);
+        imagePart = mock(Part.class);
+        fakeUser = new User();
+        when(session.getAttribute("user")).thenReturn(fakeUser);
+        when(request.getSession()).thenReturn(session);
     }
     
     @After
@@ -54,9 +68,7 @@ public class UploadImageServletTest {
 
     @Test
     public void testDoPostTruck() throws FileNotFoundException, IOException, ServletException {
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-        Part imagePart = mock(Part.class);
+        fakeUser.setPermissions(Permissions.ADMIN);
         when(request.getPart("image")).thenReturn(imagePart);
         when(request.getParameter("type")).thenReturn("truck");
         when(request.getParameter("id")).thenReturn("7");
@@ -77,17 +89,10 @@ public class UploadImageServletTest {
     
     @Test
     public void testDoPostUser() throws FileNotFoundException, IOException, ServletException {
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-        HttpSession session = mock(HttpSession.class);
-        User fakeUser = new User();
         fakeUser.setId(0);
         fakeUser.setAvatar("null");
-        Part imagePart = mock(Part.class);
         when(request.getPart("image")).thenReturn(imagePart);
         when(request.getParameter("type")).thenReturn("user");
-        when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("user")).thenReturn(fakeUser);
         UploadImageServlet servlet = new UploadImageServlet();
         File testFile = new File(TEST_IMAGE2);
         File realFile = new File("uploads/user/0.png");
