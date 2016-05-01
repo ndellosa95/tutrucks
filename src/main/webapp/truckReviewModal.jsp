@@ -34,36 +34,40 @@
             success: function (data){
                 
                 for (var i=0;i<data.length;i++){
-                    innerString.append("<div class='container'>");
-                    innerString.append("<div class='row'>");
-                    innerString.append("<div class='row'>");
-                    innerString.append("<div class='col'>");
+                    
+                    innerString+="<div class='row'>";
+                    innerString+="<div class='row'>";
+                    innerString+="<div class='col'>";
                     //Profile Picture
-                    innerString.append("</div>");
-                    innerString.append("<div class='col'>");
+                    innerString+="</div>";
+                    innerString+="<div class='col'>";
                     avgRating=[data[i]["stars"]];
                     fullStars=avgRating/2;
                     halfStars=avgRating%2;
-                    innerString.append("Reviews: ");
+                    innerString+="Reviews: ";
                     if (avgRating===0){
-                        innerString.append("None");
+                        innerString+="None";
                     }
                     for (c=0; c<fullStars; c++){
-                        innerString.append("<img src='images/Star_Full.png' width='24' height='24'>");
+                        innerString+="<img src='images/Star_Full.png' width='24' height='24'>";
                     }
                     if (halfStars===1){
-                        innerString.append("<img src='images/Star_Half.png' width='12' height='24'>");
+                        innerString+="<img src='images/Star_Half.png' width='12' height='24'>";
                     }
-                    innerString.append("</div>");
-                    innerString.append("</div>");
-                    innerString.append("<div class='row'>").append([data[i]["text"]]).append("</div>");
-                    innerString.append("<div class='row panel-title'>").append([data[i]["date"]]).append("</div>");
-                    innerString.append("</div>");
-                    innerString.append("</div>");
+                    innerString+="</div>";
+                    innerString+="</div>";
+                    innerString+="<div class='row'>";
+                    innerString+=[data[i]["text"]];
+                    innerString+="</div>";
+                    innerString+="<div class='row userAndDate'>";
+                    innerString+=[data[i]["date"]];
+                    innerString+="</div>";
+                    innerString+="</div>";
+                    
                     
                 }
                 if (i===0){
-                    innerString.append("NONE");
+                    innerString+="NONE";
                 }
                 $("#reviews").append(innerString);
             },
