@@ -5,6 +5,7 @@
  */
 package edu.temple.controller;
 
+import edu.temple.tutrucks.Permissions;
 import edu.temple.tutrucks.Truck;
 import edu.temple.tutrucks.User;
 import edu.temple.tutrucks.Visualizable;
@@ -24,7 +25,22 @@ import javax.servlet.http.Part;
  */
 public class UploadImageServlet extends HttpServlet {
     
-    private static final String IMAGE_UPLOADS = "/uploads/";
+    private static final String IMAGE_UPLOADS = "uploads/";
+    
+    static {
+        File uploadsDir = new File(IMAGE_UPLOADS);
+        if (!uploadsDir.exists()) {
+            uploadsDir.mkdir();
+        }
+        File truckDir = new File(IMAGE_UPLOADS + "truck");
+        if (!truckDir.exists()) {
+            truckDir.mkdir();
+        }
+        File userDir = new File(IMAGE_UPLOADS + "user");
+        if (!userDir.exists()) {
+            userDir.mkdir();
+        }
+    }
     
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
@@ -35,6 +51,11 @@ public class UploadImageServlet extends HttpServlet {
             Visualizable v = null;
             switch (entityType) {
                 case "truck":
+                    User admin = (User)req.getSession().getAttribute("user");
+                    if (admin.getPermissions() != Permissions.ADMIN) {
+                        resp.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to perform this action.");
+                        return;
+                    }
                     id = Integer.parseInt(req.getParameter("id"));
                     v = Truck.getTruckByID(id);
                     if (v == null) {
@@ -59,10 +80,7 @@ public class UploadImageServlet extends HttpServlet {
             File output = new File(IMAGE_UPLOADS + entityType + "/" + id + ".png");
             ImageIO.write(image, "png", output);
             v.setAvatar(output.getPath());
-        } catch (IOException ex) {
-        } catch (ServletException ex) {
-        } catch (NumberFormatException ex) {
-        } catch (ClassCastException ex) {
+        } catch (IOException | ServletException | NumberFormatException | ClassCastException ex) {
         }
     }
     
