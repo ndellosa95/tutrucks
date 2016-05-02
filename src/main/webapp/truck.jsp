@@ -117,8 +117,8 @@
     <div class="container" style="padding-bottom: 10px;">
         <div class="row-fluid">
             <div class="col-md-3">
-                <button type="button" id="more" class="btn btn-primary mapButton" data-toggle="collapse" data-target="#collapseMap">
-                    <strong><span class="glyphicon glyphicon-chevron-up"></span> Hide Map</strong>
+                <button type="button" id="more" onclick="toggleClass()" class="btn btn-primary mapButton">
+                    <strong><span id="change" class="glyphicon glyphicon-chevron-up"></span> Hide Map</strong>
                 </button>
                 <button type="button" class="btn btn-primary mapButton" onclick="getDirections();"><strong>Get Directions</strong></button>
             </div>
