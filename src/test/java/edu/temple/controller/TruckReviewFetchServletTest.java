@@ -57,7 +57,7 @@ public class TruckReviewFetchServletTest {
             when(response.getWriter()).thenReturn(writer);
             new TruckReviewFetchServlet().doGet(request, response);
             writer.flush();
-            assertEquals("[{\"text\":\"the most popular truck on campus, one of the best too, though a bit expensive\",\"stars\":8,\"date\":\"2016-04-10\",\"userinfo\":{\"name\":\"nick.dellosa\",\"email\":\"nick.dellosa@yahoo.com\"}}]", new String(baos.toByteArray()));
+            assertEquals("[{\"text\":\"the most popular truck on campus, one of the best too, though a bit expensive\",\"stars\":8,\"date\":\"2016-04-10\",\"userinfo\":{\"name\":\"nick.dellosa\",\"email\":\"nick.dellosa@yahoo.com\",\"avatar\":null,\"uid\":4}}]", new String(baos.toByteArray()));
         } catch (IOException e) {
             fail();
         }

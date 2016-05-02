@@ -443,6 +443,8 @@ public class User implements java.io.Serializable, Visualizable {
         this.setTruckReviews(user.getTruckReviews());
         this.setItemReviews(user.getItemReviews());
         return user;
+    }
+    
     public static boolean existsFB(String fbID){
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
