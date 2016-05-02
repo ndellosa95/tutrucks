@@ -5,28 +5,36 @@
 <div class="container profile">
     <div class="col-md-4">
         <%
-            User userProfile=new User(); //= (User) request.getParameter("userid");
+            User userProfile=User.loadUserByID(Integer.parseInt(request.getParameter("userid")));
+            String avatar=null;
+            List<TruckReview> truckReviews=null;
+            List<ItemReview> itemReviews=null;
+            if (userProfile==null){
+                response.sendRedirect("invalidPage.jsp");
+                return;
+            }else{
 //            user = new User();
 //            user.setAvatar("https://upload.wikimedia.org/wikipedia/en/3/38/Avatarjakeneytiri.jpg");
 //            user.setDisplayName("Avatar");
-            String avatar = userProfile.getAvatar();
-            List<TruckReview> truckReviews = userProfile.getTruckReviews();
+            avatar = userProfile.getAvatar();
+            truckReviews = userProfile.getTruckReviews();
 //            TruckReview tr = new TruckReview();
 //            Truck t = Truck.getTruckByID(1);
 //            tr.setTruck(t);
 //            tr.setReviewed(t);
 //            tr.setReviewText("best truck ever");
 //            truckReviews.add(tr);
-            List<ItemReview> itemReviews = userProfile.getItemReviews();
+            itemReviews = userProfile.getItemReviews();
+            }
         %>
 
         <img class = "avatar" src="
              <% 
                 if (avatar != null) {
                     out.print(avatar);
-                }
+                }else out.print("images/NoUserPhoto.png");
              %>" 
-             alt="No user avatar">
+             alt="No user avatar" width="128px" height="128px" style=" border-color: white;" />
 
         <h3><%=userProfile.getDisplayName()%></h3>
         <h5><%=truckReviews.size()%> truck reviews</h5>
