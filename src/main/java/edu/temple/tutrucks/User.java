@@ -150,6 +150,7 @@ public class User implements java.io.Serializable, Visualizable {
      * @return the list of reviews for trucks written by this user
      */
     public List getTruckReviews() {
+        
         return this.truckReviews;
     }
     /**
@@ -352,12 +353,16 @@ public class User implements java.io.Serializable, Visualizable {
         user.setFbLink(facebook);
         user.setPermissions(Permissions.PLEB);
         if (facebook) {
+            if (existsFB(fbID)||existsEmail(email)){
+                return null;
+            }
             user.setDisplayName(displayName);
             user.setAvatar(fbAvatarURL);
             byte[] fbSalt = generateSalt();
             user.setFacebookSalt(fbSalt);
             user.setFacebookID(encryptPassword(fbID, fbSalt));
         } else {
+            if (existsEmail(email)) return null;
             user.setDisplayName(email.substring(0, email.indexOf('@')));
         }
         user.save();
@@ -438,6 +443,31 @@ public class User implements java.io.Serializable, Visualizable {
         this.setTruckReviews(user.getTruckReviews());
         this.setItemReviews(user.getItemReviews());
         return user;
+    public static boolean existsFB(String fbID){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query q = session.createQuery(
+                "from User where facebookID=" + fbID
+        );
+        if (q.uniqueResult()==null){
+            session.close();
+            return false;
+        }else{
+            session.close();
+            return true;
+        }
+    }
+    public static boolean existsEmail(String email){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query q = session.createQuery("from User where userEmail = :email").setString("email", email);
+        if (q.uniqueResult()==null){
+            session.close();
+            return false;
+        }else{
+            session.close();
+            return true;
+        }
     }
 }
 
