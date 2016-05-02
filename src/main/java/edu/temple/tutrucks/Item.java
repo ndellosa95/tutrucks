@@ -193,7 +193,8 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
         Hibernate.initialize(retval.getItemReviews());
         session.getTransaction().commit();
         session.close();
-        retval.itemReviews.size();
+        retval.getItemReviews().size();
+        this.setItemReviews(retval.getItemReviews());
         return retval;
     }
 
@@ -205,7 +206,8 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
         Hibernate.initialize(retval.getTags());
         session.getTransaction().commit();
         session.close();
-        retval.tags.size();
+        retval.getTags().size();
+        this.setTags(retval.getTags());
         return retval;
     }
     /**

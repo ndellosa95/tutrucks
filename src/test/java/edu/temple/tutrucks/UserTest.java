@@ -46,31 +46,6 @@ public class UserTest {
         assertNotNull(truckReview);
         assertNotNull(itemReview);
     }
-
-   @Test
-    public void testAddItemReview() {
-        itemReview.setUser(user);
-        user.addReview(itemReview);
-        System.out.println("Verifying that the item review was added to the user list");
-        assertEquals(user.getItemReviews().get(0), itemReview);
-    }
-    
-    @Test
-    public void testAddTruckReview() {
-        truckReview.setUser(user);
-        user.addReview(truckReview);
-        System.out.println("Verifying that the truck review was added to the user list");
-        assertEquals(user.getTruckReviews().get(0), truckReview);
-    }
-   
-    @Test
-    public void testAddReviewFailed() {
-        User temp = new User();
-        itemReview.setUser(temp);
-        user.addReview(itemReview);
-        System.out.println("Verifying that the item review was not added to the user list");
-        assertEquals(user.getTruckReviews().contains(itemReview), false);
-    }
     
     @Test
     public void testCreateUser() {

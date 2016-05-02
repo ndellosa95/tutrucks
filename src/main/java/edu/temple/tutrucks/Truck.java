@@ -252,18 +252,14 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
         Truck retval = (Truck) session.get(Truck.class, id);
         if (loadReviews) {
             Hibernate.initialize(retval.getTruckReviews());
-        }
-        if (loadTags) {
-            Hibernate.initialize(retval.getTags());
-        }
-        session.close();
-        if (loadReviews) {
             retval.getTruckReviews().size();
             retval.removeNullReviews();
         }
         if (loadTags) {
+            Hibernate.initialize(retval.getTags());
             retval.getTags().size();
         }
+        session.close();
         return retval;
     }
     
@@ -310,6 +306,7 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
         session.getTransaction().commit();
         session.close();
         retval.getTags().size();
+        this.setTags(retval.getTags());
         return retval;
     }
     
