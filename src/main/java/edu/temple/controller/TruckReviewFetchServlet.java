@@ -58,6 +58,7 @@ public class TruckReviewFetchServlet extends HttpServlet {
                     userInfo.addProperty("name", rev.getUser().getDisplayName());
                     userInfo.addProperty("email", rev.getUser().getUserEmail());
                     userInfo.addProperty("avatar", rev.getUser().getAvatar());
+                    userInfo.addProperty("uid", rev.getUser().getId());
                     revObj.add("userinfo", userInfo);
                     array.add(revObj);
                 }

@@ -36,6 +36,9 @@
                     
                     innerString+="<div class='row borders'>";
                     innerString+="<div class='row'>";
+                    innerString+="<a href=profile.jsp?userid=";
+                    innerString+=[data[i]["userinfo"]["uid"]];
+                    innerString+=">";
                     innerString+="<img class = 'avatar' src='";
                     innerString+=[data[i]["userinfo"]["avatar"]];
                     if ([data[i]["userinfo"]["avatar"]]== null||[data[i]["userinfo"]["avatar"]]=="") {
@@ -43,7 +46,7 @@
                     }else innerString+=[data[i]["userinfo"]["avatar"]];
                     
                     innerString+="'alt='No user avatar' width='32px' height='32px'/> ";
-                    innerString+=[data[i]["userinfo"]["avatar"]];
+                    innerString+="</a>";
                     avgRating=[data[i]["stars"]];
                     fullStars=avgRating/2;
                     halfStars=avgRating%2;
@@ -61,12 +64,16 @@
                     innerString+="<div class='row'>";
                     innerString+=[data[i]["text"]];
                     innerString+="</div>";
-                    innerString+="<div class='row userAndDate'>";
+                    innerString+="<a href=profile.jsp?userid=";
+                    innerString+=[data[i]["userinfo"]["uid"]];
+                    innerString+=">";
+                    innerString+="<div class='row userAndDate' style='color:black'>";
                     innerString+="Reviewed by ";
                     innerString+=[data[i]["userinfo"]["name"]];
-                    innerString+=" on "
+                    innerString+=" on ";
                     innerString+=[data[i]["date"]];
                     innerString+="</div>";
+                    innerString+="</a>";
                     innerString+="</div>";
                     
                     
