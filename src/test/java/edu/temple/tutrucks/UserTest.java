@@ -16,10 +16,22 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 
-public class UserTest extends IntegrationTestUsingResources {
+public class UserTest {
     private ItemReview itemReview;
     private TruckReview truckReview;  
     private User user;
+    private static User realUser;
+    private static final String EMAIL = "usertest@test.com";
+    
+    @BeforeClass
+    public static void setup() {
+        realUser = User.createUser(EMAIL, "password", false, null, null, null);
+    }
+    
+    @AfterClass
+    public static void tearDown() {
+        realUser.delete();
+    }
     
     @Before
     public void setUpMock() {
@@ -62,7 +74,7 @@ public class UserTest extends IntegrationTestUsingResources {
     
     @Test
     public void testCreateUser() {
-        assertEquals(IntegrationTestResources.EMAIL, IntegrationTestResources.getTestUser().getUserEmail());
+        assertEquals(EMAIL, realUser.getUserEmail());
     }
     
     @Test
@@ -77,15 +89,15 @@ public class UserTest extends IntegrationTestUsingResources {
     
     @Test
     public void testValidateUser() {
-        User testUser = User.validateUser(IntegrationTestResources.EMAIL, IntegrationTestResources.PASSWORD);
-        assertEquals(IntegrationTestResources.getTestUser(), testUser);
+        User testUser = User.validateUser(EMAIL, "password");
+        assertEquals(realUser, testUser);
     }
     
     @Test
     public void testValidateUserMultiple() {
         for (int i=0; i < 5; i++) {
-            User testUser = User.validateUser(IntegrationTestResources.EMAIL, IntegrationTestResources.PASSWORD);
-            assertEquals(IntegrationTestResources.getTestUser(), testUser);
+            User testUser = User.validateUser(EMAIL, "password");
+            assertEquals(realUser, testUser);
         }
     }
     

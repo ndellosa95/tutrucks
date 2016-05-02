@@ -44,7 +44,7 @@ public class TruckReviewFetchServletTest {
     @After
     public void tearDown() {
     }
-    /*
+    
     @Test
     public void testDoGet() {
         HttpServletRequest request = mock(HttpServletRequest.class);
@@ -62,5 +62,4 @@ public class TruckReviewFetchServletTest {
             fail();
         }
     }
-*/
 }

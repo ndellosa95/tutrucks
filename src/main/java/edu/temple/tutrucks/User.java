@@ -404,6 +404,12 @@ public class User implements java.io.Serializable, Visualizable {
      * Removes this user object from the database.
      */
     public void delete() {
+        for (TruckReview tr : this.truckReviews) 
+            tr.delete();
+        
+        for (ItemReview ir : this.itemReviews) 
+            ir.delete();
+        
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.delete(this);

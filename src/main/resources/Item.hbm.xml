@@ -24,7 +24,7 @@
             <list-index column="review_stars" />
             <one-to-many class="edu.temple.tutrucks.ItemReview" />
         </list>
-        <set name="tags" table="tag_item_map" inverse="true" lazy="true" fetch="select">
+        <set name="tags" table="tag_item_map" inverse="true" lazy="true" fetch="select" sort="natural">
             <key>
                 <column name="item_id" />
             </key>
