@@ -36,14 +36,14 @@ public class EditTruckServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String truckName = request.getParameter("oldName");
-        String edittedName = request.getParameter("newName");
+        int truckId = Integer.parseInt(request.getParameter("id"));
+        String truckName = request.getParameter("name");
         double lat = Double.parseDouble(request.getParameter("lat"));
         double lng = Double.parseDouble(request.getParameter("lng"));
         Time openTime = Time.valueOf(request.getParameter("open"));
         Time closeTime = Time.valueOf(request.getParameter("close"));
-        Truck editTruck = Truck.getTruckByName(truckName);
-        editTruck.setTruckName(edittedName);
+        Truck editTruck = Truck.getTruckByID(truckId);
+        editTruck.setTruckName(truckName);
         editTruck.setLongitude(lng);
         editTruck.setLatitude(lat);
         editTruck.setOpeningTime(openTime);

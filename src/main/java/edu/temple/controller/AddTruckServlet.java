@@ -6,10 +6,14 @@
 package edu.temple.controller;
 
 import edu.temple.tutrucks.HibernateUtil;
+import edu.temple.tutrucks.Tag;
 import edu.temple.tutrucks.Truck;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Time;
+import java.util.Arrays;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +34,7 @@ public class AddTruckServlet extends HttpServlet {
      *
      * @param request servlet request
      * @param response servlet response
-     * @return 
+     * @return
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
@@ -42,6 +46,8 @@ public class AddTruckServlet extends HttpServlet {
         double lng = Double.parseDouble(request.getParameter("lng"));
         Time openTime = Time.valueOf(request.getParameter("open"));
         Time closeTime = Time.valueOf(request.getParameter("close"));
+        String tagString = request.getParameter("tags");
+        List<String> tags = Arrays.asList(tagString.split("\\s*,\\s*"));
         //check these value things
         Truck newTruck = new Truck();
         newTruck.setTruckName(truckName);
@@ -51,12 +57,18 @@ public class AddTruckServlet extends HttpServlet {
         newTruck.setClosingTime(closeTime);
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.saveOrUpdate(newTruck);
+        session.persist(newTruck);
+        for (String s : tags) {
+            Tag temp = Tag.retrieveTag(s, true);
+            temp.addEntity(newTruck);
+            newTruck.addTags(temp);
+            session.saveOrUpdate(temp);
+        }
         session.getTransaction().commit();
         session.close();
-        
+
         try (PrintWriter out = response.getWriter()) {
-            out.print("Truck successfully saved");
+            out.print("Truck added");
         }
     }
 

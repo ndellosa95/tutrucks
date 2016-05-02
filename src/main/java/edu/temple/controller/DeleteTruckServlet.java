@@ -6,9 +6,14 @@
 package edu.temple.controller;
 
 import edu.temple.tutrucks.HibernateUtil;
+import edu.temple.tutrucks.Item;
+import edu.temple.tutrucks.Menu;
 import edu.temple.tutrucks.Truck;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,16 +40,23 @@ public class DeleteTruckServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String truckName = request.getParameter("name");
-        Truck deleteTruck = Truck.getTruckByName(truckName);
+        int id = Integer.parseInt(request.getParameter("truckId"));
+        Truck deleteTruck = Truck.getTruckByID(id);
+        List<Menu> deleteMenu = deleteTruck.getMenus();
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        Object persistentInstance = session.load(Truck.class, deleteTruck.getId());
-        session.delete(persistentInstance);
+        for (Menu m: deleteMenu) {
+            Set<Item> deleteItems = m.getItems();
+            for (Item i: deleteItems) {
+                session.delete(i);
+            }
+            session.delete(m);
+        }
+        session.delete(deleteTruck);
         session.getTransaction().commit();
         session.close();
         try (PrintWriter out = response.getWriter()) {
-            out.println("Truck successfully deleted");
+            out.println("Truck deleted");
         }
     }
 

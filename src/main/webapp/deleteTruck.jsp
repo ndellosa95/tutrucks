@@ -10,9 +10,9 @@
                 <%
                     Truck selected = new Truck();
                     boolean submitted = false;
-                    List<String> list = Truck.getAllTruckNames();
-                    for (String s : list) {
-                        out.print("<option>" + s + "</option>");
+                    List<Truck> list = Truck.getAllTrucks();
+                    for (Truck t : list) {
+                        out.print("<option value='" + t.getId() +"'>" + t.getTruckName() + "</option>");
                     }
                 %>
             </select>
@@ -28,10 +28,11 @@
     $.ajax({
             type: "POST",
             url: "/DeleteTruckServlet",
-            data: {name: truckName},
+            data: {truckId: truckName},
             async: false,
             success: function (data) {
                 alert(data);
+                location.reload();
             },
             error: function(error) {
                 alert("There was an error.");

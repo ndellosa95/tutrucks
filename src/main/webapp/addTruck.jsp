@@ -78,133 +78,19 @@
                 <input type="text" class="form-control" name="closeTime" placeholder="Closing Time">
             </div>
         </fieldset>
-        <fieldset class="form-group formWrapper">
-            <h3>Menu</h3>
-            <div class="container containerPanelWrapper">
-                <div class="panel panel-default panelCloneWrapper hidden">
-                    <div class="panel-heading">
-                        <input type="text" class="form-control" placeholder="Category Title" name="categoryTitle">
-                        <input type="text" class="form-control" placeholder="Category Description" name="categoryDescription">
-                        <button type="button" class="form-control btn btn-danger remove" id="removeCategory">Remove</button> 
-                    </div>
-                    <div class="panel-body outerWrapper">
-                        <div class ="container-fluid containerWrapper">
-                            <div class="row-fluid top-buffer cloneWrapper">
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Item Name">
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control" placeholder="Item Price">       
-                                </div> 
-                                <div class="col-sm-2">
-                                    <button type="button" class="form-control btn btn-primary addButton">Add tags</button>
-                                </div>
-                                <div class="col-sm-2">
-                                    <button type="button" class="form-control btn btn-danger remove removeItem">Remove</button>       
-                                </div>                              
-                            </div>
-                            <div class="row-fluid top-buffer cloneWrapper">
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Item Name">
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control" placeholder="Item Price">       
-                                </div> 
-                                <div class="col-sm-2">
-                                    <button type="button" class="form-control btn btn-primary addButton">Add tags</button>
-                                </div>
-                                <div class="col-sm-2">
-                                    <button type="button" class="form-control btn btn-danger remove removeItem">Remove</button>       
-                                </div>                        
-                            </div>
-                            <div class="row-fluid top-buffer cloneWrapper">
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Item Name">
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control" placeholder="Item Price">       
-                                </div> 
-                                <div class="col-sm-2">
-                                    <button type="button" class="form-control btn btn-primary addButton">Add tags</button>
-                                </div>
-                                <div class="col-sm-2">
-                                    <button type="button" class="form-control btn btn-danger remove removeItem">Remove</button>       
-                                </div>                         
-                            </div>      
-                        </div>
-                        <div class="row-fluid top-buffer">
-                            <div class="col-sm-2 col-sm-push-10">
-                                <button type="button" class="btn btn-primary addButton addItem">New Item</button>
-                            </div> 
-                        </div>  
-                    </div>
-                </div>   
-                <div class="panel panel-default panelCloneWrapper">
-                    <div class="panel-heading">
-                        <input type="text" class="form-control" placeholder="Category Title">
-                        <input type="text" class="form-control" placeholder="Category Description">
-                        <button type="button" class="form-control btn btn-danger remove" id="removeCategory">Remove</button> 
-                    </div>
-                    <div class="panel-body outerWrapper">
-                        <div class ="container-fluid containerWrapper">
-                            <div class="row-fluid top-buffer cloneWrapper">
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Item Name">
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control" placeholder="Item Price">       
-                                </div> 
-                                <div class="col-sm-2">
-                                    <button type="button" class="form-control btn btn-primary addButton">Add tags</button>
-                                </div>
-                                <div class="col-sm-2">
-                                    <button type="button" class="form-control btn btn-danger remove removeItem">Remove</button>       
-                                </div>                              
-                            </div>
-                            <div class="row-fluid top-buffer cloneWrapper">
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Item Name">
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control" placeholder="Item Price">       
-                                </div> 
-                                <div class="col-sm-2">
-                                    <button type="button" class="form-control btn btn-primary addButton">Add tags</button>
-                                </div>
-                                <div class="col-sm-2">
-                                    <button type="button" class="form-control btn btn-danger remove removeItem">Remove</button>       
-                                </div>                        
-                            </div>
-                            <div class="row-fluid top-buffer cloneWrapper">
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Item Name">
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control" placeholder="Item Price">       
-                                </div> 
-                                <div class="col-sm-2">
-                                    <button type="button" class="form-control btn btn-primary addButton">Add tags</button>
-                                </div>
-                                <div class="col-sm-2">
-                                    <button type="button" class="form-control btn btn-danger remove removeItem">Remove</button>       
-                                </div>                         
-                            </div>      
-                        </div>
-                        <div class="row-fluid top-buffer">
-                            <div class="col-sm-2 col-sm-push-10">
-                                <button type="button" class="btn btn-primary addButton addItem">New Item</button>
-                            </div> 
-                        </div>  
-                    </div>
-                </div>  
+        <fieldset class ="form-group">
+            <div class="col-sm-4">
+                <label for="tags">Tags</label>
+                <small class="text-muted" style="display:block">Separate each tag with a comma</small>
             </div>
-            <button type="button" class="btn btn-primary addButton" id="addCategory">New Category</button>
+            <div class="col-sm-8">
+                <textarea class="form-control" style="min-width: 100%" name="tags"></textarea>
+            </div>
         </fieldset>
         <button type="submit" id="submit" class="btn btn-primary addButton">Submit</button>
     </form>
 </div>
 <%@ include file="footer.html"%>
-<script src="cloneMenu.js"></script>
 <script>
     $("#form").submit(function (e) {
     e.preventDefault();
@@ -213,10 +99,11 @@
     var longitude = $(e.target).find('[name=longitude]').val();
     var openTime = $(e.target).find('[name=openTime]').val();
     var closeTime = $(e.target).find('[name=closeTime]').val();
+    var tagsString = $(e.target).find('[name=tags]').val();
     $.ajax({
             type: "POST",
             url: "/AddTruckServlet",
-            data: {name: truckName, lat: latitude, lng: longitude, open: openTime, close: closeTime},
+            data: {name: truckName, lat: latitude, lng: longitude, open: openTime, close: closeTime, tags: tagsString},
             async: false,
             success: function (data) {
                 alert(data);
