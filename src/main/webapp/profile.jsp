@@ -5,7 +5,7 @@
 <div class="container profile">
     <div class="col-md-4">
         <%
-            User userProfile=new User(); //= (User) request.getParameter("userid");
+            User userProfile=User.loadUserByID(Integer.parseInt(request.getParameter("userid"))); 
 //            user = new User();
 //            user.setAvatar("https://upload.wikimedia.org/wikipedia/en/3/38/Avatarjakeneytiri.jpg");
 //            user.setDisplayName("Avatar");
@@ -24,9 +24,9 @@
              <% 
                 if (avatar != null) {
                     out.print(avatar);
-                }
+                }else out.print("images/NoUserPhoto.png");
              %>" 
-             alt="No user avatar">
+             alt="No user avatar" width="128px" height="128px" style="border-style: thick; border-color: white;" />
 
         <h3><%=userProfile.getDisplayName()%></h3>
         <h5><%=truckReviews.size()%> truck reviews</h5>

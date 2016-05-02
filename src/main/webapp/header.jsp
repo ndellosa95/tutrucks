@@ -9,12 +9,14 @@
     User user = (User) session.getAttribute("user");
     String logOnAreaVisibility = " display:none; ";
     String logOffAreaVisibility = " display:none; ";
+    int uid=0;
     if (user == null) {
         logOnAreaVisibility = " display:inline-block; ";
         logOffAreaVisibility ="display: none;";
     }else{
         logOnAreaVisibility = " display:none; ";
         logOffAreaVisibility = " display:inline-block; ";
+        uid=user.getId();
     }
 %>
 <html lang="en">
@@ -102,7 +104,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="index.jsp">Home</a></li>
             <li><a href="search.jsp?criteria=truck:*">All Trucks</a></li>
-            <li><a href="#" style="<%=logOffAreaVisibility%>">My Profile</a></li>
+            <li><a href="profile.jsp?userid=<%=uid%>" style="<%=logOffAreaVisibility%>">My Profile</a></li>
             <li><a href="#">About</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
