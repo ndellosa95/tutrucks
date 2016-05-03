@@ -79,7 +79,7 @@
                         }
                         if (user != null) {
                             out.print("</span><a id='tag_adder' href='#'>add tags...</a>"
-                                + "<input type='text' id='tag_add_field' hidden />"
+                                + "<input type='text' id='tag_add_field' style='color: black;' hidden />"
                                 + "<input type='button' title='Enter new tags, separated by commas' id='tag_add_button' hidden /></span>");
                         }
                     }

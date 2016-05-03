@@ -66,7 +66,7 @@
                     }
                     innerString+="</div>";
                     innerString+="<div class='row'>";
-                    innerString+="<p style='word-wrap: break-word; padding=5;'>";
+                    innerString+="<p style='word-wrap: break-word; padding-left=20px;padding-left=20px;'>";
                     innerString+=[data[i]["text"]];
                     innerString+="</p>";
                     innerString+="</div>";

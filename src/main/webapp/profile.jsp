@@ -57,7 +57,9 @@
                             <div class="row review">
                                 <div class="row">
                                     <div class="col-sm-12" style="text-align: center; color:#A41E35;">
-                                        <h4>TRUCK NAME</h4>
+                                        <a href="truck.jsp?truck=<%=review.getTruck().getId()%>" style="color:#A41E35;">
+                                        <h4><%=review.getTruck().getTruckName()%></h4>
+                                        </a>
                                     </div>
                                     <div class="col-sm-12" style="text-align: center;">
                                         <%
@@ -78,6 +80,7 @@
                                     </div>
                                 </div>
                                 <div class="row" style="text-align: left; padding: 5px;">
+                                    
                                     <p><%=review.getReviewText()%></p>
                                 </div>
                                 <div class="row userAndDate" style="text-align: center; padding: 5px;">
