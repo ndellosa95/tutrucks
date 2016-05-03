@@ -34,7 +34,7 @@
                     out.print(avatar);
                 }else out.print("images/NoUserPhoto.png");
              %>" 
-             alt="No user avatar" width="128px" height="128px" style=" border-color: white;" />
+             alt="No user avatar" width="128px" height="128px" style="border:2px solid #FFFFFF; border-radius:5px" />
 
         <h3><%=userProfile.getDisplayName()%></h3>
         <h5><%=truckReviews.size()%> truck reviews</h5>

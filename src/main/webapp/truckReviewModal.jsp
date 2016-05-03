@@ -74,6 +74,7 @@
                     innerString+=[data[i]["date"]];
                     innerString+="</div>";
                     innerString+="</a>";
+                    innerString+="<br />";
                     innerString+="</div>";
                     
                     
