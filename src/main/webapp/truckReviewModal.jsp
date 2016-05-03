@@ -66,7 +66,9 @@
                     }
                     innerString+="</div>";
                     innerString+="<div class='row'>";
+                    innerString+="<p style='word-wrap: break-word; padding=5;'>";
                     innerString+=[data[i]["text"]];
+                    innerString+="</p>";
                     innerString+="</div>";
                     innerString+="<a href=profile.jsp?userid=";
                     innerString+=[data[i]["userinfo"]["uid"]];
