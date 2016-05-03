@@ -1,4 +1,5 @@
 
+<%@page import="edu.temple.tutrucks.Permissions"%>
 <!DOCTYPE html>
 <%@page import="edu.temple.tutrucks.User"%>
 <% 
@@ -9,6 +10,7 @@
     User user = (User) session.getAttribute("user");
     String logOnAreaVisibility = " display:none; ";
     String logOffAreaVisibility = " display:none; ";
+    String adminAreaVisibility = " display:none; ";
     int uid=0;
     if (user == null) {
         logOnAreaVisibility = " display:inline-block; ";
@@ -17,6 +19,11 @@
         logOnAreaVisibility = " display:none; ";
         logOffAreaVisibility = " display:inline-block; ";
         uid=user.getId();
+        if (user.getPermissions()==Permissions.ADMIN){
+            adminAreaVisibility = " display: inline-block;";
+        }else{
+            adminAreaVisibility = " display:none; ";
+        }
     }
 %>
 <html lang="en">
@@ -105,7 +112,7 @@
             <li class="active"><a href="index.jsp">Home</a></li>
             <li><a href="search.jsp?criteria=truck:*">All Trucks</a></li>
             <li><a href="profile.jsp?userid=<%=uid%>" style="<%=logOffAreaVisibility%>">My Profile</a></li>
-            <li><a href="#">About</a></li>
+            <li><a href="adminDash.jsp" style="<%=logOffAreaVisibility%>">Admin Panel</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown" id="loginDropdown" style="<%=logOnAreaVisibility%>">
