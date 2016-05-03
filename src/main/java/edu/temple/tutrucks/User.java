@@ -26,10 +26,7 @@ import org.hibernate.Session;
 public class User implements java.io.Serializable, Visualizable {
 
     private static final Random SALTER = new java.security.SecureRandom();
-    private static final String APP_ID = "1272882256060359";
-    private static final String APP_SECRET = "f45bb012fb2097e5a7aa53fded1c2383";
-    private static final String TOKEN_EXTENDER_URL = "www.facebook.com/oauth/access_token";
-    private static final int TOKEN_LENGTH = 1024;
+    private static final String EMAIL_PATTERN = "(.+)@(.+)\\.((com)|(edu)|(org)|(gov)|(net)|(io))";
 
     private int id;
     private String userEmail;
@@ -346,6 +343,17 @@ public class User implements java.io.Serializable, Visualizable {
      */
     public static User createUser(String email, String password, boolean facebook, String displayName, String fbAvatarURL, String fbID) {
         User user = new User();
+        if (!email.matches(EMAIL_PATTERN)) 
+            throw new IllegalArgumentException("Email is not valid.");
+        else if (existsEmail(email))
+            throw new IllegalArgumentException("Email already exists in database.");
+        else if (password.length() > 16)
+            throw new IllegalArgumentException("Password is too long (16 characters max).");
+        else if (password.length() < 6)
+            throw new IllegalArgumentException("Password is too short (6 characters min).");
+        else if (facebook && existsFB(fbID))
+            throw new IllegalArgumentException("An account already exists for this Facebook profile.");
+        
         user.setUserEmail(email);
         byte[] salt = generateSalt();
         user.setSalt(salt);
