@@ -333,6 +333,7 @@ public class User implements java.io.Serializable, Visualizable {
         this.setDisplayName(displayName);
         this.setAvatar(avatar);
         this.linkUserFacebook(fbID);
+        this.save();
     }
     /**
      * Creates a user with the specified credentials.

@@ -16,8 +16,8 @@ put rating in rating slot on right side
         List<Searchable> results = DBUtils.searchAll(search, tagged);
         Truck t;
         out.print("<div class='row'>");
-        out.print("<div class='col-md-2'> </div>");
-        out.print("<div class='col-md-8'>");
+        out.print("<div class='col-lg-1'> </div>");
+        out.print("<div class='col-lg-10'>");
             out.print("<div class='panel panel-default'>\n");
                 out.print("<div class='panel-heading'>\n");
                     out.print("<h1 class='panel-title'>");
@@ -42,8 +42,8 @@ put rating in rating slot on right side
                         out.print("<div class='panel-body'> \n");
                             out.print("<div class='row-fluid'>\n");
                                 out.print("<a href='truck.jsp?truck="+t.getId()+"' style='color: black'>");
-                                    out.print("<div class='col-lg-2'></div>");
-                                    out.print("<div class='col-lg-3 truckPhoto login'>");
+                                    //out.print("<div class='col-md-4'></div>");
+                                    out.print("<div class='col-lg-4 truckPhoto login'>");
                                         out.print("<img src='");
                                         String avatarURL= t.getAvatar();
                                         if(avatarURL==null||avatarURL.equals("")){
@@ -53,7 +53,7 @@ put rating in rating slot on right side
                                         out.print("width=160px height=120px>");
                                     out.print("</div>\n");
 
-                                    out.print("<div class='col-lg-2 login' style='vertical-align: middle;'>");
+                                    out.print("<div class='col-lg-4 login' style='vertical-align: middle;'>");
                                         boolean morning=true;
                                         int openingHours=t.getOpeningTime().getHours();
                                         int openingMinutes=t.getOpeningTime().getMinutes();
@@ -78,7 +78,7 @@ put rating in rating slot on right side
                                         else out.print(" PM");
                                     out.print("</div>\n");
                                 out.print("</a>");
-                                out.print("<div class='col-lg-3 click login' style='vertical-align: middle;' data-toggle='modal' data-target='#truckModal' data-truckid="
+                                out.print("<div class='col-lg-4 click login' style='vertical-align: middle;' data-toggle='modal' data-target='#truckModal' data-truckid="
                                     +t.getId()
                                     + ">");
                                     t.loadReviews();
@@ -167,7 +167,7 @@ put rating in rating slot on right side
         out.print("</div>\n");
         out.print("</div>\n");
         out.print("</div>\n");
-        out.print("<div class='col-md-2'> </div>");
+        out.print("<div class='col-lg-1'> </div>");
         out.print("</div>");
 %>
 <%@ include file="footer.html"%>

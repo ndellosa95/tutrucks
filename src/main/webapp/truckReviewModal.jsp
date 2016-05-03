@@ -27,10 +27,12 @@
         var modal = $(this);
         var innerString="";
         $("#reviews").replaceWith("<div id='reviews' class='modal-body'> </div>");
+        <% if (user==null)out.print("/*");%>
         innerString+="<div class='row'>";
         innerString+="<a style='color: black;' href=newreview.jsp?type=truck&id="+recipient+">Click here to leave a review</a><br>";
         innerString+="</div>";
         innerString+="<hr />";
+        <% if (user==null)out.print("*/");%>
         $.ajax("fetchTrucks", {
             method: "GET",
             dataType: "json",
@@ -65,7 +67,7 @@
                         innerString+="<img src='images/Star_Half.png' width='12' height='24'>";
                     }
                     innerString+="</div>";
-                    innerString+="<div class='row'>";
+                    innerString+="<div class='row-fluid'>";
                     innerString+="<p style='word-wrap: break-word; padding-left=20px;padding-left=20px;'>";
                     innerString+=[data[i]["text"]];
                     innerString+="</p>";
