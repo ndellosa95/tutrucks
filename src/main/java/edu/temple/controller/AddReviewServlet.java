@@ -66,7 +66,7 @@ public class AddReviewServlet extends HttpServlet {
             r.addReview(review);
             review.save();
             try {
-                resp.sendRedirect("truck.jsp?id=" + redirectID);
+                resp.sendRedirect("truck.jsp?truck=" + redirectID);
             } catch (IOException ex) {
                 
             }
