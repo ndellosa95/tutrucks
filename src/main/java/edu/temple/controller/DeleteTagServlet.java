@@ -6,14 +6,12 @@
 package edu.temple.controller;
 
 import edu.temple.tutrucks.HibernateUtil;
+import edu.temple.tutrucks.Item;
 import edu.temple.tutrucks.Tag;
 import edu.temple.tutrucks.Truck;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Time;
-import java.util.Arrays;
-import java.util.List;
-import javax.servlet.RequestDispatcher;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +23,8 @@ import org.hibernate.Session;
  *
  * @author michn_000
  */
-@WebServlet(name = "AddTruckServlet", urlPatterns = {"/AddTruckServlet"})
-public class AddTruckServlet extends HttpServlet {
+@WebServlet(name = "DeleteTagServlet", urlPatterns = {"/DeleteTagServlet"})
+public class DeleteTagServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,43 +32,23 @@ public class AddTruckServlet extends HttpServlet {
      *
      * @param request servlet request
      * @param response servlet response
-     * @return
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String truckName = request.getParameter("name");
-        double lat = Double.parseDouble(request.getParameter("lat"));
-        double lng = Double.parseDouble(request.getParameter("lng"));
-        Time openTime = Time.valueOf(request.getParameter("open"));
-        Time closeTime = Time.valueOf(request.getParameter("close"));
-        String tagString = request.getParameter("tags");
-        List<String> tags = Arrays.asList(tagString.split("\\s*,\\s*"));
-        //check these value things
-        Truck newTruck = new Truck();
-        newTruck.setTruckName(truckName);
-        newTruck.setLongitude(lng);
-        newTruck.setLatitude(lat);
-        newTruck.setOpeningTime(openTime);
-        newTruck.setClosingTime(closeTime);
+        String tagName = request.getParameter("name");
+        Tag deleteTag = Tag.retrieveTag(tagName, false);
+        Set<Truck> taggedTrucks = deleteTag.getTrucks();
+        Set<Item> taggedItems = deleteTag.getItems();
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.persist(newTruck);
-        //newTruck.loadTags();
-        for (String s : tags) {
-            Tag temp = Tag.retrieveTag(s, true);
-            //temp = temp.loadTaggedEntities();
-            temp.addEntity(newTruck);
-            newTruck.addTags(temp);
-            session.saveOrUpdate(temp);
-        }
+        session.delete(deleteTag);
         session.getTransaction().commit();
         session.close();
-
         try (PrintWriter out = response.getWriter()) {
-            out.print("Truck added");
+           out.print("Tag deleted");
         }
     }
 
