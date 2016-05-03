@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.sql.Time;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,19 +48,30 @@ public class EditTruckServlet extends HttpServlet {
         Time closeTime = Time.valueOf(request.getParameter("close"));
         String tagString = request.getParameter("tags");
         List<String> tags = Arrays.asList(tagString.split("\\s*,\\s*"));
-        Truck editTruck = Truck.getTruckByID(truckId);
+        Truck editTruck = Truck.getTruckByID(truckId, false, true);
         editTruck.setTruckName(truckName);
         editTruck.setLongitude(lng);
         editTruck.setLatitude(lat);
         editTruck.setOpeningTime(openTime);
         editTruck.setClosingTime(closeTime);
+        Set<Tag> deletedTags = editTruck.getTags();
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         for (String s : tags) {
             Tag temp = Tag.retrieveTag(s, true);
+            deletedTags.remove(temp);
             temp.addEntity(editTruck);
             editTruck.addTags(temp);
             session.saveOrUpdate(temp);
+        }
+        for (Tag t: deletedTags) {
+            Set<Truck> currentTaggedTrucks = t.getTrucks();
+            currentTaggedTrucks.remove(editTruck);
+            t.setTrucks(currentTaggedTrucks);
+            Set<Tag> currentTags = editTruck.getTags();
+            currentTags.remove(t);
+            editTruck.setTags(currentTags);
+            session.saveOrUpdate(t);           
         }
         session.saveOrUpdate(editTruck);
         session.getTransaction().commit();
