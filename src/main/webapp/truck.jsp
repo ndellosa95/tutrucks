@@ -224,7 +224,7 @@
                     success: function (data) {
                         var result = "";
                         for (var i=0; i < data.length; i++) {
-                            result += ("<a class='taglinks' href='search.jsp?tagged=" + data[i] + ">"
+                            result += ("<a class='taglinks' href='search.jsp?tagged=" + data[i] + "'>"
                                    + data[i] + "</a>, ");
                         }
                         $("#current_tags").html(result);

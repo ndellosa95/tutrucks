@@ -44,6 +44,7 @@ public class UserCreateServlet extends HttpServlet {
         try {
             user = User.createUser(email, password, fb, display, avatar, fbID);
         } catch (IllegalArgumentException ex) {
+            System.err.println("ex: " + ex.getLocalizedMessage());
             resp.sendRedirect("error.jsp?msg=" + ex.getLocalizedMessage());
             return;
         }
