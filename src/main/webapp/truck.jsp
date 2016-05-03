@@ -217,7 +217,6 @@
         $("#tag_add_button").click(function () {
             var addTag = $("#tag_add_field").val();
             if (addTag) {
-                console.log("making ajax call for " + addTag);
                 $.ajax("addtags", {
                     method: "POST",
                     dataType: "json",
@@ -229,15 +228,15 @@
                                    + data[i] + "</a>, ");
                         }
                         $("#current_tags").html(result);
+                        $("#tag_add_field").val("");
                     },
                     error: function(jqHXR, status, error) {
                     
                     }
                 });
-            } else {
-                $("#tag_add_field").hide();
-                $("#tag_add_button").hide();
             }
+            $("#tag_add_field").hide();
+            $("#tag_add_button").hide();
         });
     });
     </script>

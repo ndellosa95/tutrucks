@@ -26,6 +26,9 @@
         <property name="avatar" type="string">
             <column name="avatar"></column>
         </property>
+        <property name="takesCard" type="boolean">
+            <column name="takes_cards"></column>
+        </property>
         <bag name="truckReviews" table="truck_review" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="truck_id" />

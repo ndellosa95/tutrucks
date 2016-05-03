@@ -29,6 +29,7 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
      private Time openingTime;
      private Time closingTime;
      private String avatar;
+     private boolean takesCard;
      private List<TruckReview> truckReviews;
      private List<Menu> menus;
      private Set<Tag> tags;
@@ -183,6 +184,20 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
      */
     public void setClosingTime(Time closingTime) {
         this.closingTime = closingTime;
+    }
+    /**
+     * Gets whether or not this truck takes credit cards or is cash-only. Required by Hibernate.
+     * @return true if this truck takes cards, false if it is cash-only
+     */
+    public boolean getTakesCard() {
+        return this.takesCard;
+    }
+    /**
+     * Sets whether or not this truck takes credit cards or is cash-only. Required by Hibernate.
+     * @param takesCard whether or not this truck takes cards or is cash-only
+     */
+    public void setTakesCard(boolean takesCard) {
+        this.takesCard = takesCard;
     }
 
     @Override
