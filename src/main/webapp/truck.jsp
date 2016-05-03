@@ -62,7 +62,7 @@
         <div class="col-lg-8" style="text-align: left;">
             <h1 style="color: white;"><%=truckName%></h1>
             <p style="color: white"><%
-                    Set<Tag> tags = truck.loadTags();
+                    Set<Tag> tags = truck.loadTags().getTags();
                     if (!(tags.isEmpty() && user == null)) {
                         out.print("Tags: <span><span id='current_tags'>");
                         if (!tags.isEmpty()) {

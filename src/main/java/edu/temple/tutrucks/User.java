@@ -437,11 +437,11 @@ public class User implements java.io.Serializable, Visualizable {
         Hibernate.initialize(user.getTruckReviews());
         Hibernate.initialize(user.getItemReviews());
         session.getTransaction().commit();
-        session.close();
-        user.getTruckReviews().size();
+	user.getTruckReviews().size();
         user.getItemReviews().size();
         this.setTruckReviews(user.getTruckReviews());
         this.setItemReviews(user.getItemReviews());
+        session.close();
         return user;
     }
     

@@ -1,14 +1,18 @@
-<!--Need to set image size for avatars-->
+
 <%@ include file="header.jsp"%>
+<%@ page import="org.hibernate.Hibernate"%>
+<%@ page import="org.hibernate.Query"%>
+<%@ page import="org.hibernate.Session"%>
 <%@ page import="edu.temple.tutrucks.*"%>
 <%@ page import="java.util.List"%>
 <div class="container profile">
     <div class="col-md-4">
         <%
+
             User userProfile=User.loadUserByID(Integer.parseInt(request.getParameter("userid")));
             String avatar=null;
-            List<TruckReview> truckReviews=null;
-            List<ItemReview> itemReviews=null;
+            List<TruckReview> truckReviews;
+            List<ItemReview> itemReviews;
             if (userProfile==null){
                 response.sendRedirect("invalidPage.jsp");
                 return;
@@ -17,6 +21,7 @@
 //            user.setAvatar("https://upload.wikimedia.org/wikipedia/en/3/38/Avatarjakeneytiri.jpg");
 //            user.setDisplayName("Avatar");
             avatar = userProfile.getAvatar();
+            userProfile = userProfile.loadUserReviews();
             truckReviews = userProfile.getTruckReviews();
 //            TruckReview tr = new TruckReview();
 //            Truck t = Truck.getTruckByID(1);
