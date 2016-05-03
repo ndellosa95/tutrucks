@@ -122,7 +122,7 @@ public abstract class Review<T extends Reviewable> {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         if (this.id == 0) {
-            Criteria criteria = session.createCriteria(this.getClass()).setProjection(Projections.max("id"));
+            Criteria criteria = session.createCriteria(Review.class).setProjection(Projections.max("id"));
             Object result = criteria.uniqueResult();
             int max = result == null ? 0 : (Integer)result;
             this.setId(max+1);

@@ -38,8 +38,8 @@ public class ItemInfoFetchServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
            int itemID = Integer.parseInt(req.getParameter("id"));
-           Item item = Item.getItemByID(itemID);
-           List<ItemReview> reviews = item.loadReviews();
+           Item item = Item.getItemByID(itemID, true, true);
+           List<ItemReview> reviews = item.getItemReviews();
            JsonArray jsArrayReviews = new JsonArray();
            for (ItemReview ir : reviews) {
                JsonObject cur = new JsonObject();
@@ -55,7 +55,7 @@ public class ItemInfoFetchServlet extends HttpServlet {
            }
            JsonObject retval = new JsonObject();
            retval.add("reviews", jsArrayReviews);
-           Set<Tag> tags = item.loadTags();
+           Set<Tag> tags = item.getTags();
            JsonArray jsArrayTags = new JsonArray();
            for (Tag t : tags) {
                jsArrayTags.add(t.getTagName());

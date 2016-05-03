@@ -40,8 +40,13 @@ put rating in rating slot on right side
                 out.print("<div class='row-fluid'>\n");
                 out.print("<a href='truck.jsp?truck="+t.getId()+"' style='color: black'>");
                     out.print("<div class='col-lg-4 truckPhoto login'>");
-
-                        out.print("PHOTO OF TRUCK");
+                        out.print("<img src='");
+                        String avatarURL= t.getAvatar();
+                        if(avatarURL==null||avatarURL.equals("")){
+                            out.print("images/NoTruckImage.png' alt='Default Photo'");
+                        }else out.print(avatarURL+"' alt='Photo of "+t.getTruckName()+"'");
+                        
+                    out.print("width=160px height=120px>");
                     out.print("</div>\n");
 
                     out.print("<div class='col-lg-5 login'>");

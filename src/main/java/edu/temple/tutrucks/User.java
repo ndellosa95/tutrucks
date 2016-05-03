@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -35,8 +36,8 @@ public class User implements java.io.Serializable, Visualizable {
     private byte[] passWord;
     private boolean fbLink;
     private String avatar;
-    private List<TruckReview> truckReviews = new ArrayList<>();
-    private List<ItemReview> itemReviews = new ArrayList<>();
+    private List<TruckReview> truckReviews;
+    private List<ItemReview> itemReviews;
     private String displayName;
     private Permissions permissions;
     private byte[] salt;
@@ -149,6 +150,7 @@ public class User implements java.io.Serializable, Visualizable {
      * @return the list of reviews for trucks written by this user
      */
     public List getTruckReviews() {
+        
         return this.truckReviews;
     }
     /**
@@ -163,32 +165,21 @@ public class User implements java.io.Serializable, Visualizable {
      * @param r the review to add to this user's list of reviews
      */
     public void addReview(Review r) throws IllegalArgumentException {
-        if (r.getUser() == null) {
-            r.setUser(this);
-        } else if (!r.getUser().equals(this)) {
-            throw new IllegalArgumentException("A review's user parameter must be either null or equal to the User object you are adding the review to.");
-        }
-        if (r.getClass() == TruckReview.class) {
-            truckReviews.add((TruckReview) r);
-        } else {
-            itemReviews.add((ItemReview) r);
-        }
+        r.setUser(this);
     }
     /**
      * Sets the list of reviews for trucks written by this user. Required by Hibernate
      * @param truckReviews the list of reviews for trucks written by this user
      */
     public void setTruckReviews(List<TruckReview> truckReviews) {
-        this.truckReviews.clear();
-        this.truckReviews.addAll(truckReviews);
+        this.truckReviews = truckReviews;
     }
     /**
      * Sets the list of reviews for items written by this user. Required by Hibernate
      * @param itemReviews the list of reviews for items written by this user
      */
     public void setItemReviews(List<ItemReview> itemReviews) {
-        this.itemReviews.clear();
-        this.itemReviews.addAll(itemReviews);
+        this.itemReviews = itemReviews;
     }
     /**
      * Returns the display name for this user. Required by Hibernate
@@ -362,12 +353,16 @@ public class User implements java.io.Serializable, Visualizable {
         user.setFbLink(facebook);
         user.setPermissions(Permissions.PLEB);
         if (facebook) {
+            if (existsFB(fbID)||existsEmail(email)){
+                return null;
+            }
             user.setDisplayName(displayName);
             user.setAvatar(fbAvatarURL);
             byte[] fbSalt = generateSalt();
             user.setFacebookSalt(fbSalt);
             user.setFacebookID(encryptPassword(fbID, fbSalt));
         } else {
+            if (existsEmail(email)) return null;
             user.setDisplayName(email.substring(0, email.indexOf('@')));
         }
         user.save();
@@ -406,9 +401,37 @@ public class User implements java.io.Serializable, Visualizable {
     public void delete() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.delete(this);
+        User user = (User) session.get(User.class, this.getId());
+        Hibernate.initialize(user.getTruckReviews());
+        Hibernate.initialize(user.getItemReviews());
+        for (TruckReview tr : user.truckReviews) 
+            session.delete(tr);
+        
+        for (ItemReview ir : user.itemReviews) 
+            session.delete(ir);
+        
+        session.delete(user);
         session.getTransaction().commit();
         session.close();
+    }
+    /**
+     * Loads the user with the specified ID.
+     * @param id the ID of the user to load
+     * @param loadReviews true if the reviews written by this user should be loaded along with the user object
+     * @return the user with the specified ID
+     */
+    public static User loadUserByID(int id, boolean loadReviews) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        User retval = (User) session.get(User.class, id);
+        if (loadReviews) {
+            Hibernate.initialize(retval.getTruckReviews());
+            Hibernate.initialize(retval.getItemReviews());
+            retval.getTruckReviews().size();
+            retval.getItemReviews().size();
+        }
+        session.close();
+        return retval;
     }
     /**
      * Loads the user with the specified ID.
@@ -416,14 +439,52 @@ public class User implements java.io.Serializable, Visualizable {
      * @return the user with the specified ID
      */
     public static User loadUserByID(int id) {
+        return loadUserByID(id, false);
+    }
+    /**
+     * Loads the reviews written by this user from the database.
+     * @return the user object containing the reviews written by this user
+     */
+    public User loadUserReviews() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        User user = (User) session.get(User.class, this.getId());
+        Hibernate.initialize(user.getTruckReviews());
+        Hibernate.initialize(user.getItemReviews());
+        session.getTransaction().commit();
+        session.close();
+        user.getTruckReviews().size();
+        user.getItemReviews().size();
+        this.setTruckReviews(user.getTruckReviews());
+        this.setItemReviews(user.getItemReviews());
+        return user;
+    }
+    
+    public static boolean existsFB(String fbID){
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
-                "from User where id=" + id
+                "from User where facebookID=" + fbID
         );
-        User retval = (User) q.uniqueResult();
-        session.close();
-        return retval;
+        if (q.uniqueResult()==null){
+            session.close();
+            return false;
+        }else{
+            session.close();
+            return true;
+        }
+    }
+    public static boolean existsEmail(String email){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query q = session.createQuery("from User where userEmail = :email").setString("email", email);
+        if (q.uniqueResult()==null){
+            session.close();
+            return false;
+        }else{
+            session.close();
+            return true;
+        }
     }
 }
 
