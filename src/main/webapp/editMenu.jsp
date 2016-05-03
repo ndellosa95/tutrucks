@@ -78,8 +78,7 @@
                     for (Truck t : list) {
                         if (t.getId() == selected.getId()) {
                             out.print("<option value='" + t.getId() + "'selected>" + t.getTruckName() + "</option>");
-                        }
-                        else {
+                        } else {
                             out.print("<option value='" + t.getId() + "'>" + t.getTruckName() + "</option>");
                         }
                     }
@@ -94,6 +93,7 @@
             <div class="container containerPanelWrapper">
                 <div class="panel panel-default panelCloneWrapper hidden">
                     <div class="panel-heading">
+                        <input type="hidden" name="menuId" value="">
                         <input type="text" class="form-control" name="categoryTitle" placeholder="Category Title">
                         <input type="text" class="form-control" name="categoryDescription" placeholder="Category Description">
                         <button type="button" class="form-control btn btn-danger" id="removeCategory">Remove</button> 
@@ -105,23 +105,24 @@
                                     <h4>Name</h4>
                                 </div>
                                 <div class="col-sm-2">
-                                     <h4>Price</h4>
+                                    <h4>Price</h4>
                                 </div>
                                 <div class="col-sm-5">
-                                     <h4>Tags</h4>
+                                    <h4>Tags</h4>
                                 </div>
                                 <div class="col-sm-2">
                                     <h4>&nbsp;</h4>
                                 </div>
                             </div>
                             <div class="row-fluid cloneWrapper">
-                                <div class="col-sm-3">
+                                <input type="hidden" name="itemId" value="">
+                                <div class="col-sm-3" id="itemName">
                                     <input type="text" class="form-control" name="itemName" placeholder="Item Name">
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-2" id="itemPrice">
                                     <input type="text" class="form-control" name="itemPrice" placeholder="Item Price">       
                                 </div> 
-                                <div class="col-sm-5">
+                                <div class="col-sm-5" id="tags">
                                     <textarea class="form-control" style="min-width: 100%; margin-bottom: 5px;" rows="1" name="tags"></textarea>
                                 </div> 
                                 <div class="col-sm-2">
@@ -129,33 +130,35 @@
                                 </div>                              
                             </div>
                             <div class="row-fluid cloneWrapper">
-                                <div class="col-sm-3">
+                                <input type="hidden" name="itemId" value="">
+                                <div class="col-sm-3" id="itemName">
                                     <input type="text" class="form-control" name="itemName" placeholder="Item Name">
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-2" id="itemPrice">
                                     <input type="text" class="form-control" name="itemPrice" placeholder="Item Price">       
                                 </div> 
-                                <div class="col-sm-5">
+                                <div class="col-sm-5" id="tags">
                                     <textarea class="form-control" style="min-width: 100%; margin-bottom: 5px;" rows="1" name="tags"></textarea>
                                 </div> 
                                 <div class="col-sm-2">
                                     <button type="button" class="form-control btn btn-danger removeItem">Remove</button>       
-                                </div>                                     
+                                </div>                              
                             </div>
                             <div class="row-fluid cloneWrapper">
-                                <div class="col-sm-3">
+                                <input type="hidden" name="itemId" value="">
+                                <div class="col-sm-3" id="itemName">
                                     <input type="text" class="form-control" name="itemName" placeholder="Item Name">
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-2" id="itemPrice">
                                     <input type="text" class="form-control" name="itemPrice" placeholder="Item Price">       
                                 </div> 
-                                <div class="col-sm-5">
+                                <div class="col-sm-5" id="tags">
                                     <textarea class="form-control" style="min-width: 100%; margin-bottom: 5px;" rows="1" name="tags"></textarea>
                                 </div> 
                                 <div class="col-sm-2">
                                     <button type="button" class="form-control btn btn-danger removeItem">Remove</button>       
-                                </div>                                       
-                            </div>      
+                                </div>                              
+                            </div>     
                         </div>
                         <div class="row-fluid">
                             <div class="col-sm-2 col-sm-push-10">
@@ -181,6 +184,7 @@
 
                         out.print("<div class='panel panel-default panelCloneWrapper'>"
                                 + "<div class='panel-heading'>"
+                                + "<input type='hidden' name='menuId' value='" + m.getId() +"'>"
                                 + "<input type='text' class='form-control' name='categoryTitle' value='" + menuName + "'>"
                                 + "<input type='text' class='form-control' name='categoryDescription' value='" + menuDescription + "'>"
                                 + "<button type='button' class='form-control btn btn-danger' id='removeCategory'>Remove</button> "
@@ -188,7 +192,7 @@
                                 + "<div class='panel-body outerWrapper'>"
                                 + "<div class ='container-fluid containerWrapper'>"
                                 + "<div class='row-fluid'><div class='col-sm-3'>"
-                                +"<h4>Name</h4>"
+                                + "<h4>Name</h4>"
                                 + "</div>"
                                 + "<div class='col-sm-2'>"
                                 + "<h4>Price</h4>"
@@ -200,7 +204,7 @@
                                 + "<h4>&nbsp;</h4"
                                 + "></div>"
                                 + "</div>");
-                        
+
                         Set<Item> items = m.getItems();
                         for (Item i : items) {
                             i = Item.getItemByID(i.getId(), false, true);
@@ -213,20 +217,21 @@
                                 itemPrice = i.getPrice();
                             }
                             out.print("<div class='row-fluid cloneWrapper'>"
-                                    + "<div class='col-sm-3'>"
+                                    +"<input type='hidden' name='itemId' value='" + i.getId() +"'>"
+                                    + "<div class='col-sm-3' id='itemName'>"
                                     + "<input type='text' class='form-control' name='itemName' value='" + itemName + "'>"
                                     + "</div>"
-                                    + "<div class='col-sm-2'>"
+                                    + "<div class='col-sm-2' id='itemPrice'>"
                                     + "<input type='text' class='form-control' name='itemPrice' value='" + itemPrice + "'>"
                                     + "</div>"
-                                    +"<div class='col-sm-5'>"
-                                    +"<textarea class='form-control' style='min-width: 100%; margin-bottom: 5px;' rows='1' name='tags'>");
+                                    + "<div class='col-sm-5' id='tags'>"
+                                    + "<textarea class='form-control' style='min-width: 100%; margin-bottom: 5px;' rows='1' name='tags'>");
                             Set<Tag> tags = i.getTags();
                             for (Tag t : tags) {
                                 out.println(t.getTagName() + ", ");
-                            }                        
+                            }
                             out.print("</textarea>"
-                                    + "</div>" 
+                                    + "</div>"
                                     + "<div class='col-sm-2'>"
                                     + "<button type='button' class='form-control btn btn-danger removeItem'>Remove</button>       "
                                     + "</div>"
@@ -247,7 +252,7 @@
             </div>
             <button type="button" class="btn btn-primary" id="addCategory">New Category</button>
         </fieldset>
-            <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
 <%@ include file="footer.html"%>
@@ -255,27 +260,35 @@
 <script>
     $("#form").submit(function (e) {
         e.preventDefault();
-        var titlesArray = $(e.target).find('[class=panel-heading]').map(function() {
-               return $(this).find('[name=categoryDescription]').value;
+        var name = $(e.target).find('[name=truckName]').val();
+        var menuArray = $(e.target).find('.panel').not('.hidden').map(function () {
+            var menu = new Object();
+            var panelHeading = $(this).children('[class=panel-heading]');
+            menu.id = panelHeading.children('[name=menuId]').val();
+            menu.menuName = panelHeading.children("[name=categoryTitle]").val();
+            menu.description = panelHeading.children("[name=categoryDescription]").val();
+            menu.items = $(this).find('.row-fluid').filter('.cloneWrapper').map(function () {
+                var item = new Object();
+                item.id = $(this).children("[name=itemId]").val();
+                item.itemName = $(this).children("[id=itemName]").children("[name=itemName").val();
+                item.price = $(this).children("[id=itemPrice]").children("[name=itemPrice").val();
+                item.tags = $(this).children("[id=tags]").children("[name=tags").val();
+                return item;
             }).get();
-        var descriptionArray = $(e.target).find('[name=categoryDescription]').map(function() {
-                return this.value;
-            }).get();
-        
-       
-        /*$.ajax({
-         type: "POST",
-         url: "/EditMenuServlet",
-         data: {oldName: edittedTruck, newName: truckName, lat: latitude, lng: longitude, open: openTime, close: closeTime},
-         async: false,
-         success: function (data) {
-         alert(data);
-         },
-         error: function (error) {
-         alert("There was an error.");
-         console.log(error);
-         }
-         });*/
-
+            return menu;
+        }).get();
+        $.ajax({
+            type: "POST",
+            url: "/EditMenuServlet",
+            dataType: 'JSON',
+            data: {menu: JSON.stringify(menuArray), truckName: name},
+            success: function (data) {
+                alert(data);
+            },
+            error: function (error) {
+                alert("There was an error.");
+                console.log(error);
+            }
+        });
     });
 </script>
