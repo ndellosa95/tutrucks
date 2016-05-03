@@ -6,10 +6,13 @@
 package edu.temple.controller;
 
 import edu.temple.tutrucks.HibernateUtil;
+import edu.temple.tutrucks.Tag;
 import edu.temple.tutrucks.Truck;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Time;
+import java.util.Arrays;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,6 +45,8 @@ public class EditTruckServlet extends HttpServlet {
         double lng = Double.parseDouble(request.getParameter("lng"));
         Time openTime = Time.valueOf(request.getParameter("open"));
         Time closeTime = Time.valueOf(request.getParameter("close"));
+        String tagString = request.getParameter("tags");
+        List<String> tags = Arrays.asList(tagString.split("\\s*,\\s*"));
         Truck editTruck = Truck.getTruckByID(truckId);
         editTruck.setTruckName(truckName);
         editTruck.setLongitude(lng);
@@ -50,6 +55,12 @@ public class EditTruckServlet extends HttpServlet {
         editTruck.setClosingTime(closeTime);
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
+        for (String s : tags) {
+            Tag temp = Tag.retrieveTag(s, true);
+            temp.addEntity(editTruck);
+            editTruck.addTags(temp);
+            session.saveOrUpdate(temp);
+        }
         session.saveOrUpdate(editTruck);
         session.getTransaction().commit();
         session.close();
