@@ -26,13 +26,12 @@
         <property name="avatar" type="string">
             <column name="avatar"></column>
         </property>
-        <list name="truckReviews" table="truck_review" inverse="true" lazy="true" fetch="select">
+        <bag name="truckReviews" table="truck_review" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="truck_id" />
             </key>
-            <list-index column="review_stars" />
             <one-to-many class="edu.temple.tutrucks.TruckReview" />
-        </list>
+        </bag>
         <list name="menus" table="menu" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="truck_id" />
@@ -40,7 +39,7 @@
             <list-index column="id" />
             <one-to-many class="edu.temple.tutrucks.Menu" />
         </list>
-        <set name="tags" table="tag_truck_map" inverse="true" lazy="true" fetch="select">
+        <set name="tags" table="tag_truck_map" inverse="true" lazy="true" fetch="select" sort="natural">
             <key>
                 <column name="truck_id" />
             </key>

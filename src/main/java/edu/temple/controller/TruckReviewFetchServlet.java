@@ -36,14 +36,13 @@ public class TruckReviewFetchServlet extends HttpServlet {
             int truckID = Integer.parseInt(req.getParameter("criteria"));
             int minReview = Integer.parseInt(req.getParameter("start"));
             int maxReview = Integer.parseInt(req.getParameter("end"));
-            Truck t = Truck.getTruckByID(truckID);
-            
-            List<TruckReview> reviews1 = t.loadReviews();
+            Truck t = Truck.getTruckByID(truckID, true, false);
+            List<TruckReview> reviews1 = t.getTruckReviews();
             String s;
             if (minReview>=reviews1.size()){
                 minReview=0;
                 maxReview=-1;
-            };
+            }
             if (maxReview>=reviews1.size()) maxReview=reviews1.size()-1;
             List<TruckReview> reviews = reviews1.subList(minReview, maxReview-minReview+1);
             
@@ -66,7 +65,6 @@ public class TruckReviewFetchServlet extends HttpServlet {
             
             Gson gson = new GsonBuilder().serializeNulls().create();
             s = gson.toJson(array);
-            System.out.println(s);
             resp.getWriter().print(s);
         } catch (Exception e) {
             System.err.println(e.getMessage());
