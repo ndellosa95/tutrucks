@@ -417,19 +417,34 @@ public class User implements java.io.Serializable, Visualizable {
     /**
      * Loads the user with the specified ID.
      * @param id the ID of the user to load
+     * @param loadReviews true if the reviews written by this user should be loaded along with the user object
      * @return the user with the specified ID
      */
-    public static User loadUserByID(int id) {
+    public static User loadUserByID(int id, boolean loadReviews) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        Query q = session.createQuery(
-                "from User where id=" + id
-        );
-        User retval = (User) q.uniqueResult();
+        User retval = (User) session.get(User.class, id);
+        if (loadReviews) {
+            Hibernate.initialize(retval.getTruckReviews());
+            Hibernate.initialize(retval.getItemReviews());
+            retval.getTruckReviews().size();
+            retval.getItemReviews().size();
+        }
         session.close();
         return retval;
     }
-    
+    /**
+     * Loads the user with the specified ID.
+     * @param id the ID of the user to load
+     * @return the user with the specified ID
+     */
+    public static User loadUserByID(int id) {
+        return loadUserByID(id, false);
+    }
+    /**
+     * Loads the reviews written by this user from the database.
+     * @return the user object containing the reviews written by this user
+     */
     public User loadUserReviews() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();

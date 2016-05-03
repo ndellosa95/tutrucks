@@ -12,6 +12,7 @@ package edu.temple.tutrucks;
  */
 
 import java.util.Arrays;
+import java.util.Date;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -85,6 +86,32 @@ public class UserTest {
         assertFalse(Arrays.equals(testUserSalt, testUser.getSalt()));
         assertFalse(Arrays.equals(testUserPassword, testUser.getPassWord()));
         testUser.delete();
+    }
+    
+    @Test
+    public void testLoadReviews() {
+        Truck truck = Truck.getTruckByID(1);
+        TruckReview tr = new TruckReview();
+        Item item = Item.getItemByID(1);
+        ItemReview ir = new ItemReview();
+        tr.setReviewText("test");
+        tr.setReviewStars(5);
+        tr.setReviewDate(new Date());
+        tr.setUser(realUser);
+        tr.setTruck(truck);
+        ir.setReviewText("test");
+        ir.setReviewStars(5);
+        ir.setReviewDate(new Date());
+        ir.setUser(realUser);
+        ir.setItem(item);
+        tr.save();
+        ir.save();
+        realUser.loadUserReviews();
+        assertTrue(realUser.getTruckReviews().contains(tr));
+        assertTrue(realUser.getItemReviews().contains(ir));
+        User realUser2 = User.loadUserByID(realUser.getId(), true);
+        assertTrue(realUser2.getTruckReviews().contains(tr));
+        assertTrue(realUser2.getItemReviews().contains(ir));
     }
 }
 
