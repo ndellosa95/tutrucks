@@ -65,7 +65,8 @@ public class AddTagServlet extends HttpServlet {
                 respArray.add(t.getTagName());
             }
             Gson gson = new Gson();
-            resp.getWriter().print(gson.toJson(respArray));
+            String s = gson.toJson(respArray);
+            resp.getWriter().print(s);
         } catch(NumberFormatException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();

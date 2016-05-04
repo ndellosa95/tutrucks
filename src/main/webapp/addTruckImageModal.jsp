@@ -13,7 +13,7 @@
     List<Truck> trucks = Truck.getAllTrucks();
 %>
 <div class="col-md-8 col-md-push-2">
-    <form action="uploadImage" method="POST">
+    <form action="uploadImage" method="POST" enctype="multipart/form-data">
         <div class="col-sm-4">
             <input type="file" name="image">
             <input type="hidden" name="type" value="truck">

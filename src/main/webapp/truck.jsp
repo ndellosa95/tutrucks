@@ -62,7 +62,7 @@
         <div class="col-lg-8" style="text-align: left;">
             <h1 style="color: white;"><%=truckName%></h1>
             <p style="color: white"><%
-                    Set<Tag> tags = truck.loadTags();
+                    Set<Tag> tags = truck.loadTags().getTags();
                     if (!(tags.isEmpty() && user == null)) {
                         out.print("Tags: <span><span id='current_tags'>");
                         if (!tags.isEmpty()) {
@@ -79,7 +79,7 @@
                         }
                         if (user != null) {
                             out.print("</span><a id='tag_adder' href='#'>add tags...</a>"
-                                + "<input type='text' id='tag_add_field' hidden />"
+                                + "<input type='text' id='tag_add_field' style='color: black;' hidden />"
                                 + "<input type='button' title='Enter new tags, separated by commas' id='tag_add_button' hidden /></span>");
                         }
                     }
@@ -224,7 +224,7 @@
                     success: function (data) {
                         var result = "";
                         for (var i=0; i < data.length; i++) {
-                            result += ("<a class='taglinks' href='search.jsp?tagged=" + data[i] + ">"
+                            result += ("<a class='taglinks' href='search.jsp?tagged=" + data[i] + "'>"
                                    + data[i] + "</a>, ");
                         }
                         $("#current_tags").html(result);

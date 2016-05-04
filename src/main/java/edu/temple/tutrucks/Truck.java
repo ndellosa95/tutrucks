@@ -189,7 +189,7 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
      * Gets whether or not this truck takes credit cards or is cash-only. Required by Hibernate.
      * @return true if this truck takes cards, false if it is cash-only
      */
-    public boolean getTakesCard() {
+    public boolean isTakesCard() {
         return this.takesCard;
     }
     /**
