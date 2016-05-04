@@ -84,6 +84,33 @@
                         }
                     }
                     %></p>
+            <p style="color:white">
+                <%
+                boolean morning=true;
+                int openingHours=truck.getOpeningTime().getHours();
+                int openingMinutes=truck.getOpeningTime().getMinutes();
+                if (openingHours>12){
+                    morning =false;
+                    openingHours-=12;
+                }if (openingHours==0) openingHours=12;
+                out.print(openingHours+":"+openingMinutes);
+                if(openingMinutes==0) out.print("0");
+                if (morning)out.print(" AM");
+                else out.print(" PM");
+                out.print(" - ");
+                int closingHours=truck.getClosingTime().getHours();
+                int closingMinutes=truck.getClosingTime().getMinutes();
+                if (closingHours>12){
+                    morning =false;
+                    closingHours-=12;
+                }if (closingHours==0) closingHours=12;
+                out.print(closingHours+":"+closingMinutes);
+                if(closingMinutes==0) out.print("0");
+                if (morning)out.print(" AM");
+                else out.print(" PM");
+                
+                %>
+            </p>
         </div>
         <div class="col-lg-4" style="text-align: right;">
             <h1 class ="click" style="color: white" data-toggle="modal" data-target="#truckModal" 
