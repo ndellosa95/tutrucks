@@ -8,13 +8,13 @@
         invalidLogin = Boolean.parseBoolean(request.getParameter("invalid"));
     } catch (Exception e) {}
     User user = (User) session.getAttribute("user");
-    String logOnAreaVisibility = " display:none; ";
-    String logOffAreaVisibility = " display:none; ";
-    String adminAreaVisibility = " display:none; ";
+    String logOffAreaVisibility, logOnAreaVisibility, adminAreaVisibility;
+    adminAreaVisibility=logOnAreaVisibility=logOffAreaVisibility=" display:none ";
     int uid=0;
     if (user == null) {
         logOnAreaVisibility = " display:inline-block; ";
         logOffAreaVisibility ="display: none;";
+        adminAreaVisibility = " display:none; ";
     }else{
         logOnAreaVisibility = " display:none; ";
         logOffAreaVisibility = " display:inline-block; ";
@@ -112,7 +112,7 @@
             <li class="active"><a href="index.jsp">Home</a></li>
             <li><a href="search.jsp?criteria=truck:*">All Trucks</a></li>
             <li><a href="profile.jsp?userid=<%=uid%>" style="<%=logOffAreaVisibility%>">My Profile</a></li>
-            <li><a href="adminDash.jsp" style="<%=logOffAreaVisibility%>">Admin Panel</a></li>
+            <li><a href="adminDash.jsp" style="<%=adminAreaVisibility%>">Admin Panel</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown" id="loginDropdown" style="<%=logOnAreaVisibility%>">

@@ -3,35 +3,22 @@
 var map;
 var userLocation;
 var templeCenter;
-var trucks= [];
+var trucks;
 
-function initMap() {
-    var temp = {
-      name: "Cha Cha",
-      lat: 39.979858,
-      lng: -75.154957,
-    };
-    trucks.push(temp);
-    temp = {
-      name: "Mexican Grill Stand",
-      lat: 39.980964,
-      lng: -75.155242,
-    };
-    trucks.push(temp);
-    temp = {
-      name: "Chicken Heaven",
-      lat: 39.980000,
-      lng:  -75.156046,
-    };
-    trucks.push(temp);
+function intialize(openTrucks) {
+    trucks = openTrucks;
     
     //MAP SETUP
     templeCenter = {lat: 39.981478, lng: -75.155124};
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
+        zoom: 15,
         center: templeCenter
     });
-
+    
+    google.maps.event.addDomListener(window, "resize", function () {
+        intialize(trucks);
+    });
+    
     //GET USER LOCATION
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -55,7 +42,7 @@ function initMap() {
         var marker = createMarker(trucks[i]);
         //HAVE TO PASS THE LAT AND LONG IN THE GET DIRECTIONS STRING
         var contentString = "<h5 style='color: black'>" + trucks[i].name + "</h5>" +
-        "<button type='button' class ='btn btn-primary-outline btn-sm' onclick='getDirections(" + trucks[i].lat + ", " + trucks[i].lng + ")'>Directions</button> <button type='button' onclick='toMenu' class='btn btn-sm btn-danger-outline'>View Menu</button>";
+        "<button class='btn btn-sm' onclick='getDirections(" + trucks[i].lat + ", " + trucks[i].lng + ")' style='color: black'>Directions</button> <a href='truck.jsp?truck=" + trucks[i].id + "' style='color:black'>View Menu</a>";
         //ADD INFO WINDOW TO MARKER
         bindwindow(marker, map, infowindow, contentString);
         marker.setMap(map);
