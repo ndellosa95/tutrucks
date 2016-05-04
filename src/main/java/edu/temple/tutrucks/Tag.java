@@ -20,7 +20,7 @@ import org.hibernate.Session;
  * @version %PROJECT_VERSION%
  * 
  */
-public class Tag implements java.io.Serializable, java.lang.Comparable, Searchable {
+public class Tag implements java.io.Serializable, java.lang.Comparable, Searchable, Modifiable {
 
      private int id;
      private String tagName;
@@ -214,6 +214,7 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
     /**
      * Saves this tag object to the database and assigns it an ID value.
      */
+    @Override
     public void save() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -225,6 +226,7 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
     /**
      * Removes this tag object from the database.
      */
+    @Override
     public void delete() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();

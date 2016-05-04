@@ -9,7 +9,7 @@ package edu.temple.tutrucks;
  *
  * @author nickdellosa
  */
-public interface Visualizable extends Modifiable {
-    public String getAvatar();
-    public void setAvatar(String avatar);
+public interface Modifiable {
+    public void save();
+    public void delete();
 }

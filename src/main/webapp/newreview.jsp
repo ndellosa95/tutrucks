@@ -75,7 +75,7 @@
             break;
         case "item":
             r = Item.getItemByID(id);
-            name=Item.getItemByID(id).getItemName();
+            name=Item.getItemByID(id).getItemName()+" at "+Item.getItemByID(id).getMenu().getTruck().getTruckName();
             break;
         default:
             // error handling
@@ -87,7 +87,7 @@
 %>
 
 <div class="container">
-    <h1>Review for <%=name %></h1>
+    <h1>Review for <%=name %> </h1>
     <form action="addReview" method="POST">
         <input type="hidden" name ="type" value="<%=type%>">
         <input type="hidden" name ="id" value="<%=id%>">

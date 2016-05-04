@@ -5,6 +5,7 @@
  */
 package edu.temple.controller;
 
+import edu.temple.tutrucks.HibernateUtil;
 import edu.temple.tutrucks.Permissions;
 import edu.temple.tutrucks.Truck;
 import edu.temple.tutrucks.User;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import org.hibernate.Session;
 
 /**
  *
@@ -80,6 +82,7 @@ public class UploadImageServlet extends HttpServlet {
             File output = new File(IMAGE_UPLOADS + entityType + "/" + id + ".png");
             ImageIO.write(image, "png", output);
             v.setAvatar(output.getPath());
+            v.save();
         } catch (IOException | ServletException | NumberFormatException | ClassCastException ex) {
         }
     }

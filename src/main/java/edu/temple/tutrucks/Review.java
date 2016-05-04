@@ -17,7 +17,7 @@ import org.hibernate.criterion.Projections;
  * @version %PROJECT_VERSION%
  * @param <T> The type of item being reviewed. Must implement the reviewable interface
  */
-public abstract class Review<T extends Reviewable> {
+public abstract class Review<T extends Reviewable> implements Modifiable{
     
      private int id;
      private User user;
@@ -118,6 +118,7 @@ public abstract class Review<T extends Reviewable> {
     /**
      * Saves this review object to the database and assigns it an ID value.
      */
+    @Override
     public void save() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -136,6 +137,7 @@ public abstract class Review<T extends Reviewable> {
     /**
      * Removes this review object from the database.
      */
+    @Override
     public void delete() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();

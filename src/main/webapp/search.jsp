@@ -73,7 +73,7 @@ put rating in rating slot on right side
                                             closingHours-=12;
                                         }if (closingHours==0) closingHours=12;
                                         out.print(closingHours+":"+closingMinutes);
-                                        if(openingMinutes==0) out.print("0");
+                                        if(closingMinutes==0) out.print("0");
                                         if (morning)out.print(" AM");
                                         else out.print(" PM");
                                     out.print("</div>\n");
