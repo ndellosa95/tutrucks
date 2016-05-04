@@ -93,7 +93,7 @@
             <div class="container containerPanelWrapper">
                 <div class="panel panel-default panelCloneWrapper hidden">
                     <div class="panel-heading">
-                        <input type="hidden" name="menuId" value="">
+                        <input type="hidden" name="menuId" value="0">
                         <input type="text" class="form-control" name="categoryTitle" placeholder="Category Title">
                         <input type="text" class="form-control" name="categoryDescription" placeholder="Category Description">
                         <button type="button" class="form-control btn btn-danger" id="removeCategory">Remove</button> 
@@ -115,7 +115,7 @@
                                 </div>
                             </div>
                             <div class="row-fluid cloneWrapper">
-                                <input type="hidden" name="itemId" value="">
+                                <input type="hidden" name="itemId" value="0">
                                 <div class="col-sm-3" id="itemName">
                                     <input type="text" class="form-control" name="itemName" placeholder="Item Name">
                                 </div>
@@ -130,7 +130,7 @@
                                 </div>                              
                             </div>
                             <div class="row-fluid cloneWrapper">
-                                <input type="hidden" name="itemId" value="">
+                                <input type="hidden" name="itemId" value="0">
                                 <div class="col-sm-3" id="itemName">
                                     <input type="text" class="form-control" name="itemName" placeholder="Item Name">
                                 </div>
@@ -145,7 +145,7 @@
                                 </div>                              
                             </div>
                             <div class="row-fluid cloneWrapper">
-                                <input type="hidden" name="itemId" value="">
+                                <input type="hidden" name="itemId" value="0">
                                 <div class="col-sm-3" id="itemName">
                                     <input type="text" class="form-control" name="itemName" placeholder="Item Name">
                                 </div>
