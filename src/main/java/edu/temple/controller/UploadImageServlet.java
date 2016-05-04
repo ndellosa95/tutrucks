@@ -5,12 +5,14 @@
  */
 package edu.temple.controller;
 
+import javax.servlet.annotation.MultipartConfig;
 import edu.temple.tutrucks.Permissions;
 import edu.temple.tutrucks.Truck;
 import edu.temple.tutrucks.User;
 import edu.temple.tutrucks.Visualizable;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -18,7 +20,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-
+@MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB
+                 maxFileSize=1024*1024*10,      // 10MB
+                 maxRequestSize=1024*1024*50)   // 50MB
 /**
  *
  * @author nickdellosa
@@ -76,10 +80,13 @@ public class UploadImageServlet extends HttpServlet {
                     //error handling
                     return;
             }
-            BufferedImage image = ImageIO.read(imagePart.getInputStream());
-            File output = new File(IMAGE_UPLOADS + entityType + "/" + id + ".png");
-            ImageIO.write(image, "png", output);
-            v.setAvatar(output.getPath());
+            BufferedImage image;
+            image= ImageIO.read(imagePart.getInputStream());
+            String path=IMAGE_UPLOADS + entityType + "/" + id + ".png";
+            File output;
+            output= new File(path);
+            boolean b=ImageIO.write(image, "PNG", output);
+            if (v!=null)v.setAvatar(path);
         } catch (IOException | ServletException | NumberFormatException | ClassCastException ex) {
         }
     }
