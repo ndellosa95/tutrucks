@@ -123,17 +123,41 @@
                         <% for (ItemReview review : itemReviews) { %>
                             <div class="row review">
                                 <div class="row">
-                                    <div class="col-md-8" style="text-align: left; color:#A41E35;">
-                                        <h4><%=review.getItem().getItemName()%>/h4>
+                                    <div class="col-sm-12" style="text-align: center; color:#A41E35;">
+                                        
+                                        <h4><%=review.getItem().getItemName()%>
+                                            at
+                                        <a href="truck.jsp?truck=<%=review.getItem().getMenu().getTruck().getId()%>" style="color:#A41E35;"><%=review.getItem().getMenu().getTruck().getTruckName()%></a></h4>
+                                        
+                                        
                                     </div>
-                                    <div class="col-md-4" style="text-align: right;">
-                                        <h5><%=review.getReviewStars()%></h5>
+                                    <div class="col-sm-12" style="text-align: center;">
+                                        <%
+                                            
+                                            int reviewStars=review.getReviewStars();
+                                            int fullStars=reviewStars/2;
+                                            int halfStars=reviewStars%2;
+                                            if (reviewStars==0){
+                                                out.print("0-Star Review");
+                                            }
+                                            for (int c=0; c<fullStars; c++){
+                                                out.print("<img src='images/Star_Full.png' width='24' height='24'>");
+                                            }
+                                            if (halfStars==1){
+                                                out.print("<img src='images/Star_Half.png' width='12' height='24'>");
+                                            }
+                                        %>
                                     </div>
                                 </div>
                                 <div class="row" style="text-align: left; padding: 5px;">
+                                    
                                     <p><%=review.getReviewText()%></p>
                                 </div>
-                            </div>  
+                                <div class="row userAndDate" style="text-align: center; padding: 5px;">
+                                    <p>Reviewed on <%= review.getReviewDate()%></p>
+                                </div>
+                            </div>
+                            <hr />
                         <% } %>
                     </div>
                 </div>
