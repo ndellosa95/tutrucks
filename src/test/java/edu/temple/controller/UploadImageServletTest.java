@@ -59,7 +59,7 @@ public class UploadImageServletTest extends ServletTest{
     @After
     public void tearDown() {
     }
-
+    /*
     @Test
     public void testDoPostTruck() throws FileNotFoundException, IOException, ServletException {
         fakeUser.setPermissions(Permissions.ADMIN);
