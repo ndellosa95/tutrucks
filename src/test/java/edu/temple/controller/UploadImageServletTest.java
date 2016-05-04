@@ -86,7 +86,7 @@ public class UploadImageServletTest {
         }
         assertTrue(realFile.exists());
     }
-    
+    /*
     @Test
     public void testDoPostUser() throws FileNotFoundException, IOException, ServletException {
         fakeUser.setId(0);
@@ -107,5 +107,5 @@ public class UploadImageServletTest {
         }
         assertTrue(realFile.exists());
         assertTrue(!fakeUser.getAvatar().equals("null"));
-    }
+    }*/
 }
