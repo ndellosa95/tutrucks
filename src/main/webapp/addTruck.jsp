@@ -1,6 +1,7 @@
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.io.IOException"%>
 <%@ include file="header.jsp"%>
+<%@ include file="adminAuth.jsp"%>
 <style>
     body{
         text-shadow: none;

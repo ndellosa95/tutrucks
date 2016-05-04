@@ -4,6 +4,7 @@
 <%@page import="edu.temple.tutrucks.Tag"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="header.jsp"%>
+<%@ include file="adminAuth.jsp"%>
 <div class="container">
     <form>
         <fieldset class="form-group form-inline">
