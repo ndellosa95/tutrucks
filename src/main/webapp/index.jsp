@@ -155,9 +155,8 @@
 
                 });
                 $(window).load(function () {
-                    $.ajax({
+                    $.ajax("AllOpenTrucks", {
                         type: "POST",
-                        url: "/AllOpenTrucks",
                         async: false,
                         success: function (data) {
                             var trucks = data;
