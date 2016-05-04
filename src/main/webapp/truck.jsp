@@ -181,16 +181,28 @@
                             out.print(NumberFormat.getCurrencyInstance(new Locale("en", "US")).format(price));
                         %>
                     </div>
-                    <div class="col-lg-2 click" data-toggle="modal" data-target="#itemModal" data-truckid="<%=itemID%>">
+                    <div class="col-lg-2 click" data-toggle="modal" data-target="#itemModal" style="text-align: left" data-itemid="<%=itemID%>">
                         <%
                             double stars = 0.0;
                             double averageStars = 0.0;
                             List<ItemReview> reviews = item.getItemReviews();
-                        
                             if (reviews.size() > 0) {
-                                stars = item.getScore();
-                                averageStars = stars / 2;
-                                out.print(averageStars);
+                                avgRating = item.getScore();
+                                fullStars=avgRating/2;
+                                halfStars=avgRating%2;
+                                if (avgRating==0){
+                                    out.print("Rating: 0");
+                                }
+                                for (int i=0;i<fullStars;i++){
+                                    out.print("<img src='images/Star_Full.png' width='16' height='16'>");
+                                }
+                                if (halfStars==1){
+                                    out.print("<img src='images/Star_Half.png' width='8' height='16'>");
+                                }
+                                
+                                
+                            }else{
+                                out.print("No Reviews");
                             }
                         %>
                     </div>                                   
