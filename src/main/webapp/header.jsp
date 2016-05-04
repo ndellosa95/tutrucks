@@ -132,12 +132,24 @@
               
             </li>
             <li class="" id="logoutTab" style="<%=logOffAreaVisibility%>">
-                    <a style="color:black" href="javascript:$.post('logout', { success: function(data) { window.location.href ='index.jsp'; } });">Logout</a>
+                    <a id='logout' style="color:black" href="#">Logout</a>
             </li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
+    <script>
+        $(document).ready(function () {
+           $("#logout").click(function () {
+              $.ajax('logout', {
+                  method: "POST",
+                  success: function(data) { 
+                      location.reload(true); 
+                  } 
+              });  
+           });
+        });
+    </script>
     <div class="site-wrapper">
 		
       <div class="site-wrapper-inner">
