@@ -113,6 +113,33 @@ public class UserTest {
         assertTrue(realUser2.getTruckReviews().contains(tr));
         assertTrue(realUser2.getItemReviews().contains(ir));
     }
+    
+    @Test
+    public void testCreateUserBad() {
+        String badEmail = "badEmail";
+        String goodEmail = "goodEmail@test.com";
+        String shortPass = "p";
+        String longPass = "this is a very long password, far too long, absurdly long, why would you ever make a password this long?";
+        try {
+            User.createUser(badEmail, "whatever",false, null, null, null);
+            fail();
+            return;
+        } catch (IllegalArgumentException ex) {}
+        try {
+            User.createUser(goodEmail, shortPass, false, null, null, null);
+            fail();
+            return;
+        } catch (IllegalArgumentException ex) {}
+        try {
+            User.createUser(goodEmail, longPass, false, null, null, null);
+            fail();
+            return;
+        } catch (IllegalArgumentException ex) {}
+        try {
+            User.createUser(EMAIL, "whatever", false, null, null, null);
+            fail();
+        } catch (IllegalArgumentException ex) {}
+    }
 }
 
 

@@ -127,9 +127,11 @@ put rating in rating slot on right side
             item = (Item) s;
             out.print("<div class ='panel panel-danger'>\n");
                 out.print("<div class='panel-heading'>\n");
+                    out.print("<a href='truck.jsp?truck="+item.getMenu().getTruck().getId()+"' style='color: black'>");
                     out.print("<h1 class='panel-title'>");
                         out.print(item.getItemName());
                     out.print("</h1>\n");
+                    out.print("</a>");
                 out.print("</div>");
             out.print("<div class='panel-body'> \n");
                 out.print("<div class='row-fluid'>\n");

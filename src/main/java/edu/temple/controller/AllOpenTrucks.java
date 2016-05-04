@@ -5,6 +5,8 @@
  */
 package edu.temple.controller;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import edu.temple.tutrucks.HibernateUtil;
 import edu.temple.tutrucks.Truck;
 import java.io.IOException;
@@ -38,7 +40,9 @@ public class AllOpenTrucks extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("text/html;charset=UTF-8");
+        //response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
         Date today = new java.util.Date();
         if (today.getDay() == 0 || today.getDay() == 7){
             //its the weekend everything is closed
@@ -48,12 +52,18 @@ public class AllOpenTrucks extends HttpServlet {
         Query q = session.createQuery("from Truck t where t.openingTime <=:time and t.closingTime >:time");
         q.setParameter("time", currentTime);
         List<Truck> results = q.list();
+        //List<Truck> results = Truck.getAllTrucks();
+       JsonArray jsonArray = new JsonArray();
+        for (Truck t: results) {
+               JsonObject jsonObject = new JsonObject();
+               jsonObject.addProperty("name", t.getTruckName());
+               jsonObject.addProperty("lat", t.getLatitude());
+               jsonObject.addProperty("lng", t.getLongitude());
+               jsonObject.addProperty("id", t.getId()); 
+               jsonArray.add(jsonObject);
+        }
         try (PrintWriter out = response.getWriter()) {
-           out.print("{\"trucks\": [");
-            for (Truck t: results) {
-               out.print("{\"name\": \"" + t.getTruckName() + "\", \"lat\": " + t.getLatitude() + "},");
-            }
-            out.print("]}");
+           out.print(jsonArray);  
         }
     }
 

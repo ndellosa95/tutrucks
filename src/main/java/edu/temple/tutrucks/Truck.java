@@ -367,6 +367,29 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
         }
     }
 
+    @Override
+    public void save() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.saveOrUpdate(this);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Override
+    public void delete() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Truck truck = (Truck) session.get(Truck.class, this.getId());
+        Hibernate.initialize(truck.getTruckReviews());
+        for (TruckReview tr : truck.truckReviews) 
+            session.delete(tr);
+        
+        session.delete(truck);
+        session.getTransaction().commit();
+        session.close();
+    }
+
 }
 
 
