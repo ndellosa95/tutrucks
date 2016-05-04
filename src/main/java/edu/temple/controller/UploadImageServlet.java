@@ -27,7 +27,7 @@ import org.hibernate.Session;
  */
 public class UploadImageServlet extends HttpServlet {
     
-    private static final String IMAGE_UPLOADS = System.getProperty("user.dir") + "/uploads/";
+    private static final String IMAGE_UPLOADS = "uploads/";
     
     static {
         File uploadsDir = new File(IMAGE_UPLOADS);
@@ -84,7 +84,7 @@ public class UploadImageServlet extends HttpServlet {
             BufferedImage image = ImageIO.read(imagePart.getInputStream());
             File output = new File(IMAGE_UPLOADS + entityType + "/" + id + ".png");
             ImageIO.write(image, "png", output);
-            v.setAvatar(output.getAbsolutePath());
+            v.setAvatar(output.getPath());
             v.save();
             resp.sendRedirect(redirect);
         } catch (IOException | ServletException | NumberFormatException | ClassCastException ex) {
