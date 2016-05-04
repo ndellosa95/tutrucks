@@ -42,19 +42,7 @@ public class DeleteTruckServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         int id = Integer.parseInt(request.getParameter("truckId"));
         Truck deleteTruck = Truck.getTruckByID(id);
-        List<Menu> deleteMenu = deleteTruck.getMenus();
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        for (Menu m: deleteMenu) {
-            Set<Item> deleteItems = m.getItems();
-            for (Item i: deleteItems) {
-                session.delete(i);
-            }
-            session.delete(m);
-        }
-        session.delete(deleteTruck);
-        session.getTransaction().commit();
-        session.close();
+        deleteTruck.delete();
         try (PrintWriter out = response.getWriter()) {
             out.println("Truck deleted");
         }

@@ -132,7 +132,7 @@
               
             </li>
             <li class="" id="logoutTab" style="<%=logOffAreaVisibility%>">
-                    <a style="color:black" href="javascript:$.post('logout'); window.location.href ='index.jsp';">Logout</a>
+                    <a style="color:black" href="javascript:$.post('logout', { async: false }); window.location.href ='index.jsp';">Logout</a>
             </li>
           </ul>
         </div><!--/.nav-collapse -->

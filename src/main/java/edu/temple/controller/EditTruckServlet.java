@@ -55,14 +55,12 @@ public class EditTruckServlet extends HttpServlet {
         editTruck.setOpeningTime(openTime);
         editTruck.setClosingTime(closeTime);
         Set<Tag> deletedTags = editTruck.getTags();
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
         for (String s : tags) {
             Tag temp = Tag.retrieveTag(s, true);
             deletedTags.remove(temp);
             temp.addEntity(editTruck);
             editTruck.addTags(temp);
-            session.saveOrUpdate(temp);
+            temp.save();
         }
         for (Tag t: deletedTags) {
             Set<Truck> currentTaggedTrucks = t.getTrucks();
@@ -71,11 +69,9 @@ public class EditTruckServlet extends HttpServlet {
             Set<Tag> currentTags = editTruck.getTags();
             currentTags.remove(t);
             editTruck.setTags(currentTags);
-            session.saveOrUpdate(t);           
+            t.save();
         }
-        session.saveOrUpdate(editTruck);
-        session.getTransaction().commit();
-        session.close();
+        editTruck.save();
         try (PrintWriter out = response.getWriter()) {
            out.print("Truck successfully updated");
         }
