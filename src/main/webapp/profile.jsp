@@ -37,8 +37,8 @@
                     out.print(avatar);
                 }else out.print("images/NoUserPhoto.png");
              %>" 
-             alt="No user avatar" width="128px" height="128px" style="border:2px solid #FFFFFF; border-radius:5px" />
-
+             alt="No user avatar" width="128px" height="128px" style="border:2px solid #FFFFFF; border-radius:5px" /> <br />
+        <a style="font-size: x-small;" id="image_upload" href="#">Upload a profile picture...</a> <br />
         <h3 style="color: white;"><%=userProfile.getDisplayName()%></h3>
         <h5 style="color: white;"><%=truckReviews.size()%> truck reviews</h5>
         <h5 style="color: white;"><%=itemReviews.size()%> item reviews</h5>
@@ -145,5 +145,11 @@
         </div>
     </div>
 </div>
-
+ <script>
+    $(document).ready(function() {
+        $("#image_upload").click(function() {
+           // open image upload modal 
+        });
+    });
+</script>
 <%@ include file="footer.html"%>

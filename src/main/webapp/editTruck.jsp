@@ -11,9 +11,18 @@
             <select class="form-control" name="truckName">
                 <%  Truck selected = new Truck();
                     boolean submitted = false;
+                    if (request.getParameter("submitted") != null) {
+                        selected = Truck.getTruckByID(Integer.parseInt(request.getParameter("truckName")));
+                        submitted = true;
+                    }
                     List<Truck> list = Truck.getAllTrucks();
                     for (Truck t : list) {
-                        out.print("<option value='" + t.getId() + "'>" + t.getTruckName() + "</option>");
+                        if (t.getId() == selected.getId()) {
+                            out.print("<option value='" + t.getId() + "'selected>" + t.getTruckName() + "</option>");
+                        }
+                        else {
+                            out.print("<option value='" + t.getId() + "'>" + t.getTruckName() + "</option>");
+                        }
                     }
                 %>
             </select>
@@ -21,12 +30,6 @@
         </fieldset>
     </form>
 
-    <%
-        if (request.getParameter("submitted") != null) {
-            selected = Truck.getTruckByID(Integer.parseInt(request.getParameter("truckName")));
-            submitted = true;
-        }
-    %>
 </div>
 <br><br>
 <div class="container">
@@ -40,7 +43,7 @@
                 <input type="text" placeholder="Name" class="form-control" name="truckName" 
                        <%
                            if (submitted) {
-                               out.println("value = '" + selected.getTruckName() + "'");
+                               out.print("value = '" + selected.getTruckName() + "'");
                            }
                        %>
                        >
@@ -54,7 +57,7 @@
                 <input type="text" placeholder="Latitude" class="form-control" name="latitude"
                        <%
                            if (submitted) {
-                               out.println("value = '" + selected.getLatitude() + "'");
+                               out.print("value = '" + selected.getLatitude() + "'");
                            }
                        %>
                        >
@@ -63,7 +66,7 @@
                 <input type="text" placeholder="Longitude" class="form-control" name="longitude"
                        <%
                            if (submitted) {
-                               out.println("value = '" + selected.getLongitude() + "'");
+                               out.print("value = '" + selected.getLongitude() + "'");
                            }
                        %>
                        >
@@ -78,7 +81,7 @@
                 <input type="text" class="form-control" name="openTime" placeholder="Opening Time"
                        <%
                            if (submitted) {
-                               out.println("value = '" + selected.getOpeningTime().toString() + "'");
+                               out.print("value = '" + selected.getOpeningTime().toString() + "'");
                            }
                        %>
                        >
@@ -86,7 +89,7 @@
             <div class="col-sm-4">
                 <input type="text" class="form-control" name="closeTime" placeholder="Closing Time" <%
                     if (submitted) {
-                        out.println("value = '" + selected.getClosingTime() + "'");
+                        out.print("value = '" + selected.getClosingTime() + "'");
                     }
                        %>
                        >
@@ -99,12 +102,13 @@
             </div>
             <div class="col-sm-8">
                 <textarea class="form-control" style="min-width: 100%" name="tags"><%
-                        if (submitted) {
-                            Set<Tag> tags = selected.getTags();
-                            for (Tag t : tags) {
-                                out.println(t.getTagName() + ", ");
-                            }
+                    if (submitted) {
+                        selected.loadTags();
+                        Set<Tag> tags = selected.getTags();
+                        for (Tag t : tags) {
+                            out.print(t.getTagName() + ", ");
                         }
+                    }
                     %></textarea>
             </div>
         </fieldset>
@@ -121,11 +125,11 @@
         var longitude = $(e.target).find('[name=longitude]').val();
         var openTime = $(e.target).find('[name=openTime]').val();
         var closeTime = $(e.target).find('[name=closeTime]').val();
-
+        var tagsString = $(e.target).find('[name=tags]').val();
         $.ajax({
             type: "POST",
             url: "/EditTruckServlet",
-            data: {id: truckId, name: truckName, lat: latitude, lng: longitude, open: openTime, close: closeTime},
+            data: {id: truckId, name: truckName, lat: latitude, lng: longitude, open: openTime, close: closeTime, tags: tagsString},
             async: false,
             success: function (data) {
                 alert(data);
@@ -135,6 +139,5 @@
                 console.log(error);
             }
         });
-
     });
 </script>
