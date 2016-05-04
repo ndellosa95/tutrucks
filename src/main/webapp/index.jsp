@@ -80,16 +80,14 @@
                             ;
                         })
                     });
-                    $.ajax({
+                    $.ajax("AllOpenTrucks", {
                         type: "POST",
-                        url: "/AllOpenTrucks",
-                        async: false,
+                        async: true,
                         success: function (data) {
                             var trucks = data;
                             intialize(trucks);
                         },
                         error: function (error) {
-                            alert("There was an error.");
                             console.log(error);
                         }
                     });
