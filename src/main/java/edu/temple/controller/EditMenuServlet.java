@@ -5,29 +5,27 @@
  */
 package edu.temple.controller;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import edu.temple.tutrucks.HibernateUtil;
-import edu.temple.tutrucks.Truck;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Time;
-import java.util.Date;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.hibernate.Query;
-import org.hibernate.Session;
+import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import edu.temple.tutrucks.Item;
+import edu.temple.tutrucks.ItemDeserializer;
+import edu.temple.tutrucks.Menu;
+import edu.temple.tutrucks.MenuDeserializer;
 
 /**
  *
  * @author michn_000
  */
-@WebServlet(name = "AllOpenTrucks", urlPatterns = {"/AllOpenTrucks"})
-public class AllOpenTrucks extends HttpServlet {
+@WebServlet(name = "EditMenuServlet", urlPatterns = {"/EditMenuServlet"})
+public class EditMenuServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,32 +38,23 @@ public class AllOpenTrucks extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //response.setContentType("text/html;charset=UTF-8");
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        Date today = new java.util.Date();
-        if (today.getDay() == 0 || today.getDay() == 7){
-            //its the weekend everything is closed
-        }
-        Date currentTime = new Time(today.getTime()); 
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Query q = session.createQuery("from Truck t where t.openingTime <=:time and t.closingTime >:time");
-        q.setParameter("time", currentTime);
-        List<Truck> results = q.list();
-        //List<Truck> results = Truck.getAllTrucks();
-       JsonArray jsonArray = new JsonArray();
-        for (Truck t: results) {
-               JsonObject jsonObject = new JsonObject();
-               jsonObject.addProperty("name", t.getTruckName());
-               jsonObject.addProperty("lat", t.getLatitude());
-               jsonObject.addProperty("lng", t.getLongitude());
-               jsonObject.addProperty("id", t.getId()); 
-               jsonArray.add(jsonObject);
-        }
+        response.setContentType("text/html;charset=UTF-8");
+        String menuString = request.getParameter("menu");
+        String truckName = request.getParameter("truckName");
+        
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(Menu.class, new MenuDeserializer());
+        gsonBuilder.registerTypeAdapter(Item.class, new ItemDeserializer());
+        Gson gson = gsonBuilder.create();
+        
+        Menu[] menuArray = gson.fromJson(menuString, Menu[].class);
+        
         try (PrintWriter out = response.getWriter()) {
-           out.print(jsonArray);  
+            out.print(menuArray[2].toString());
         }
     }
+
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
