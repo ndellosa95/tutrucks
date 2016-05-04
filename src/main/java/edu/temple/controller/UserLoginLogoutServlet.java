@@ -43,7 +43,6 @@ public class UserLoginLogoutServlet extends HttpServlet {
                 u.linkUserFacebook(fbID, displayName, avatarURL);
             } else {
                 u = User.validateUser(email, password);
-                System.out.println("User: "+u);
                 session.setAttribute("user", u);
             }
         } else {
