@@ -55,19 +55,15 @@ public class AddTruckServlet extends HttpServlet {
         newTruck.setLatitude(lat);
         newTruck.setOpeningTime(openTime);
         newTruck.setClosingTime(closeTime);
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.persist(newTruck);
+        newTruck.save();
         //newTruck.loadTags();
         for (String s : tags) {
             Tag temp = Tag.retrieveTag(s, true);
             //temp = temp.loadTaggedEntities();
             temp.addEntity(newTruck);
             newTruck.addTags(temp);
-            session.saveOrUpdate(temp);
+            temp.save();
         }
-        session.getTransaction().commit();
-        session.close();
 
         try (PrintWriter out = response.getWriter()) {
             out.print("Truck added");

@@ -402,6 +402,7 @@ public class User implements java.io.Serializable, Visualizable {
     /**
      * Saves this user object to the database and assigns it an ID value.
      */
+    @Override
     public void save() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -412,6 +413,7 @@ public class User implements java.io.Serializable, Visualizable {
     /**
      * Removes this user object from the database.
      */
+    @Override
     public void delete() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();

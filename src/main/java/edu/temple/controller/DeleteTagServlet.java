@@ -40,13 +40,7 @@ public class DeleteTagServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String tagName = request.getParameter("name");
         Tag deleteTag = Tag.retrieveTag(tagName, false);
-        Set<Truck> taggedTrucks = deleteTag.getTrucks();
-        Set<Item> taggedItems = deleteTag.getItems();
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.delete(deleteTag);
-        session.getTransaction().commit();
-        session.close();
+        deleteTag.delete();
         try (PrintWriter out = response.getWriter()) {
            out.print("Tag deleted");
         }

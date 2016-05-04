@@ -19,7 +19,7 @@ import org.hibernate.Session;
  * @author Nick Dell'Osa
  * @version %PROJECT_VERSION%
  */
-public class Item implements java.io.Serializable, Reviewable, Taggable, Searchable {
+public class Item implements java.io.Serializable, Reviewable, Taggable, Searchable, Modifiable {
 
 
      private int id;
@@ -267,6 +267,29 @@ public class Item implements java.io.Serializable, Reviewable, Taggable, Searcha
                 if (this.getItemReviews().get(i) == null) this.getItemReviews().remove(i);
             }
         }
+    }
+
+    @Override
+    public void save() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.saveOrUpdate(this);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Override
+    public void delete() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Item item = (Item) session.get(Item.class, this.getId());
+        Hibernate.initialize(item.getItemReviews());
+        for (ItemReview ir : item.itemReviews) 
+            session.delete(ir);
+        
+        session.delete(item);
+        session.getTransaction().commit();
+        session.close();
     }
 
 }

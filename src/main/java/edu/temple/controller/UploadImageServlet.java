@@ -5,7 +5,7 @@
  */
 package edu.temple.controller;
 
-import javax.servlet.annotation.MultipartConfig;
+import edu.temple.tutrucks.HibernateUtil;
 import edu.temple.tutrucks.Permissions;
 import edu.temple.tutrucks.Truck;
 import edu.temple.tutrucks.User;
@@ -20,9 +20,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-@MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB
-                 maxFileSize=1024*1024*10,      // 10MB
-                 maxRequestSize=1024*1024*50)   // 50MB
+import org.hibernate.Session;
+
 /**
  *
  * @author nickdellosa
@@ -80,13 +79,11 @@ public class UploadImageServlet extends HttpServlet {
                     //error handling
                     return;
             }
-            BufferedImage image;
-            image= ImageIO.read(imagePart.getInputStream());
-            String path=IMAGE_UPLOADS + entityType + "/" + id + ".png";
-            File output;
-            output= new File(path);
-            boolean b=ImageIO.write(image, "PNG", output);
-            if (v!=null)v.setAvatar(path);
+            BufferedImage image = ImageIO.read(imagePart.getInputStream());
+            File output = new File(IMAGE_UPLOADS + entityType + "/" + id + ".png");
+            ImageIO.write(image, "png", output);
+            v.setAvatar(output.getPath());
+            v.save();
         } catch (IOException | ServletException | NumberFormatException | ClassCastException ex) {
         }
     }
