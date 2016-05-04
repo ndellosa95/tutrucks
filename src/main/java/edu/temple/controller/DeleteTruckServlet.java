@@ -42,9 +42,11 @@ public class DeleteTruckServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         int id = Integer.parseInt(request.getParameter("truckId"));
         Truck deleteTruck = Truck.getTruckByID(id);
-        deleteTruck.delete();
-        try (PrintWriter out = response.getWriter()) {
-            out.println("Truck deleted");
+        if (deleteTruck != null) {
+            deleteTruck.delete();
+            try (PrintWriter out = response.getWriter()) {
+                out.println("Truck deleted");
+            }
         }
     }
 

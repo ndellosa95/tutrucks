@@ -74,7 +74,7 @@
         <url-pattern>/addReview</url-pattern>
     </servlet-mapping>
     <servlet>
-        <serlvet-name>EditUserInfo</serlvet-name>
+        <servlet-name>EditUserInfo</servlet-name>
         <servlet-class>edu.temple.controller.EditUserInfoServlet</servlet-class>
     </servlet>
     <servlet-mapping>
