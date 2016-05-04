@@ -51,6 +51,7 @@ public class UploadImageServlet extends HttpServlet {
             String entityType = req.getParameter("type");
             int id = -1;
             Visualizable v = null;
+            String redirect = null;
             switch (entityType) {
                 case "truck":
                     User admin = (User)req.getSession().getAttribute("user");
@@ -64,6 +65,7 @@ public class UploadImageServlet extends HttpServlet {
                         // error handling
                         return;
                     }
+                    redirect = "truck.jsp?id=" + id;
                     break;
                 case "user":
                     User user = (User)req.getSession().getAttribute("user");
@@ -73,6 +75,7 @@ public class UploadImageServlet extends HttpServlet {
                     }
                     id = user.getId();
                     v = user;
+                    redirect = "profile.jsp?id=" + id;
                     break;
                 default:
                     //error handling
@@ -83,6 +86,7 @@ public class UploadImageServlet extends HttpServlet {
             ImageIO.write(image, "png", output);
             v.setAvatar(output.getPath());
             v.save();
+            resp.sendRedirect(redirect);
         } catch (IOException | ServletException | NumberFormatException | ClassCastException ex) {
         }
     }

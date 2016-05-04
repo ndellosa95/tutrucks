@@ -12,9 +12,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -31,14 +28,11 @@ import static org.mockito.Mockito.when;
  *
  * @author nickdellosa
  */
-public class UploadImageServletTest {
+public class UploadImageServletTest extends ServletTest{
     
     private static final String TEST_IMAGE = UploadImageServletTest.class.getClassLoader().getResource("TestImage.jpg").getFile();
     private static final String TEST_IMAGE2 = UploadImageServletTest.class.getClassLoader().getResource("TestImage2.jpg").getFile();
     
-    private HttpServletRequest request;
-    private HttpServletResponse response;
-    private HttpSession session;
     private Part imagePart;
     private User fakeUser;
     
@@ -54,14 +48,12 @@ public class UploadImageServletTest {
     }
     
     @Before
-    public void setUp() {
-        request = mock(HttpServletRequest.class);
-        response = mock(HttpServletResponse.class);
-        session = mock(HttpSession.class);
+    @Override
+    public void setupInstance() throws IOException {
+        super.setupInstance();
         imagePart = mock(Part.class);
         fakeUser = spy(new User());
         when(session.getAttribute("user")).thenReturn(fakeUser);
-        when(request.getSession()).thenReturn(session);
     }
     
     @After

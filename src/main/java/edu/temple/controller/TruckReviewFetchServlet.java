@@ -34,8 +34,8 @@ public class TruckReviewFetchServlet extends HttpServlet {
         
         try {
             int truckID = Integer.parseInt(req.getParameter("criteria"));
-            int minReview = Integer.parseInt(req.getParameter("start"));
-            int maxReview = Integer.parseInt(req.getParameter("end"));
+            int minReview = req.getParameter("start") == null ? 0 : Integer.parseInt(req.getParameter("start"));
+            int maxReview = req.getParameter("end") == null ? 100 : Integer.parseInt(req.getParameter("end"));
             Truck t = Truck.getTruckByID(truckID, true, false);
             List<TruckReview> reviews1 = t.getTruckReviews();
             String s;
@@ -43,8 +43,8 @@ public class TruckReviewFetchServlet extends HttpServlet {
                 minReview=0;
                 maxReview=-1;
             }
-            if (maxReview>=reviews1.size()) maxReview=reviews1.size()-1;
-            List<TruckReview> reviews = reviews1.subList(minReview, maxReview-minReview+1);
+            if (maxReview>=reviews1.size()) maxReview=reviews1.size();
+            List<TruckReview> reviews = reviews1.subList(minReview, maxReview);
             
             JsonArray array = new JsonArray();
             for (TruckReview rev : reviews) {
