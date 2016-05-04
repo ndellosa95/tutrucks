@@ -170,9 +170,8 @@
         var openTime = $(e.target).find('[name=openTime]').val();
         var closeTime = $(e.target).find('[name=closeTime]').val();
         var tagsString = $(e.target).find('[name=tags]').val();
-        $.ajax({
+        $.ajax("EditTruckServlet", {
             type: "POST",
-            url: "/EditTruckServlet",
             data: {id: truckId, name: truckName, lat: latitude, lng: longitude, open: openTime, close: closeTime, tags: tagsString},
             async: false,
             success: function (data) {

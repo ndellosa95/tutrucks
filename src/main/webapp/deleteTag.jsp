@@ -85,9 +85,8 @@
     $("#deleteTag").submit(function (e) {
     e.preventDefault();
     var tagName = $(e.target).find('[name=deleteTag]').val();
-    $.ajax({
-            type: "POST",
-            url: "/DeleteTagServlet",
+    $.ajax("DeleteTagServlet", {
+            type: "GET",
             data: {name: tagName},
             async: false,
             success: function (data) {

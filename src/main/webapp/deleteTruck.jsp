@@ -26,9 +26,8 @@
     $("#form").submit(function (e) {
     e.preventDefault();
     var truckName = $(e.target).find('[name=truckName]').val();
-    $.ajax({
+    $.ajax("DeleteTruckServlet", {
             type: "POST",
-            url: "/DeleteTruckServlet",
             data: {truckId: truckName},
             async: false,
             success: function (data) {
