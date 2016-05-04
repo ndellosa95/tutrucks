@@ -22,7 +22,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 /**
@@ -57,7 +59,7 @@ public class UploadImageServletTest {
         response = mock(HttpServletResponse.class);
         session = mock(HttpSession.class);
         imagePart = mock(Part.class);
-        fakeUser = new User();
+        fakeUser = spy(new User());
         when(session.getAttribute("user")).thenReturn(fakeUser);
         when(request.getSession()).thenReturn(session);
     }
@@ -91,6 +93,7 @@ public class UploadImageServletTest {
     public void testDoPostUser() throws FileNotFoundException, IOException, ServletException {
         fakeUser.setId(0);
         fakeUser.setAvatar("null");
+        doNothing().when(fakeUser).save();
         when(request.getPart("image")).thenReturn(imagePart);
         when(request.getParameter("type")).thenReturn("user");
         UploadImageServlet servlet = new UploadImageServlet();
