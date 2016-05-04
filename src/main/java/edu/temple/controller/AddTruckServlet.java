@@ -55,6 +55,7 @@ public class AddTruckServlet extends HttpServlet {
         newTruck.setLatitude(lat);
         newTruck.setOpeningTime(openTime);
         newTruck.setClosingTime(closeTime);
+        System.out.println("about to save truck " + truckName);
         newTruck.save();
         //newTruck.loadTags();
         for (String s : tags) {
@@ -64,10 +65,11 @@ public class AddTruckServlet extends HttpServlet {
             newTruck.addTags(temp);
             temp.save();
         }
-
+        System.out.println("tryna print");
         try (PrintWriter out = response.getWriter()) {
             out.print("Truck added");
         }
+        System.out.println("should be done");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

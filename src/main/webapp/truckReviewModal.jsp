@@ -54,8 +54,7 @@
                     innerString+="'alt='No user avatar' width='32px' height='32px'/> ";
                     innerString+="</a>";
                     avgRating=[data[i]["stars"]];
-                    alert(avgRating);
-                    fullStars=avgRating/2;
+                    fullStars=Math.floor(avgRating/2);
                     halfStars=avgRating%2;
                     innerString+="Rating: ";
                     if (avgRating===0){
