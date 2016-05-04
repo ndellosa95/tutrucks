@@ -259,6 +259,11 @@ public class User implements java.io.Serializable, Visualizable {
      * @param newPassword the new unencrypted password for this user
      */
     public void changePassword(String newPassword) {
+        if (newPassword.length() > 16) {
+            throw new IllegalArgumentException("Password is too long (16 characters max).");
+        } else if (newPassword.length() < 6) {
+            throw new IllegalArgumentException("Password is too short (6 characters min)."); 
+        }
         byte[] newSalt = generateSalt();
         byte[] epass = encryptPassword(newPassword, newSalt);
         this.setSalt(newSalt);
@@ -380,7 +385,7 @@ public class User implements java.io.Serializable, Visualizable {
     
     @Override
     public boolean equals(Object o) {
-        if (o instanceof User) {
+        if (o != null && o instanceof User) {
             return this.id == ((User)o).id;
         }
         return false;

@@ -74,4 +74,12 @@
         <servlet-name>AddReview</servlet-name>
         <url-pattern>/addReview</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <serlvet-name>EditUserInfo</serlvet-name>
+        <servlet-class>edu.temple.controller.EditUserInfoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditUserInfo</servlet-name>
+        <url-pattern>/edituserinfo</url-pattern>
+    </servlet-mapping>
 </web-app>

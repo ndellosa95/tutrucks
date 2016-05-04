@@ -11,6 +11,7 @@
             String avatar=null;
             List<TruckReview> truckReviews;
             List<ItemReview> itemReviews;
+            boolean isThisUser = false;
             if (userProfile==null){
                 response.sendRedirect("invalidPage.jsp");
                 return;
@@ -28,6 +29,7 @@
 //            tr.setReviewText("best truck ever");
 //            truckReviews.add(tr);
             itemReviews = userProfile.getItemReviews();
+            isThisUser = userProfile.equals(user);
             }
         %>
 
@@ -38,10 +40,28 @@
                 }else out.print("images/NoUserPhoto.png");
              %>" 
              alt="No user avatar" width="128px" height="128px" style="border:2px solid #FFFFFF; border-radius:5px" /> <br />
-        <a style="font-size: x-small;" id="image_upload" href="#">Upload a profile picture...</a> <br />
-        <h3 style="color: white;"><%=userProfile.getDisplayName()%></h3>
+        <% 
+                if (isThisUser) {
+                    out.print("<a style='font-size: x-small;' id='image_upload' href='#'>Upload a profile picture...</a> <br />");
+                }
+        %>
+        <h3 id="displayname" style="color: white;"><%=userProfile.getDisplayName()%></h3>
+        <div>
+            <% 
+                if (isThisUser) {
+                    out.print("<a style='font-size: x-small;' id='changedn'>Change display name...</a>");
+                    out.print("<span id='cdnform' hidden><input type='text' id='ndn' /><input type='button' id='cdn' /></span>");
+                }
+            %>
+        </div>
         <h5 style="color: white;"><%=truckReviews.size()%> truck reviews</h5>
         <h5 style="color: white;"><%=itemReviews.size()%> item reviews</h5>
+        <% 
+            if (isThisUser) {
+                out.print("<a style='font-size: x-small;' id='changepw'>Change password...</a>");
+                out.print("<div id='cpwform' hidden><input type='password' id='opw' /><br /><input type='password' id='npw' /><input type='cpw' /></div>");
+            }
+        %>
     </div>
     <div class="col-md-8">
         <div class="row">
@@ -147,9 +167,66 @@
 </div>
  <script>
     $(document).ready(function() {
-        $("#image_upload").click(function() {
-           // open image upload modal 
-        });
+        if (<%= isThisUser %>) {
+            $("#image_upload").click(function() {
+               // open image upload modal 
+            });
+            $("#changedn").click(function() {
+               $("#changedn").hide();
+               $("#cdn").val('Cancel');
+               $("#cdnform").show();
+            });
+            $("#cdn").click(function() {
+                var changeDisplayName = $("#ndn").val();
+                if (changeDisplayName) {
+                    $.ajax("edituserinfo", {
+                       method: "POST",
+                       dataType: "text",
+                       data: { displayname: changeDisplayName },
+                       success: function (data) {
+                           $("#displayname").text(data);
+                       }
+                    });
+                    $("#ndn").val("");
+                    $("#cdn").val("Cancel");
+                    $("#changedn").show();
+                    $("#cdnform").hide();
+                }
+            });
+            $("#ndn").keyup(function() {
+                var changeTextToAdd = $(this).val().length > 0;
+                $("#cdn").val(changeTextToAdd ? 'Submit' : 'Cancel');  
+            });
+            $("#changepw").click(function() {
+                $("#changepw").hide();
+                $("#cpw").val('Cancel');
+                $("#cpwform").show();
+            });
+            $("input:password").keyup(function() {
+                var changeTextToAdd = true;
+                $(this).each(function(index, element) {
+                    changeTextToAdd = changeTextToAdd && $(this).val().length > 0;
+                });
+                $("#cpw").val(changeTextToAdd ? 'Submit' : 'Cancel');  
+            });
+            $("#cpw").click(function() {
+                var oldPassword = $("#opw").val();
+                var changePassword = $("#npw").val();
+                if (oldPassword && changePassword) {
+                    $.ajax("edituserinfo", {
+                       method: "POST",
+                       data: { oldpassword: oldPassword, newpassword: changePassword },
+                       success: function (data) {
+                           alert(data);
+                       }
+                    });
+                    $("#ndn").val("");
+                    $("#cdn").val("Cancel");
+                    $("#changedn").show();
+                    $("#cdnform").hide();
+                }
+            });
+        }
     });
 </script>
 <%@ include file="footer.html"%>
