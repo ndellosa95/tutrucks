@@ -277,9 +277,8 @@
             }).get();
             return menu;
         }).get();
-        $.ajax({
+        $.ajax("EditMenuServlet", {
             type: "POST",
-            url: "/EditMenuServlet",
             dataType: 'JSON',
             data: {menu: JSON.stringify(menuArray), truckName: name},
             success: function (data) {
