@@ -77,7 +77,7 @@ public class UploadImageServlet extends HttpServlet {
                         // error handling
                         return;
                     }
-                    redirect = "truck.jsp?id=" + id;
+                    redirect = "truck.jsp?truck=" + id;
                     break;
                 case "user":
                     User user = (User)req.getSession().getAttribute("user");
