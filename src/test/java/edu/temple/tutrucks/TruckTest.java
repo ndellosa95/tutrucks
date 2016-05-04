@@ -6,6 +6,7 @@
 package edu.temple.tutrucks;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -179,6 +180,18 @@ public class TruckTest {
         assertFalse(realTruck.equals(Truck.getTruckByID(2)));
         Object testObject = new Object();
         assertFalse(realTruck.equals(testObject));
+    }
+    
+    @Test
+    public void testAllTruckNames() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query q = session.createQuery("select truckName from Truck order by truckName ASC");
+        List l = q.list();
+        session.close();
+        List<String> lreal = Truck.getAllTruckNames();
+        assertEquals(l.size(), lreal.size());
+        for (int i=0; i < l.size(); i++) assertEquals(l.get(i), lreal.get(i));
     }
 }
 
