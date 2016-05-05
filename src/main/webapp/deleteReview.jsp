@@ -8,6 +8,7 @@
 <%@page import="edu.temple.tutrucks.Truck"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="header.jsp"%>
+<%@ include file="adminAuth.jsp"%>
 <div class="container">
     <h3>Select a truck/item to delete a review from:</h3>
     <form>

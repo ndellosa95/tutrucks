@@ -25,8 +25,7 @@
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this);
-        var innerString="";
-        debugger;
+        var innerString="";S
         $("#reviews").replaceWith("<div id='reviews' class='modal-body'> </div>");
         <% if (user==null)out.print("/*");%>
                 innerString+="<div class='row'>";
