@@ -2,6 +2,7 @@
 <%@page import="edu.temple.tutrucks.Truck"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="header.jsp"%>
+<%@ include file="adminAuth.jsp"%>
 <div class="container">
     <form id="form">
         <fieldset class="form-group form-inline">
@@ -25,9 +26,8 @@
     $("#form").submit(function (e) {
     e.preventDefault();
     var truckName = $(e.target).find('[name=truckName]').val();
-    $.ajax({
+    $.ajax("DeleteTruckServlet", {
             type: "POST",
-            url: "/DeleteTruckServlet",
             data: {truckId: truckName},
             async: false,
             success: function (data) {

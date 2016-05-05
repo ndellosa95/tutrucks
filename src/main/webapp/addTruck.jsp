@@ -1,6 +1,7 @@
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.io.IOException"%>
 <%@ include file="header.jsp"%>
+<%@ include file="adminAuth.jsp"%>
 <style>
     body{
         text-shadow: none;
@@ -100,9 +101,8 @@
     var openTime = $(e.target).find('[name=openTime]').val();
     var closeTime = $(e.target).find('[name=closeTime]').val();
     var tagsString = $(e.target).find('[name=tags]').val();
-    $.ajax({
+    $.ajax("AddTruckServlet", {
             type: "POST",
-            url: "/AddTruckServlet",
             data: {name: truckName, lat: latitude, lng: longitude, open: openTime, close: closeTime, tags: tagsString},
             async: false,
             success: function (data) {

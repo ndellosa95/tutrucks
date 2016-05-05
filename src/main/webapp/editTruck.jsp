@@ -4,6 +4,50 @@
 <%@page import="edu.temple.tutrucks.Tag"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="header.jsp"%>
+<%@ include file="adminAuth.jsp"%>
+<style>
+    body{
+        text-shadow: none;
+        color: white;
+    }
+
+    .panel .panel-heading, .panel-body{
+        background-color: #A41E35;
+        border: solid 5px white;
+    }
+
+    .panel-body {
+        border-top: none;
+    }
+
+    .top-buffer {
+        margin-top: 10px;
+    }
+
+    .remove {
+        background-color: #A41E35;
+        color: #999;
+        border: solid 3px #999;
+
+    }
+    .remove:hover {
+        background-color: #999;
+        color: #A41E35;
+        border: solid 3px #999;
+    }
+
+    .addButton {
+        background-color: #A41E35;
+        color: white;
+        border: solid 3px white;
+    }
+
+    .addButton:hover {
+        background-color: white;
+        color: #A41E35;
+        border: solid 3px white;
+    }
+</style>
 <div class="container">
     <form>
         <fieldset class="form-group form-inline">
@@ -126,9 +170,8 @@
         var openTime = $(e.target).find('[name=openTime]').val();
         var closeTime = $(e.target).find('[name=closeTime]').val();
         var tagsString = $(e.target).find('[name=tags]').val();
-        $.ajax({
+        $.ajax("EditTruckServlet", {
             type: "POST",
-            url: "/EditTruckServlet",
             data: {id: truckId, name: truckName, lat: latitude, lng: longitude, open: openTime, close: closeTime, tags: tagsString},
             async: false,
             success: function (data) {

@@ -40,7 +40,7 @@ public class ItemInfoFetchServletTest extends ServletTest {
         realUser.delete();
         itag.delete();
     }
-    
+   /* 
     @Test
     public void doGetTest() {
         Item realItem = Item.getItemByID(1);
@@ -69,4 +69,5 @@ public class ItemInfoFetchServletTest extends ServletTest {
             fail();
         }
     }
+*/
 }

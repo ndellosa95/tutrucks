@@ -6,6 +6,7 @@
 <%@page import="edu.temple.tutrucks.Tag"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="header.jsp"%>
+<%@ include file="adminAuth.jsp"%>
 <style>
     body{
         text-shadow: none;
@@ -84,9 +85,8 @@
     $("#deleteTag").submit(function (e) {
     e.preventDefault();
     var tagName = $(e.target).find('[name=deleteTag]').val();
-    $.ajax({
-            type: "POST",
-            url: "/DeleteTagServlet",
+    $.ajax("DeleteTagServlet", {
+            type: "GET",
             data: {name: tagName},
             async: false,
             success: function (data) {

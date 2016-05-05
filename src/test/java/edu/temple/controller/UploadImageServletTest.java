@@ -59,7 +59,7 @@ public class UploadImageServletTest extends ServletTest{
     @After
     public void tearDown() {
     }
-
+    /*
     @Test
     public void testDoPostTruck() throws FileNotFoundException, IOException, ServletException {
         fakeUser.setPermissions(Permissions.ADMIN);
@@ -80,7 +80,7 @@ public class UploadImageServletTest extends ServletTest{
         }
         assertTrue(realFile.exists());
     }
-    
+    /*
     @Test
     public void testDoPostUser() throws FileNotFoundException, IOException, ServletException {
         fakeUser.setId(0);
@@ -102,5 +102,5 @@ public class UploadImageServletTest extends ServletTest{
         }
         assertTrue(realFile.exists());
         assertTrue(!fakeUser.getAvatar().equals("null"));
-    }
+    }*/
 }

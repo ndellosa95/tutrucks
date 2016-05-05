@@ -25,20 +25,23 @@
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this);
-        var innerString="";
+        var innerString="";S
         $("#reviews").replaceWith("<div id='reviews' class='modal-body'> </div>");
         <% if (user==null)out.print("/*");%>
-        innerString+="<div class='row'>";
-        innerString+="<a style='color: black;' href=newreview.jsp?type=truck&id="+recipient+">Click here to leave a review</a><br>";
-        innerString+="</div>";
-        innerString+="<hr />";
-        <% if (user==null)out.print("*/");%>
+                innerString+="<div class='row'>";
+                innerString+="<a style='color: black;' href=newreview.jsp?type=truck&id="+recipient+">Click here to leave a review</a><br>";
+                innerString+="</div>";
+                innerString+="<hr />";
+                <% if (user==null)out.print("*/");%>
         $.ajax("fetchTrucks", {
             method: "GET",
             dataType: "json",
             data: {criteria:recipient, start: 0, end: 20},
             success: function (data){
-                for (var i=0;i<data.length;i++){
+                var i=0;
+                var revCount=0;
+                
+                while (i<data.length){
                     
                     innerString+="<div class='row borders'>";
                     innerString+="<div class='row'>";
@@ -46,7 +49,6 @@
                     innerString+=[data[i]["userinfo"]["uid"]];
                     innerString+=">";
                     innerString+="<img class = 'avatar' src='";
-                    innerString+=[data[i]["userinfo"]["avatar"]];
                     if ([data[i]["userinfo"]["avatar"]]== null||[data[i]["userinfo"]["avatar"]]=="") {
                         innerString+="images/NoUserPhoto.png";
                     }else innerString+=[data[i]["userinfo"]["avatar"]];
@@ -54,7 +56,7 @@
                     innerString+="'alt='No user avatar' width='32px' height='32px'/> ";
                     innerString+="</a>";
                     avgRating=[data[i]["stars"]];
-                    fullStars=avgRating/2;
+                    fullStars=Math.floor(avgRating/2);
                     halfStars=avgRating%2;
                     innerString+="Rating: ";
                     if (avgRating===0){
@@ -85,17 +87,21 @@
                     innerString+="<br />";
                     innerString+="</div>";
                     innerString+="<br />"
-                    
+                    i++;
+                    revCount++;
                     
                 }
-                if (i===0){
+                if (revCount===0){
                     innerString+="No Reviews";
                 }
                 $("#reviews").append(innerString);
+                
             },
             error: function (jqXHR, status, error){
-                
+                innerString+="No Reviews";
+                $("#reviews").append(innerString);
             }
+        
         });
         
     });
