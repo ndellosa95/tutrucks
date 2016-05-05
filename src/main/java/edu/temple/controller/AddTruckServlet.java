@@ -33,7 +33,6 @@ public class AddTruckServlet extends HttpServlet {
      *
      * @param request servlet request
      * @param response servlet response
-     * @return
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
