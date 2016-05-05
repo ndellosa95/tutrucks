@@ -42,14 +42,14 @@
              alt="No user avatar" width="128px" height="128px" style="border:2px solid #FFFFFF; border-radius:5px" /> <br />
         <% 
                 if (isThisUser) {
-                    out.print("<a style='font-size: x-small;' id='image_upload' href='#'>Upload a profile picture...</a> <br />");
+                    out.print("<a style='font-size: x-small;' id='image_upload' href='addUserImageModal.jsp'>Upload a profile picture...</a> <br />");
                 }
         %>
         <h3 id="displayname" style="color: white;"><%=userProfile.getDisplayName()%></h3>
         <div>
             <% 
                 if (isThisUser) {
-                    out.print("<a style='font-size: x-small;' id='changedn'>Change display name...</a>");
+                    out.print("<a style='font-size: x-small;' id='changedn' >Change display name...</a>");
                     out.print("<span id='cdnform' hidden><input type='text' id='ndn' /><input type='button' id='cdn' /></span>");
                 }
             %>

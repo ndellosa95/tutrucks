@@ -38,7 +38,7 @@ import org.hibernate.Session;
 
 public class UploadImageServlet extends HttpServlet {
     
-    private static final String IMAGE_UPLOADS = "uploads\\";
+    private static final String IMAGE_UPLOADS = "uploads/";
     
     static {
         File uploadsDir = new File(IMAGE_UPLOADS);
@@ -87,7 +87,7 @@ public class UploadImageServlet extends HttpServlet {
                     }
                     id = user.getId();
                     v = user;
-                    redirect = "profile.jsp?id=" + id;
+                    redirect = "profile.jsp?userid=" + id;
                     break;
                 default:
                     //error handling
@@ -96,7 +96,7 @@ public class UploadImageServlet extends HttpServlet {
             // gets absolute path of the web application
             String appPath = req.getServletContext().getRealPath("");
             // constructs path of the directory to save uploaded file
-            String savePath = appPath + IMAGE_UPLOADS + entityType;
+            String savePath =  appPath + File.separator + IMAGE_UPLOADS + entityType;
 
             // creates the save directory if it does not exists
             File fileSaveDir = new File(savePath);
