@@ -5,21 +5,16 @@
  */
 package edu.temple.controller;
 
-import edu.temple.tutrucks.HibernateUtil;
-import edu.temple.tutrucks.Item;
-import edu.temple.tutrucks.Menu;
+import edu.temple.tutrucks.Permissions;
 import edu.temple.tutrucks.Truck;
+import edu.temple.tutrucks.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.hibernate.Session;
 
 /**
  *
@@ -39,6 +34,10 @@ public class DeleteTruckServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user.getPermissions() != Permissions.ADMIN) {
+            response.sendError(403);
+        }
         response.setContentType("text/html;charset=UTF-8");
         int id = Integer.parseInt(request.getParameter("truckId"));
         Truck deleteTruck = Truck.getTruckByID(id);

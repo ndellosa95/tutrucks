@@ -5,21 +5,20 @@
  */
 package edu.temple.controller;
 
-import edu.temple.tutrucks.HibernateUtil;
+import edu.temple.tutrucks.Permissions;
 import edu.temple.tutrucks.Tag;
 import edu.temple.tutrucks.Truck;
+import edu.temple.tutrucks.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Time;
 import java.util.Arrays;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.hibernate.Session;
 
 /**
  *
@@ -40,6 +39,10 @@ public class AddTruckServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user.getPermissions() != Permissions.ADMIN) {
+            response.sendError(403);
+        }
         response.setContentType("text/html;charset=UTF-8");
         String truckName = request.getParameter("name");
         double lat = Double.parseDouble(request.getParameter("lat"));

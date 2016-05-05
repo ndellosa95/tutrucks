@@ -5,19 +5,14 @@
  */
 package edu.temple.controller;
 
-import edu.temple.tutrucks.HibernateUtil;
-import edu.temple.tutrucks.Item;
 import edu.temple.tutrucks.Tag;
-import edu.temple.tutrucks.Truck;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.hibernate.Session;
 
 /**
  *

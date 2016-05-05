@@ -208,7 +208,7 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
             aretval.save();
             return aretval.loadTaggedEntities();
         } else {
-            return retval.loadTaggedEntities();
+            return retval == null ? null : retval.loadTaggedEntities();
         }
     }
     /**
@@ -228,10 +228,13 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
      */
     @Override
     public void delete() {
+        Tag tag = this.loadTaggedEntities();
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.delete(this);
-        for (Taggable t : this.getAllTaggedEntities()) session.saveOrUpdate(t);
+        for (Taggable t : tag.getAllTaggedEntities()) {
+            t.getTags().remove(tag);
+        }
+        session.delete(tag);
         session.getTransaction().commit();
         session.close();
     }
@@ -245,6 +248,7 @@ public class Tag implements java.io.Serializable, java.lang.Comparable, Searchab
         session.getTransaction().commit();
         session.close();
         retval.numEntities();
+        for (Taggable t : retval.getAllTaggedEntities()) t.loadTags();
         return retval;
     }
 }

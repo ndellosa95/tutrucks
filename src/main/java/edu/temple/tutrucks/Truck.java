@@ -272,7 +272,10 @@ public class Truck implements java.io.Serializable, Reviewable, Taggable, Search
         }
         if (loadTags) {
             Hibernate.initialize(retval.getTags());
-            retval.getTags().size();
+            for (Tag t : retval.getTags()) {
+                Hibernate.initialize(t.getTrucks());
+                Hibernate.initialize(t.getItems());
+            }
         }
         session.close();
         return retval;

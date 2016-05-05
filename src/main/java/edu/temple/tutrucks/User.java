@@ -480,7 +480,7 @@ public class User implements java.io.Serializable, Visualizable {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query q = session.createQuery(
-                "from User where facebookID=" + fbID
+                "from User where facebookID='" + fbID + "'"
         );
         if (q.uniqueResult()==null){
             session.close();
